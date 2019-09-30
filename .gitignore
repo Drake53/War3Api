@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/src/War3Api.Blizzard/Generated
+/src/War3Api.Common/Generated
