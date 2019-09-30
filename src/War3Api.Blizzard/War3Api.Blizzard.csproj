@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="War3Api.Common" Version="1.31.1" />
+    <PackageReference Include="War3Api.Common" Version="1.31.1.*" />
   </ItemGroup>
 
   <ItemGroup>
