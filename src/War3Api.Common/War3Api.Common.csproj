@@ -42,5 +42,10 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <None Include="Generated\**" />
+  </ItemGroup>
 
 </Project>
