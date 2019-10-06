@@ -9,7 +9,7 @@
 
 #pragma warning disable IDE0052, IDE1006, CS0626
 
-using War3Net.CodeAnalysis.CSharp.Attributes;
+using War3Net.CodeAnalysis.Common;
 
 // TODO: partial class to split in multiple files
 // TODO: documentation
@@ -1077,187 +1077,187 @@ namespace War3Api
         }
 
         [NativeLuaMemberAttribute]
-        public static extern race ConvertRace( int i );
+        public static extern race ConvertRace(int i);
         [NativeLuaMemberAttribute]
-        public static extern alliancetype ConvertAllianceType( int i );
+        public static extern alliancetype ConvertAllianceType(int i);
         [NativeLuaMemberAttribute]
-        public static extern racepreference ConvertRacePref( int i );
+        public static extern racepreference ConvertRacePref(int i);
         [NativeLuaMemberAttribute]
-        public static extern igamestate ConvertIGameState( int i );
+        public static extern igamestate ConvertIGameState(int i);
         [NativeLuaMemberAttribute]
-        public static extern fgamestate ConvertFGameState( int i );
+        public static extern fgamestate ConvertFGameState(int i);
         [NativeLuaMemberAttribute]
-        public static extern playerstate ConvertPlayerState( int i );
+        public static extern playerstate ConvertPlayerState(int i);
         [NativeLuaMemberAttribute]
-        public static extern playerscore ConvertPlayerScore( int i );
+        public static extern playerscore ConvertPlayerScore(int i);
         [NativeLuaMemberAttribute]
-        public static extern playergameresult ConvertPlayerGameResult( int i );
+        public static extern playergameresult ConvertPlayerGameResult(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitstate ConvertUnitState( int i );
+        public static extern unitstate ConvertUnitState(int i);
         [NativeLuaMemberAttribute]
-        public static extern aidifficulty ConvertAIDifficulty( int i );
+        public static extern aidifficulty ConvertAIDifficulty(int i);
         [NativeLuaMemberAttribute]
-        public static extern gameevent ConvertGameEvent( int i );
+        public static extern gameevent ConvertGameEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern playerevent ConvertPlayerEvent( int i );
+        public static extern playerevent ConvertPlayerEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern playerunitevent ConvertPlayerUnitEvent( int i );
+        public static extern playerunitevent ConvertPlayerUnitEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern widgetevent ConvertWidgetEvent( int i );
+        public static extern widgetevent ConvertWidgetEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern dialogevent ConvertDialogEvent( int i );
+        public static extern dialogevent ConvertDialogEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitevent ConvertUnitEvent( int i );
+        public static extern unitevent ConvertUnitEvent(int i);
         [NativeLuaMemberAttribute]
-        public static extern limitop ConvertLimitOp( int i );
+        public static extern limitop ConvertLimitOp(int i);
         [NativeLuaMemberAttribute]
-        public static extern unittype ConvertUnitType( int i );
+        public static extern unittype ConvertUnitType(int i);
         [NativeLuaMemberAttribute]
-        public static extern gamespeed ConvertGameSpeed( int i );
+        public static extern gamespeed ConvertGameSpeed(int i);
         [NativeLuaMemberAttribute]
-        public static extern placement ConvertPlacement( int i );
+        public static extern placement ConvertPlacement(int i);
         [NativeLuaMemberAttribute]
-        public static extern startlocprio ConvertStartLocPrio( int i );
+        public static extern startlocprio ConvertStartLocPrio(int i);
         [NativeLuaMemberAttribute]
-        public static extern gamedifficulty ConvertGameDifficulty( int i );
+        public static extern gamedifficulty ConvertGameDifficulty(int i);
         [NativeLuaMemberAttribute]
-        public static extern gametype ConvertGameType( int i );
+        public static extern gametype ConvertGameType(int i);
         [NativeLuaMemberAttribute]
-        public static extern mapflag ConvertMapFlag( int i );
+        public static extern mapflag ConvertMapFlag(int i);
         [NativeLuaMemberAttribute]
-        public static extern mapvisibility ConvertMapVisibility( int i );
+        public static extern mapvisibility ConvertMapVisibility(int i);
         [NativeLuaMemberAttribute]
-        public static extern mapsetting ConvertMapSetting( int i );
+        public static extern mapsetting ConvertMapSetting(int i);
         [NativeLuaMemberAttribute]
-        public static extern mapdensity ConvertMapDensity( int i );
+        public static extern mapdensity ConvertMapDensity(int i);
         [NativeLuaMemberAttribute]
-        public static extern mapcontrol ConvertMapControl( int i );
+        public static extern mapcontrol ConvertMapControl(int i);
         [NativeLuaMemberAttribute]
-        public static extern playercolor ConvertPlayerColor( int i );
+        public static extern playercolor ConvertPlayerColor(int i);
         [NativeLuaMemberAttribute]
-        public static extern playerslotstate ConvertPlayerSlotState( int i );
+        public static extern playerslotstate ConvertPlayerSlotState(int i);
         [NativeLuaMemberAttribute]
-        public static extern volumegroup ConvertVolumeGroup( int i );
+        public static extern volumegroup ConvertVolumeGroup(int i);
         [NativeLuaMemberAttribute]
-        public static extern camerafield ConvertCameraField( int i );
+        public static extern camerafield ConvertCameraField(int i);
         [NativeLuaMemberAttribute]
-        public static extern blendmode ConvertBlendMode( int i );
+        public static extern blendmode ConvertBlendMode(int i);
         [NativeLuaMemberAttribute]
-        public static extern raritycontrol ConvertRarityControl( int i );
+        public static extern raritycontrol ConvertRarityControl(int i);
         [NativeLuaMemberAttribute]
-        public static extern texmapflags ConvertTexMapFlags( int i );
+        public static extern texmapflags ConvertTexMapFlags(int i);
         [NativeLuaMemberAttribute]
-        public static extern fogstate ConvertFogState( int i );
+        public static extern fogstate ConvertFogState(int i);
         [NativeLuaMemberAttribute]
-        public static extern effecttype ConvertEffectType( int i );
+        public static extern effecttype ConvertEffectType(int i);
         [NativeLuaMemberAttribute]
-        public static extern version ConvertVersion( int i );
+        public static extern version ConvertVersion(int i);
         [NativeLuaMemberAttribute]
-        public static extern itemtype ConvertItemType( int i );
+        public static extern itemtype ConvertItemType(int i);
         [NativeLuaMemberAttribute]
-        public static extern attacktype ConvertAttackType( int i );
+        public static extern attacktype ConvertAttackType(int i);
         [NativeLuaMemberAttribute]
-        public static extern damagetype ConvertDamageType( int i );
+        public static extern damagetype ConvertDamageType(int i);
         [NativeLuaMemberAttribute]
-        public static extern weapontype ConvertWeaponType( int i );
+        public static extern weapontype ConvertWeaponType(int i);
         [NativeLuaMemberAttribute]
-        public static extern soundtype ConvertSoundType( int i );
+        public static extern soundtype ConvertSoundType(int i);
         [NativeLuaMemberAttribute]
-        public static extern pathingtype ConvertPathingType( int i );
+        public static extern pathingtype ConvertPathingType(int i);
         [NativeLuaMemberAttribute]
-        public static extern mousebuttontype ConvertMouseButtonType( int i );
+        public static extern mousebuttontype ConvertMouseButtonType(int i);
         [NativeLuaMemberAttribute]
-        public static extern animtype ConvertAnimType( int i );
+        public static extern animtype ConvertAnimType(int i);
         [NativeLuaMemberAttribute]
-        public static extern subanimtype ConvertSubAnimType( int i );
+        public static extern subanimtype ConvertSubAnimType(int i);
         [NativeLuaMemberAttribute]
-        public static extern originframetype ConvertOriginFrameType( int i );
+        public static extern originframetype ConvertOriginFrameType(int i);
         [NativeLuaMemberAttribute]
-        public static extern framepointtype ConvertFramePointType( int i );
+        public static extern framepointtype ConvertFramePointType(int i);
         [NativeLuaMemberAttribute]
-        public static extern textaligntype ConvertTextAlignType( int i );
+        public static extern textaligntype ConvertTextAlignType(int i);
         [NativeLuaMemberAttribute]
-        public static extern frameeventtype ConvertFrameEventType( int i );
+        public static extern frameeventtype ConvertFrameEventType(int i);
         [NativeLuaMemberAttribute]
-        public static extern oskeytype ConvertOsKeyType( int i );
+        public static extern oskeytype ConvertOsKeyType(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityintegerfield ConvertAbilityIntegerField( int i );
+        public static extern abilityintegerfield ConvertAbilityIntegerField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityrealfield ConvertAbilityRealField( int i );
+        public static extern abilityrealfield ConvertAbilityRealField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitybooleanfield ConvertAbilityBooleanField( int i );
+        public static extern abilitybooleanfield ConvertAbilityBooleanField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitystringfield ConvertAbilityStringField( int i );
+        public static extern abilitystringfield ConvertAbilityStringField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityintegerlevelfield ConvertAbilityIntegerLevelField( int i );
+        public static extern abilityintegerlevelfield ConvertAbilityIntegerLevelField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityreallevelfield ConvertAbilityRealLevelField( int i );
+        public static extern abilityreallevelfield ConvertAbilityRealLevelField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitybooleanlevelfield ConvertAbilityBooleanLevelField( int i );
+        public static extern abilitybooleanlevelfield ConvertAbilityBooleanLevelField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitystringlevelfield ConvertAbilityStringLevelField( int i );
+        public static extern abilitystringlevelfield ConvertAbilityStringLevelField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityintegerlevelarrayfield ConvertAbilityIntegerLevelArrayField( int i );
+        public static extern abilityintegerlevelarrayfield ConvertAbilityIntegerLevelArrayField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilityreallevelarrayfield ConvertAbilityRealLevelArrayField( int i );
+        public static extern abilityreallevelarrayfield ConvertAbilityRealLevelArrayField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitybooleanlevelarrayfield ConvertAbilityBooleanLevelArrayField( int i );
+        public static extern abilitybooleanlevelarrayfield ConvertAbilityBooleanLevelArrayField(int i);
         [NativeLuaMemberAttribute]
-        public static extern abilitystringlevelarrayfield ConvertAbilityStringLevelArrayField( int i );
+        public static extern abilitystringlevelarrayfield ConvertAbilityStringLevelArrayField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitintegerfield ConvertUnitIntegerField( int i );
+        public static extern unitintegerfield ConvertUnitIntegerField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitrealfield ConvertUnitRealField( int i );
+        public static extern unitrealfield ConvertUnitRealField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitbooleanfield ConvertUnitBooleanField( int i );
+        public static extern unitbooleanfield ConvertUnitBooleanField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitstringfield ConvertUnitStringField( int i );
+        public static extern unitstringfield ConvertUnitStringField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitweaponintegerfield ConvertUnitWeaponIntegerField( int i );
+        public static extern unitweaponintegerfield ConvertUnitWeaponIntegerField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitweaponrealfield ConvertUnitWeaponRealField( int i );
+        public static extern unitweaponrealfield ConvertUnitWeaponRealField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitweaponbooleanfield ConvertUnitWeaponBooleanField( int i );
+        public static extern unitweaponbooleanfield ConvertUnitWeaponBooleanField(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitweaponstringfield ConvertUnitWeaponStringField( int i );
+        public static extern unitweaponstringfield ConvertUnitWeaponStringField(int i);
         [NativeLuaMemberAttribute]
-        public static extern itemintegerfield ConvertItemIntegerField( int i );
+        public static extern itemintegerfield ConvertItemIntegerField(int i);
         [NativeLuaMemberAttribute]
-        public static extern itemrealfield ConvertItemRealField( int i );
+        public static extern itemrealfield ConvertItemRealField(int i);
         [NativeLuaMemberAttribute]
-        public static extern itembooleanfield ConvertItemBooleanField( int i );
+        public static extern itembooleanfield ConvertItemBooleanField(int i);
         [NativeLuaMemberAttribute]
-        public static extern itemstringfield ConvertItemStringField( int i );
+        public static extern itemstringfield ConvertItemStringField(int i);
         [NativeLuaMemberAttribute]
-        public static extern movetype ConvertMoveType( int i );
+        public static extern movetype ConvertMoveType(int i);
         [NativeLuaMemberAttribute]
-        public static extern targetflag ConvertTargetFlag( int i );
+        public static extern targetflag ConvertTargetFlag(int i);
         [NativeLuaMemberAttribute]
-        public static extern armortype ConvertArmorType( int i );
+        public static extern armortype ConvertArmorType(int i);
         [NativeLuaMemberAttribute]
-        public static extern heroattribute ConvertHeroAttribute( int i );
+        public static extern heroattribute ConvertHeroAttribute(int i);
         [NativeLuaMemberAttribute]
-        public static extern defensetype ConvertDefenseType( int i );
+        public static extern defensetype ConvertDefenseType(int i);
         [NativeLuaMemberAttribute]
-        public static extern regentype ConvertRegenType( int i );
+        public static extern regentype ConvertRegenType(int i);
         [NativeLuaMemberAttribute]
-        public static extern unitcategory ConvertUnitCategory( int i );
+        public static extern unitcategory ConvertUnitCategory(int i);
         [NativeLuaMemberAttribute]
-        public static extern pathingflag ConvertPathingFlag( int i );
+        public static extern pathingflag ConvertPathingFlag(int i);
         [NativeLuaMemberAttribute]
-        public static extern int OrderId( string orderIdString );
+        public static extern int OrderId(string orderIdString);
         [NativeLuaMemberAttribute]
-        public static extern string OrderId2String( int orderId );
+        public static extern string OrderId2String(int orderId);
         [NativeLuaMemberAttribute]
-        public static extern int UnitId( string unitIdString );
+        public static extern int UnitId(string unitIdString);
         [NativeLuaMemberAttribute]
-        public static extern string UnitId2String( int unitId );
+        public static extern string UnitId2String(int unitId);
         [NativeLuaMemberAttribute]
-        public static extern int AbilityId( string abilityIdString );
+        public static extern int AbilityId(string abilityIdString);
         [NativeLuaMemberAttribute]
-        public static extern string AbilityId2String( int abilityId );
+        public static extern string AbilityId2String(int abilityId);
         [NativeLuaMemberAttribute]
-        public static extern string GetObjectName( int objectId );
+        public static extern string GetObjectName(int objectId);
         [NativeLuaMemberAttribute]
         public static extern int GetBJMaxPlayers();
         [NativeLuaMemberAttribute]
@@ -4615,99 +4615,99 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static readonly pathingflag PATHING_FLAG_UNITEMPLACABLE = ConvertPathingFlag(256);
         [NativeLuaMemberAttribute]
-        public static extern float Deg2Rad( float degrees );
+        public static extern float Deg2Rad(float degrees);
         [NativeLuaMemberAttribute]
-        public static extern float Rad2Deg( float radians );
+        public static extern float Rad2Deg(float radians);
         [NativeLuaMemberAttribute]
-        public static extern float Sin( float radians );
+        public static extern float Sin(float radians);
         [NativeLuaMemberAttribute]
-        public static extern float Cos( float radians );
+        public static extern float Cos(float radians);
         [NativeLuaMemberAttribute]
-        public static extern float Tan( float radians );
+        public static extern float Tan(float radians);
         [NativeLuaMemberAttribute]
-        public static extern float Asin( float y );
+        public static extern float Asin(float y);
         [NativeLuaMemberAttribute]
-        public static extern float Acos( float x );
+        public static extern float Acos(float x);
         [NativeLuaMemberAttribute]
-        public static extern float Atan( float x );
+        public static extern float Atan(float x);
         [NativeLuaMemberAttribute]
-        public static extern float Atan2( float y, float x );
+        public static extern float Atan2(float y, float x);
         [NativeLuaMemberAttribute]
-        public static extern float SquareRoot( float x );
+        public static extern float SquareRoot(float x);
         [NativeLuaMemberAttribute]
-        public static extern float Pow( float x, float power );
+        public static extern float Pow(float x, float power);
         [NativeLuaMemberAttribute]
-        public static extern float I2R( int i );
+        public static extern float I2R(int i);
         [NativeLuaMemberAttribute]
-        public static extern int R2I( float r );
+        public static extern int R2I(float r);
         [NativeLuaMemberAttribute]
-        public static extern string I2S( int i );
+        public static extern string I2S(int i);
         [NativeLuaMemberAttribute]
-        public static extern string R2S( float r );
+        public static extern string R2S(float r);
         [NativeLuaMemberAttribute]
-        public static extern string R2SW( float r, int width, int precision );
+        public static extern string R2SW(float r, int width, int precision);
         [NativeLuaMemberAttribute]
-        public static extern int S2I( string s );
+        public static extern int S2I(string s);
         [NativeLuaMemberAttribute]
-        public static extern float S2R( string s );
+        public static extern float S2R(string s);
         [NativeLuaMemberAttribute]
-        public static extern int GetHandleId( object h );
+        public static extern int GetHandleId(object h);
         [NativeLuaMemberAttribute]
-        public static extern string SubString( string source, int start, int end );
+        public static extern string SubString(string source, int start, int end);
         [NativeLuaMemberAttribute]
-        public static extern int StringLength( string s );
+        public static extern int StringLength(string s);
         [NativeLuaMemberAttribute]
-        public static extern string StringCase( string source, bool upper );
+        public static extern string StringCase(string source, bool upper);
         [NativeLuaMemberAttribute]
-        public static extern int StringHash( string s );
+        public static extern int StringHash(string s);
         [NativeLuaMemberAttribute]
-        public static extern string GetLocalizedString( string source );
+        public static extern string GetLocalizedString(string source);
         [NativeLuaMemberAttribute]
-        public static extern int GetLocalizedHotkey( string source );
+        public static extern int GetLocalizedHotkey(string source);
         [NativeLuaMemberAttribute]
-        public static extern void SetMapName( string name );
+        public static extern void SetMapName(string name);
         [NativeLuaMemberAttribute]
-        public static extern void SetMapDescription( string description );
+        public static extern void SetMapDescription(string description);
         [NativeLuaMemberAttribute]
-        public static extern void SetTeams( int teamcount );
+        public static extern void SetTeams(int teamcount);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayers( int playercount );
+        public static extern void SetPlayers(int playercount);
         [NativeLuaMemberAttribute]
-        public static extern void DefineStartLocation( int whichStartLoc, float x, float y );
+        public static extern void DefineStartLocation(int whichStartLoc, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void DefineStartLocationLoc( int whichStartLoc, location whichLocation );
+        public static extern void DefineStartLocationLoc(int whichStartLoc, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern void SetStartLocPrioCount( int whichStartLoc, int prioSlotCount );
+        public static extern void SetStartLocPrioCount(int whichStartLoc, int prioSlotCount);
         [NativeLuaMemberAttribute]
-        public static extern void SetStartLocPrio( int whichStartLoc, int prioSlotIndex, int otherStartLocIndex, startlocprio priority );
+        public static extern void SetStartLocPrio(int whichStartLoc, int prioSlotIndex, int otherStartLocIndex, startlocprio priority);
         [NativeLuaMemberAttribute]
-        public static extern int GetStartLocPrioSlot( int whichStartLoc, int prioSlotIndex );
+        public static extern int GetStartLocPrioSlot(int whichStartLoc, int prioSlotIndex);
         [NativeLuaMemberAttribute]
-        public static extern startlocprio GetStartLocPrio( int whichStartLoc, int prioSlotIndex );
+        public static extern startlocprio GetStartLocPrio(int whichStartLoc, int prioSlotIndex);
         [NativeLuaMemberAttribute]
-        public static extern void SetGameTypeSupported( gametype whichGameType, bool value );
+        public static extern void SetGameTypeSupported(gametype whichGameType, bool value);
         [NativeLuaMemberAttribute]
-        public static extern void SetMapFlag( mapflag whichMapFlag, bool value );
+        public static extern void SetMapFlag(mapflag whichMapFlag, bool value);
         [NativeLuaMemberAttribute]
-        public static extern void SetGamePlacement( placement whichPlacementType );
+        public static extern void SetGamePlacement(placement whichPlacementType);
         [NativeLuaMemberAttribute]
-        public static extern void SetGameSpeed( gamespeed whichspeed );
+        public static extern void SetGameSpeed(gamespeed whichspeed);
         [NativeLuaMemberAttribute]
-        public static extern void SetGameDifficulty( gamedifficulty whichdifficulty );
+        public static extern void SetGameDifficulty(gamedifficulty whichdifficulty);
         [NativeLuaMemberAttribute]
-        public static extern void SetResourceDensity( mapdensity whichdensity );
+        public static extern void SetResourceDensity(mapdensity whichdensity);
         [NativeLuaMemberAttribute]
-        public static extern void SetCreatureDensity( mapdensity whichdensity );
+        public static extern void SetCreatureDensity(mapdensity whichdensity);
         [NativeLuaMemberAttribute]
         public static extern int GetTeams();
         [NativeLuaMemberAttribute]
         public static extern int GetPlayers();
         [NativeLuaMemberAttribute]
-        public static extern bool IsGameTypeSupported( gametype whichGameType );
+        public static extern bool IsGameTypeSupported(gametype whichGameType);
         [NativeLuaMemberAttribute]
         public static extern gametype GetGameTypeSelected();
         [NativeLuaMemberAttribute]
-        public static extern bool IsMapFlagSet( mapflag whichMapFlag );
+        public static extern bool IsMapFlagSet(mapflag whichMapFlag);
         [NativeLuaMemberAttribute]
         public static extern placement GetGamePlacement();
         [NativeLuaMemberAttribute]
@@ -4719,227 +4719,227 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern mapdensity GetCreatureDensity();
         [NativeLuaMemberAttribute]
-        public static extern float GetStartLocationX( int whichStartLocation );
+        public static extern float GetStartLocationX(int whichStartLocation);
         [NativeLuaMemberAttribute]
-        public static extern float GetStartLocationY( int whichStartLocation );
+        public static extern float GetStartLocationY(int whichStartLocation);
         [NativeLuaMemberAttribute]
-        public static extern location GetStartLocationLoc( int whichStartLocation );
+        public static extern location GetStartLocationLoc(int whichStartLocation);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerTeam( player whichPlayer, int whichTeam );
+        public static extern void SetPlayerTeam(player whichPlayer, int whichTeam);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerStartLocation( player whichPlayer, int startLocIndex );
+        public static extern void SetPlayerStartLocation(player whichPlayer, int startLocIndex);
         [NativeLuaMemberAttribute]
-        public static extern void ForcePlayerStartLocation( player whichPlayer, int startLocIndex );
+        public static extern void ForcePlayerStartLocation(player whichPlayer, int startLocIndex);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerColor( player whichPlayer, playercolor color );
+        public static extern void SetPlayerColor(player whichPlayer, playercolor color);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerAlliance( player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting, bool value );
+        public static extern void SetPlayerAlliance(player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting, bool value);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerTaxRate( player sourcePlayer, player otherPlayer, playerstate whichResource, int rate );
+        public static extern void SetPlayerTaxRate(player sourcePlayer, player otherPlayer, playerstate whichResource, int rate);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerRacePreference( player whichPlayer, racepreference whichRacePreference );
+        public static extern void SetPlayerRacePreference(player whichPlayer, racepreference whichRacePreference);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerRaceSelectable( player whichPlayer, bool value );
+        public static extern void SetPlayerRaceSelectable(player whichPlayer, bool value);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerController( player whichPlayer, mapcontrol controlType );
+        public static extern void SetPlayerController(player whichPlayer, mapcontrol controlType);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerName( player whichPlayer, string name );
+        public static extern void SetPlayerName(player whichPlayer, string name);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerOnScoreScreen( player whichPlayer, bool flag );
+        public static extern void SetPlayerOnScoreScreen(player whichPlayer, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerTeam( player whichPlayer );
+        public static extern int GetPlayerTeam(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerStartLocation( player whichPlayer );
+        public static extern int GetPlayerStartLocation(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern playercolor GetPlayerColor( player whichPlayer );
+        public static extern playercolor GetPlayerColor(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool GetPlayerSelectable( player whichPlayer );
+        public static extern bool GetPlayerSelectable(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern mapcontrol GetPlayerController( player whichPlayer );
+        public static extern mapcontrol GetPlayerController(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern playerslotstate GetPlayerSlotState( player whichPlayer );
+        public static extern playerslotstate GetPlayerSlotState(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerTaxRate( player sourcePlayer, player otherPlayer, playerstate whichResource );
+        public static extern int GetPlayerTaxRate(player sourcePlayer, player otherPlayer, playerstate whichResource);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPlayerRacePrefSet( player whichPlayer, racepreference pref );
+        public static extern bool IsPlayerRacePrefSet(player whichPlayer, racepreference pref);
         [NativeLuaMemberAttribute]
-        public static extern string GetPlayerName( player whichPlayer );
+        public static extern string GetPlayerName(player whichPlayer);
         [NativeLuaMemberAttribute]
         public static extern timer CreateTimer();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyTimer( timer whichTimer );
+        public static extern void DestroyTimer(timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern void TimerStart( timer whichTimer, float timeout, bool periodic, System.Action handlerFunc );
+        public static extern void TimerStart(timer whichTimer, float timeout, bool periodic, System.Action handlerFunc);
         [NativeLuaMemberAttribute]
-        public static extern float TimerGetElapsed( timer whichTimer );
+        public static extern float TimerGetElapsed(timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern float TimerGetRemaining( timer whichTimer );
+        public static extern float TimerGetRemaining(timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern float TimerGetTimeout( timer whichTimer );
+        public static extern float TimerGetTimeout(timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern void PauseTimer( timer whichTimer );
+        public static extern void PauseTimer(timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern void ResumeTimer( timer whichTimer );
+        public static extern void ResumeTimer(timer whichTimer);
         [NativeLuaMemberAttribute]
         public static extern timer GetExpiredTimer();
         [NativeLuaMemberAttribute]
         public static extern group CreateGroup();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyGroup( group whichGroup );
+        public static extern void DestroyGroup(group whichGroup);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupAddUnit( group whichGroup, unit whichUnit );
+        public static extern bool GroupAddUnit(group whichGroup, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupRemoveUnit( group whichGroup, unit whichUnit );
+        public static extern bool GroupRemoveUnit(group whichGroup, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGroupAddGroupFast( group whichGroup, group addGroup );
+        public static extern int BlzGroupAddGroupFast(group whichGroup, group addGroup);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGroupRemoveGroupFast( group whichGroup, group removeGroup );
+        public static extern int BlzGroupRemoveGroupFast(group whichGroup, group removeGroup);
         [NativeLuaMemberAttribute]
-        public static extern void GroupClear( group whichGroup );
+        public static extern void GroupClear(group whichGroup);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGroupGetSize( group whichGroup );
+        public static extern int BlzGroupGetSize(group whichGroup);
         [NativeLuaMemberAttribute]
-        public static extern unit BlzGroupUnitAt( group whichGroup, int index );
+        public static extern unit BlzGroupUnitAt(group whichGroup, int index);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsOfType( group whichGroup, string unitname, boolexpr filter );
+        public static extern void GroupEnumUnitsOfType(group whichGroup, string unitname, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsOfPlayer( group whichGroup, player whichPlayer, boolexpr filter );
+        public static extern void GroupEnumUnitsOfPlayer(group whichGroup, player whichPlayer, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsOfTypeCounted( group whichGroup, string unitname, boolexpr filter, int countLimit );
+        public static extern void GroupEnumUnitsOfTypeCounted(group whichGroup, string unitname, boolexpr filter, int countLimit);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRect( group whichGroup, rect r, boolexpr filter );
+        public static extern void GroupEnumUnitsInRect(group whichGroup, rect r, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRectCounted( group whichGroup, rect r, boolexpr filter, int countLimit );
+        public static extern void GroupEnumUnitsInRectCounted(group whichGroup, rect r, boolexpr filter, int countLimit);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRange( group whichGroup, float x, float y, float radius, boolexpr filter );
+        public static extern void GroupEnumUnitsInRange(group whichGroup, float x, float y, float radius, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRangeOfLoc( group whichGroup, location whichLocation, float radius, boolexpr filter );
+        public static extern void GroupEnumUnitsInRangeOfLoc(group whichGroup, location whichLocation, float radius, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRangeCounted( group whichGroup, float x, float y, float radius, boolexpr filter, int countLimit );
+        public static extern void GroupEnumUnitsInRangeCounted(group whichGroup, float x, float y, float radius, boolexpr filter, int countLimit);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsInRangeOfLocCounted( group whichGroup, location whichLocation, float radius, boolexpr filter, int countLimit );
+        public static extern void GroupEnumUnitsInRangeOfLocCounted(group whichGroup, location whichLocation, float radius, boolexpr filter, int countLimit);
         [NativeLuaMemberAttribute]
-        public static extern void GroupEnumUnitsSelected( group whichGroup, player whichPlayer, boolexpr filter );
+        public static extern void GroupEnumUnitsSelected(group whichGroup, player whichPlayer, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupImmediateOrder( group whichGroup, string order );
+        public static extern bool GroupImmediateOrder(group whichGroup, string order);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupImmediateOrderById( group whichGroup, int order );
+        public static extern bool GroupImmediateOrderById(group whichGroup, int order);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupPointOrder( group whichGroup, string order, float x, float y );
+        public static extern bool GroupPointOrder(group whichGroup, string order, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupPointOrderLoc( group whichGroup, string order, location whichLocation );
+        public static extern bool GroupPointOrderLoc(group whichGroup, string order, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupPointOrderById( group whichGroup, int order, float x, float y );
+        public static extern bool GroupPointOrderById(group whichGroup, int order, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupPointOrderByIdLoc( group whichGroup, int order, location whichLocation );
+        public static extern bool GroupPointOrderByIdLoc(group whichGroup, int order, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupTargetOrder( group whichGroup, string order, widget targetWidget );
+        public static extern bool GroupTargetOrder(group whichGroup, string order, widget targetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool GroupTargetOrderById( group whichGroup, int order, widget targetWidget );
+        public static extern bool GroupTargetOrderById(group whichGroup, int order, widget targetWidget);
         [NativeLuaMemberAttribute]
-        public static extern void ForGroup( group whichGroup, System.Action callback );
+        public static extern void ForGroup(group whichGroup, System.Action callback);
         [NativeLuaMemberAttribute]
-        public static extern unit FirstOfGroup( group whichGroup );
+        public static extern unit FirstOfGroup(group whichGroup);
         [NativeLuaMemberAttribute]
         public static extern force CreateForce();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyForce( force whichForce );
+        public static extern void DestroyForce(force whichForce);
         [NativeLuaMemberAttribute]
-        public static extern void ForceAddPlayer( force whichForce, player whichPlayer );
+        public static extern void ForceAddPlayer(force whichForce, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void ForceRemovePlayer( force whichForce, player whichPlayer );
+        public static extern void ForceRemovePlayer(force whichForce, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzForceHasPlayer( force whichForce, player whichPlayer );
+        public static extern bool BlzForceHasPlayer(force whichForce, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void ForceClear( force whichForce );
+        public static extern void ForceClear(force whichForce);
         [NativeLuaMemberAttribute]
-        public static extern void ForceEnumPlayers( force whichForce, boolexpr filter );
+        public static extern void ForceEnumPlayers(force whichForce, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void ForceEnumPlayersCounted( force whichForce, boolexpr filter, int countLimit );
+        public static extern void ForceEnumPlayersCounted(force whichForce, boolexpr filter, int countLimit);
         [NativeLuaMemberAttribute]
-        public static extern void ForceEnumAllies( force whichForce, player whichPlayer, boolexpr filter );
+        public static extern void ForceEnumAllies(force whichForce, player whichPlayer, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void ForceEnumEnemies( force whichForce, player whichPlayer, boolexpr filter );
+        public static extern void ForceEnumEnemies(force whichForce, player whichPlayer, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern void ForForce( force whichForce, System.Action callback );
+        public static extern void ForForce(force whichForce, System.Action callback);
         [NativeLuaMemberAttribute]
-        public static extern rect Rect( float minx, float miny, float maxx, float maxy );
+        public static extern rect Rect(float minx, float miny, float maxx, float maxy);
         [NativeLuaMemberAttribute]
-        public static extern rect RectFromLoc( location min, location max );
+        public static extern rect RectFromLoc(location min, location max);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveRect( rect whichRect );
+        public static extern void RemoveRect(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern void SetRect( rect whichRect, float minx, float miny, float maxx, float maxy );
+        public static extern void SetRect(rect whichRect, float minx, float miny, float maxx, float maxy);
         [NativeLuaMemberAttribute]
-        public static extern void SetRectFromLoc( rect whichRect, location min, location max );
+        public static extern void SetRectFromLoc(rect whichRect, location min, location max);
         [NativeLuaMemberAttribute]
-        public static extern void MoveRectTo( rect whichRect, float newCenterX, float newCenterY );
+        public static extern void MoveRectTo(rect whichRect, float newCenterX, float newCenterY);
         [NativeLuaMemberAttribute]
-        public static extern void MoveRectToLoc( rect whichRect, location newCenterLoc );
+        public static extern void MoveRectToLoc(rect whichRect, location newCenterLoc);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectCenterX( rect whichRect );
+        public static extern float GetRectCenterX(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectCenterY( rect whichRect );
+        public static extern float GetRectCenterY(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectMinX( rect whichRect );
+        public static extern float GetRectMinX(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectMinY( rect whichRect );
+        public static extern float GetRectMinY(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectMaxX( rect whichRect );
+        public static extern float GetRectMaxX(rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern float GetRectMaxY( rect whichRect );
+        public static extern float GetRectMaxY(rect whichRect);
         [NativeLuaMemberAttribute]
         public static extern region CreateRegion();
         [NativeLuaMemberAttribute]
-        public static extern void RemoveRegion( region whichRegion );
+        public static extern void RemoveRegion(region whichRegion);
         [NativeLuaMemberAttribute]
-        public static extern void RegionAddRect( region whichRegion, rect r );
+        public static extern void RegionAddRect(region whichRegion, rect r);
         [NativeLuaMemberAttribute]
-        public static extern void RegionClearRect( region whichRegion, rect r );
+        public static extern void RegionClearRect(region whichRegion, rect r);
         [NativeLuaMemberAttribute]
-        public static extern void RegionAddCell( region whichRegion, float x, float y );
+        public static extern void RegionAddCell(region whichRegion, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void RegionAddCellAtLoc( region whichRegion, location whichLocation );
+        public static extern void RegionAddCellAtLoc(region whichRegion, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern void RegionClearCell( region whichRegion, float x, float y );
+        public static extern void RegionClearCell(region whichRegion, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void RegionClearCellAtLoc( region whichRegion, location whichLocation );
+        public static extern void RegionClearCellAtLoc(region whichRegion, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern location Location( float x, float y );
+        public static extern location Location(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveLocation( location whichLocation );
+        public static extern void RemoveLocation(location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern void MoveLocation( location whichLocation, float newX, float newY );
+        public static extern void MoveLocation(location whichLocation, float newX, float newY);
         [NativeLuaMemberAttribute]
-        public static extern float GetLocationX( location whichLocation );
+        public static extern float GetLocationX(location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern float GetLocationY( location whichLocation );
+        public static extern float GetLocationY(location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern float GetLocationZ( location whichLocation );
+        public static extern float GetLocationZ(location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInRegion( region whichRegion, unit whichUnit );
+        public static extern bool IsUnitInRegion(region whichRegion, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPointInRegion( region whichRegion, float x, float y );
+        public static extern bool IsPointInRegion(region whichRegion, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IsLocationInRegion( region whichRegion, location whichLocation );
+        public static extern bool IsLocationInRegion(region whichRegion, location whichLocation);
         [NativeLuaMemberAttribute]
         public static extern rect GetWorldBounds();
         [NativeLuaMemberAttribute]
         public static extern trigger CreateTrigger();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyTrigger( trigger whichTrigger );
+        public static extern void DestroyTrigger(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void ResetTrigger( trigger whichTrigger );
+        public static extern void ResetTrigger(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void EnableTrigger( trigger whichTrigger );
+        public static extern void EnableTrigger(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void DisableTrigger( trigger whichTrigger );
+        public static extern void DisableTrigger(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern bool IsTriggerEnabled( trigger whichTrigger );
+        public static extern bool IsTriggerEnabled(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerWaitOnSleeps( trigger whichTrigger, bool flag );
+        public static extern void TriggerWaitOnSleeps(trigger whichTrigger, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool IsTriggerWaitOnSleeps( trigger whichTrigger );
+        public static extern bool IsTriggerWaitOnSleeps(trigger whichTrigger);
         [NativeLuaMemberAttribute]
         public static extern unit GetFilterUnit();
         [NativeLuaMemberAttribute]
@@ -4961,59 +4961,59 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern eventid GetTriggerEventId();
         [NativeLuaMemberAttribute]
-        public static extern int GetTriggerEvalCount( trigger whichTrigger );
+        public static extern int GetTriggerEvalCount(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern int GetTriggerExecCount( trigger whichTrigger );
+        public static extern int GetTriggerExecCount(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void ExecuteFunc( string funcName );
+        public static extern void ExecuteFunc(string funcName);
         [NativeLuaMemberAttribute]
-        public static extern boolexpr And( boolexpr operandA, boolexpr operandB );
+        public static extern boolexpr And(boolexpr operandA, boolexpr operandB);
         [NativeLuaMemberAttribute]
-        public static extern boolexpr Or( boolexpr operandA, boolexpr operandB );
+        public static extern boolexpr Or(boolexpr operandA, boolexpr operandB);
         [NativeLuaMemberAttribute]
-        public static extern boolexpr Not( boolexpr operand );
+        public static extern boolexpr Not(boolexpr operand);
         [NativeLuaMemberAttribute]
-        public static extern conditionfunc Condition( System.Func<bool> func );
+        public static extern conditionfunc Condition(System.Func<bool> func);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyCondition( conditionfunc c );
+        public static extern void DestroyCondition(conditionfunc c);
         [NativeLuaMemberAttribute]
-        public static extern filterfunc Filter( System.Func<bool> func );
+        public static extern filterfunc Filter(System.Func<bool> func);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyFilter( filterfunc f );
+        public static extern void DestroyFilter(filterfunc f);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyBoolExpr( boolexpr e );
+        public static extern void DestroyBoolExpr(boolexpr e);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterVariableEvent( trigger whichTrigger, string varName, limitop opcode, float limitval );
+        public static extern @event TriggerRegisterVariableEvent(trigger whichTrigger, string varName, limitop opcode, float limitval);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterTimerEvent( trigger whichTrigger, float timeout, bool periodic );
+        public static extern @event TriggerRegisterTimerEvent(trigger whichTrigger, float timeout, bool periodic);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterTimerExpireEvent( trigger whichTrigger, timer t );
+        public static extern @event TriggerRegisterTimerExpireEvent(trigger whichTrigger, timer t);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterGameStateEvent( trigger whichTrigger, gamestate whichState, limitop opcode, float limitval );
+        public static extern @event TriggerRegisterGameStateEvent(trigger whichTrigger, gamestate whichState, limitop opcode, float limitval);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterDialogEvent( trigger whichTrigger, dialog whichDialog );
+        public static extern @event TriggerRegisterDialogEvent(trigger whichTrigger, dialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterDialogButtonEvent( trigger whichTrigger, button whichButton );
+        public static extern @event TriggerRegisterDialogButtonEvent(trigger whichTrigger, button whichButton);
         [NativeLuaMemberAttribute]
         public static extern gamestate GetEventGameState();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterGameEvent( trigger whichTrigger, gameevent whichGameEvent );
+        public static extern @event TriggerRegisterGameEvent(trigger whichTrigger, gameevent whichGameEvent);
         [NativeLuaMemberAttribute]
         public static extern player GetWinningPlayer();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterEnterRegion( trigger whichTrigger, region whichRegion, boolexpr filter );
+        public static extern @event TriggerRegisterEnterRegion(trigger whichTrigger, region whichRegion, boolexpr filter);
         [NativeLuaMemberAttribute]
         public static extern region GetTriggeringRegion();
         [NativeLuaMemberAttribute]
         public static extern unit GetEnteringUnit();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterLeaveRegion( trigger whichTrigger, region whichRegion, boolexpr filter );
+        public static extern @event TriggerRegisterLeaveRegion(trigger whichTrigger, region whichRegion, boolexpr filter);
         [NativeLuaMemberAttribute]
         public static extern unit GetLeavingUnit();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterTrackableHitEvent( trigger whichTrigger, trackable t );
+        public static extern @event TriggerRegisterTrackableHitEvent(trigger whichTrigger, trackable t);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterTrackableTrackEvent( trigger whichTrigger, trackable t );
+        public static extern @event TriggerRegisterTrackableTrackEvent(trigger whichTrigger, trackable t);
         [NativeLuaMemberAttribute]
         public static extern trackable GetTriggeringTrackable();
         [NativeLuaMemberAttribute]
@@ -5027,15 +5027,15 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern player GetTournamentFinishNowPlayer();
         [NativeLuaMemberAttribute]
-        public static extern int GetTournamentScore( player whichPlayer );
+        public static extern int GetTournamentScore(player whichPlayer);
         [NativeLuaMemberAttribute]
         public static extern string GetSaveBasicFilename();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterPlayerEvent( trigger whichTrigger, player whichPlayer, playerevent whichPlayerEvent );
+        public static extern @event TriggerRegisterPlayerEvent(trigger whichTrigger, player whichPlayer, playerevent whichPlayerEvent);
         [NativeLuaMemberAttribute]
         public static extern player GetTriggerPlayer();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterPlayerUnitEvent( trigger whichTrigger, player whichPlayer, playerunitevent whichPlayerUnitEvent, boolexpr filter );
+        public static extern @event TriggerRegisterPlayerUnitEvent(trigger whichTrigger, player whichPlayer, playerunitevent whichPlayerUnitEvent, boolexpr filter);
         [NativeLuaMemberAttribute]
         public static extern unit GetLevelingUnit();
         [NativeLuaMemberAttribute]
@@ -5135,27 +5135,27 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern unit GetSpellTargetUnit();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterPlayerAllianceChange( trigger whichTrigger, player whichPlayer, alliancetype whichAlliance );
+        public static extern @event TriggerRegisterPlayerAllianceChange(trigger whichTrigger, player whichPlayer, alliancetype whichAlliance);
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterPlayerStateEvent( trigger whichTrigger, player whichPlayer, playerstate whichState, limitop opcode, float limitval );
+        public static extern @event TriggerRegisterPlayerStateEvent(trigger whichTrigger, player whichPlayer, playerstate whichState, limitop opcode, float limitval);
         [NativeLuaMemberAttribute]
         public static extern playerstate GetEventPlayerState();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterPlayerChatEvent( trigger whichTrigger, player whichPlayer, string chatMessageToDetect, bool exactMatchOnly );
+        public static extern @event TriggerRegisterPlayerChatEvent(trigger whichTrigger, player whichPlayer, string chatMessageToDetect, bool exactMatchOnly);
         [NativeLuaMemberAttribute]
         public static extern string GetEventPlayerChatString();
         [NativeLuaMemberAttribute]
         public static extern string GetEventPlayerChatStringMatched();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterDeathEvent( trigger whichTrigger, widget whichWidget );
+        public static extern @event TriggerRegisterDeathEvent(trigger whichTrigger, widget whichWidget);
         [NativeLuaMemberAttribute]
         public static extern unit GetTriggerUnit();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterUnitStateEvent( trigger whichTrigger, unit whichUnit, unitstate whichState, limitop opcode, float limitval );
+        public static extern @event TriggerRegisterUnitStateEvent(trigger whichTrigger, unit whichUnit, unitstate whichState, limitop opcode, float limitval);
         [NativeLuaMemberAttribute]
         public static extern unitstate GetEventUnitState();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterUnitEvent( trigger whichTrigger, unit whichUnit, unitevent whichEvent );
+        public static extern @event TriggerRegisterUnitEvent(trigger whichTrigger, unit whichUnit, unitevent whichEvent);
         [NativeLuaMemberAttribute]
         public static extern float GetEventDamage();
         [NativeLuaMemberAttribute]
@@ -5163,1409 +5163,1409 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern player GetEventDetectingPlayer();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterFilterUnitEvent( trigger whichTrigger, unit whichUnit, unitevent whichEvent, boolexpr filter );
+        public static extern @event TriggerRegisterFilterUnitEvent(trigger whichTrigger, unit whichUnit, unitevent whichEvent, boolexpr filter);
         [NativeLuaMemberAttribute]
         public static extern unit GetEventTargetUnit();
         [NativeLuaMemberAttribute]
-        public static extern @event TriggerRegisterUnitInRange( trigger whichTrigger, unit whichUnit, float range, boolexpr filter );
+        public static extern @event TriggerRegisterUnitInRange(trigger whichTrigger, unit whichUnit, float range, boolexpr filter);
         [NativeLuaMemberAttribute]
-        public static extern triggercondition TriggerAddCondition( trigger whichTrigger, boolexpr condition );
+        public static extern triggercondition TriggerAddCondition(trigger whichTrigger, boolexpr condition);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerRemoveCondition( trigger whichTrigger, triggercondition whichCondition );
+        public static extern void TriggerRemoveCondition(trigger whichTrigger, triggercondition whichCondition);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerClearConditions( trigger whichTrigger );
+        public static extern void TriggerClearConditions(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern triggeraction TriggerAddAction( trigger whichTrigger, System.Action actionFunc );
+        public static extern triggeraction TriggerAddAction(trigger whichTrigger, System.Action actionFunc);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerRemoveAction( trigger whichTrigger, triggeraction whichAction );
+        public static extern void TriggerRemoveAction(trigger whichTrigger, triggeraction whichAction);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerClearActions( trigger whichTrigger );
+        public static extern void TriggerClearActions(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerSleepAction( float timeout );
+        public static extern void TriggerSleepAction(float timeout);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerWaitForSound( sound s, float offset );
+        public static extern void TriggerWaitForSound(sound s, float offset);
         [NativeLuaMemberAttribute]
-        public static extern bool TriggerEvaluate( trigger whichTrigger );
+        public static extern bool TriggerEvaluate(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerExecute( trigger whichTrigger );
+        public static extern void TriggerExecute(trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern void TriggerExecuteWait( trigger whichTrigger );
+        public static extern void TriggerExecuteWait(trigger whichTrigger);
         [NativeLuaMemberAttribute]
         public static extern void TriggerSyncStart();
         [NativeLuaMemberAttribute]
         public static extern void TriggerSyncReady();
         [NativeLuaMemberAttribute]
-        public static extern float GetWidgetLife( widget whichWidget );
+        public static extern float GetWidgetLife(widget whichWidget);
         [NativeLuaMemberAttribute]
-        public static extern void SetWidgetLife( widget whichWidget, float newLife );
+        public static extern void SetWidgetLife(widget whichWidget, float newLife);
         [NativeLuaMemberAttribute]
-        public static extern float GetWidgetX( widget whichWidget );
+        public static extern float GetWidgetX(widget whichWidget);
         [NativeLuaMemberAttribute]
-        public static extern float GetWidgetY( widget whichWidget );
+        public static extern float GetWidgetY(widget whichWidget);
         [NativeLuaMemberAttribute]
         public static extern widget GetTriggerWidget();
         [NativeLuaMemberAttribute]
-        public static extern destructable CreateDestructable( int objectid, float x, float y, float face, float scale, int variation );
+        public static extern destructable CreateDestructable(int objectid, float x, float y, float face, float scale, int variation);
         [NativeLuaMemberAttribute]
-        public static extern destructable CreateDestructableZ( int objectid, float x, float y, float z, float face, float scale, int variation );
+        public static extern destructable CreateDestructableZ(int objectid, float x, float y, float z, float face, float scale, int variation);
         [NativeLuaMemberAttribute]
-        public static extern destructable CreateDeadDestructable( int objectid, float x, float y, float face, float scale, int variation );
+        public static extern destructable CreateDeadDestructable(int objectid, float x, float y, float face, float scale, int variation);
         [NativeLuaMemberAttribute]
-        public static extern destructable CreateDeadDestructableZ( int objectid, float x, float y, float z, float face, float scale, int variation );
+        public static extern destructable CreateDeadDestructableZ(int objectid, float x, float y, float z, float face, float scale, int variation);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveDestructable( destructable d );
+        public static extern void RemoveDestructable(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void KillDestructable( destructable d );
+        public static extern void KillDestructable(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableInvulnerable( destructable d, bool flag );
+        public static extern void SetDestructableInvulnerable(destructable d, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool IsDestructableInvulnerable( destructable d );
+        public static extern bool IsDestructableInvulnerable(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void EnumDestructablesInRect( rect r, boolexpr filter, System.Action actionFunc );
+        public static extern void EnumDestructablesInRect(rect r, boolexpr filter, System.Action actionFunc);
         [NativeLuaMemberAttribute]
-        public static extern int GetDestructableTypeId( destructable d );
+        public static extern int GetDestructableTypeId(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern float GetDestructableX( destructable d );
+        public static extern float GetDestructableX(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern float GetDestructableY( destructable d );
+        public static extern float GetDestructableY(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableLife( destructable d, float life );
+        public static extern void SetDestructableLife(destructable d, float life);
         [NativeLuaMemberAttribute]
-        public static extern float GetDestructableLife( destructable d );
+        public static extern float GetDestructableLife(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableMaxLife( destructable d, float max );
+        public static extern void SetDestructableMaxLife(destructable d, float max);
         [NativeLuaMemberAttribute]
-        public static extern float GetDestructableMaxLife( destructable d );
+        public static extern float GetDestructableMaxLife(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void DestructableRestoreLife( destructable d, float life, bool birth );
+        public static extern void DestructableRestoreLife(destructable d, float life, bool birth);
         [NativeLuaMemberAttribute]
-        public static extern void QueueDestructableAnimation( destructable d, string whichAnimation );
+        public static extern void QueueDestructableAnimation(destructable d, string whichAnimation);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableAnimation( destructable d, string whichAnimation );
+        public static extern void SetDestructableAnimation(destructable d, string whichAnimation);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableAnimationSpeed( destructable d, float speedFactor );
+        public static extern void SetDestructableAnimationSpeed(destructable d, float speedFactor);
         [NativeLuaMemberAttribute]
-        public static extern void ShowDestructable( destructable d, bool flag );
+        public static extern void ShowDestructable(destructable d, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern float GetDestructableOccluderHeight( destructable d );
+        public static extern float GetDestructableOccluderHeight(destructable d);
         [NativeLuaMemberAttribute]
-        public static extern void SetDestructableOccluderHeight( destructable d, float height );
+        public static extern void SetDestructableOccluderHeight(destructable d, float height);
         [NativeLuaMemberAttribute]
-        public static extern string GetDestructableName( destructable d );
+        public static extern string GetDestructableName(destructable d);
         [NativeLuaMemberAttribute]
         public static extern destructable GetTriggerDestructable();
         [NativeLuaMemberAttribute]
-        public static extern item CreateItem( int itemid, float x, float y );
+        public static extern item CreateItem(int itemid, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveItem( item whichItem );
+        public static extern void RemoveItem(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern player GetItemPlayer( item whichItem );
+        public static extern player GetItemPlayer(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern int GetItemTypeId( item i );
+        public static extern int GetItemTypeId(item i);
         [NativeLuaMemberAttribute]
-        public static extern float GetItemX( item i );
+        public static extern float GetItemX(item i);
         [NativeLuaMemberAttribute]
-        public static extern float GetItemY( item i );
+        public static extern float GetItemY(item i);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemPosition( item i, float x, float y );
+        public static extern void SetItemPosition(item i, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemDropOnDeath( item whichItem, bool flag );
+        public static extern void SetItemDropOnDeath(item whichItem, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemDroppable( item i, bool flag );
+        public static extern void SetItemDroppable(item i, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemPawnable( item i, bool flag );
+        public static extern void SetItemPawnable(item i, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemPlayer( item whichItem, player whichPlayer, bool changeColor );
+        public static extern void SetItemPlayer(item whichItem, player whichPlayer, bool changeColor);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemInvulnerable( item whichItem, bool flag );
+        public static extern void SetItemInvulnerable(item whichItem, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemInvulnerable( item whichItem );
+        public static extern bool IsItemInvulnerable(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemVisible( item whichItem, bool show );
+        public static extern void SetItemVisible(item whichItem, bool show);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemVisible( item whichItem );
+        public static extern bool IsItemVisible(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemOwned( item whichItem );
+        public static extern bool IsItemOwned(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemPowerup( item whichItem );
+        public static extern bool IsItemPowerup(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemSellable( item whichItem );
+        public static extern bool IsItemSellable(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemPawnable( item whichItem );
+        public static extern bool IsItemPawnable(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemIdPowerup( int itemId );
+        public static extern bool IsItemIdPowerup(int itemId);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemIdSellable( int itemId );
+        public static extern bool IsItemIdSellable(int itemId);
         [NativeLuaMemberAttribute]
-        public static extern bool IsItemIdPawnable( int itemId );
+        public static extern bool IsItemIdPawnable(int itemId);
         [NativeLuaMemberAttribute]
-        public static extern void EnumItemsInRect( rect r, boolexpr filter, System.Action actionFunc );
+        public static extern void EnumItemsInRect(rect r, boolexpr filter, System.Action actionFunc);
         [NativeLuaMemberAttribute]
-        public static extern int GetItemLevel( item whichItem );
+        public static extern int GetItemLevel(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern itemtype GetItemType( item whichItem );
+        public static extern itemtype GetItemType(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemDropID( item whichItem, int unitId );
+        public static extern void SetItemDropID(item whichItem, int unitId);
         [NativeLuaMemberAttribute]
-        public static extern string GetItemName( item whichItem );
+        public static extern string GetItemName(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern int GetItemCharges( item whichItem );
+        public static extern int GetItemCharges(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemCharges( item whichItem, int charges );
+        public static extern void SetItemCharges(item whichItem, int charges);
         [NativeLuaMemberAttribute]
-        public static extern int GetItemUserData( item whichItem );
+        public static extern int GetItemUserData(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemUserData( item whichItem, int data );
+        public static extern void SetItemUserData(item whichItem, int data);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateUnit( player id, int unitid, float x, float y, float face );
+        public static extern unit CreateUnit(player id, int unitid, float x, float y, float face);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateUnitByName( player whichPlayer, string unitname, float x, float y, float face );
+        public static extern unit CreateUnitByName(player whichPlayer, string unitname, float x, float y, float face);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateUnitAtLoc( player id, int unitid, location whichLocation, float face );
+        public static extern unit CreateUnitAtLoc(player id, int unitid, location whichLocation, float face);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateUnitAtLocByName( player id, string unitname, location whichLocation, float face );
+        public static extern unit CreateUnitAtLocByName(player id, string unitname, location whichLocation, float face);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateCorpse( player whichPlayer, int unitid, float x, float y, float face );
+        public static extern unit CreateCorpse(player whichPlayer, int unitid, float x, float y, float face);
         [NativeLuaMemberAttribute]
-        public static extern void KillUnit( unit whichUnit );
+        public static extern void KillUnit(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveUnit( unit whichUnit );
+        public static extern void RemoveUnit(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void ShowUnit( unit whichUnit, bool show );
+        public static extern void ShowUnit(unit whichUnit, bool show);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitState( unit whichUnit, unitstate whichUnitState, float newVal );
+        public static extern void SetUnitState(unit whichUnit, unitstate whichUnitState, float newVal);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitX( unit whichUnit, float newX );
+        public static extern void SetUnitX(unit whichUnit, float newX);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitY( unit whichUnit, float newY );
+        public static extern void SetUnitY(unit whichUnit, float newY);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitPosition( unit whichUnit, float newX, float newY );
+        public static extern void SetUnitPosition(unit whichUnit, float newX, float newY);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitPositionLoc( unit whichUnit, location whichLocation );
+        public static extern void SetUnitPositionLoc(unit whichUnit, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitFacing( unit whichUnit, float facingAngle );
+        public static extern void SetUnitFacing(unit whichUnit, float facingAngle);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitFacingTimed( unit whichUnit, float facingAngle, float duration );
+        public static extern void SetUnitFacingTimed(unit whichUnit, float facingAngle, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitMoveSpeed( unit whichUnit, float newSpeed );
+        public static extern void SetUnitMoveSpeed(unit whichUnit, float newSpeed);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitFlyHeight( unit whichUnit, float newHeight, float rate );
+        public static extern void SetUnitFlyHeight(unit whichUnit, float newHeight, float rate);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitTurnSpeed( unit whichUnit, float newTurnSpeed );
+        public static extern void SetUnitTurnSpeed(unit whichUnit, float newTurnSpeed);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitPropWindow( unit whichUnit, float newPropWindowAngle );
+        public static extern void SetUnitPropWindow(unit whichUnit, float newPropWindowAngle);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitAcquireRange( unit whichUnit, float newAcquireRange );
+        public static extern void SetUnitAcquireRange(unit whichUnit, float newAcquireRange);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitCreepGuard( unit whichUnit, bool creepGuard );
+        public static extern void SetUnitCreepGuard(unit whichUnit, bool creepGuard);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitAcquireRange( unit whichUnit );
+        public static extern float GetUnitAcquireRange(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitTurnSpeed( unit whichUnit );
+        public static extern float GetUnitTurnSpeed(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitPropWindow( unit whichUnit );
+        public static extern float GetUnitPropWindow(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitFlyHeight( unit whichUnit );
+        public static extern float GetUnitFlyHeight(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitDefaultAcquireRange( unit whichUnit );
+        public static extern float GetUnitDefaultAcquireRange(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitDefaultTurnSpeed( unit whichUnit );
+        public static extern float GetUnitDefaultTurnSpeed(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitDefaultPropWindow( unit whichUnit );
+        public static extern float GetUnitDefaultPropWindow(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitDefaultFlyHeight( unit whichUnit );
+        public static extern float GetUnitDefaultFlyHeight(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitOwner( unit whichUnit, player whichPlayer, bool changeColor );
+        public static extern void SetUnitOwner(unit whichUnit, player whichPlayer, bool changeColor);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitColor( unit whichUnit, playercolor whichColor );
+        public static extern void SetUnitColor(unit whichUnit, playercolor whichColor);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitScale( unit whichUnit, float scaleX, float scaleY, float scaleZ );
+        public static extern void SetUnitScale(unit whichUnit, float scaleX, float scaleY, float scaleZ);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitTimeScale( unit whichUnit, float timeScale );
+        public static extern void SetUnitTimeScale(unit whichUnit, float timeScale);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitBlendTime( unit whichUnit, float blendTime );
+        public static extern void SetUnitBlendTime(unit whichUnit, float blendTime);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitVertexColor( unit whichUnit, int red, int green, int blue, int alpha );
+        public static extern void SetUnitVertexColor(unit whichUnit, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void QueueUnitAnimation( unit whichUnit, string whichAnimation );
+        public static extern void QueueUnitAnimation(unit whichUnit, string whichAnimation);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitAnimation( unit whichUnit, string whichAnimation );
+        public static extern void SetUnitAnimation(unit whichUnit, string whichAnimation);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitAnimationByIndex( unit whichUnit, int whichAnimation );
+        public static extern void SetUnitAnimationByIndex(unit whichUnit, int whichAnimation);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitAnimationWithRarity( unit whichUnit, string whichAnimation, raritycontrol rarity );
+        public static extern void SetUnitAnimationWithRarity(unit whichUnit, string whichAnimation, raritycontrol rarity);
         [NativeLuaMemberAttribute]
-        public static extern void AddUnitAnimationProperties( unit whichUnit, string animProperties, bool add );
+        public static extern void AddUnitAnimationProperties(unit whichUnit, string animProperties, bool add);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitLookAt( unit whichUnit, string whichBone, unit lookAtTarget, float offsetX, float offsetY, float offsetZ );
+        public static extern void SetUnitLookAt(unit whichUnit, string whichBone, unit lookAtTarget, float offsetX, float offsetY, float offsetZ);
         [NativeLuaMemberAttribute]
-        public static extern void ResetUnitLookAt( unit whichUnit );
+        public static extern void ResetUnitLookAt(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitRescuable( unit whichUnit, player byWhichPlayer, bool flag );
+        public static extern void SetUnitRescuable(unit whichUnit, player byWhichPlayer, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitRescueRange( unit whichUnit, float range );
+        public static extern void SetUnitRescueRange(unit whichUnit, float range);
         [NativeLuaMemberAttribute]
-        public static extern void SetHeroStr( unit whichHero, int newStr, bool permanent );
+        public static extern void SetHeroStr(unit whichHero, int newStr, bool permanent);
         [NativeLuaMemberAttribute]
-        public static extern void SetHeroAgi( unit whichHero, int newAgi, bool permanent );
+        public static extern void SetHeroAgi(unit whichHero, int newAgi, bool permanent);
         [NativeLuaMemberAttribute]
-        public static extern void SetHeroInt( unit whichHero, int newInt, bool permanent );
+        public static extern void SetHeroInt(unit whichHero, int newInt, bool permanent);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroStr( unit whichHero, bool includeBonuses );
+        public static extern int GetHeroStr(unit whichHero, bool includeBonuses);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroAgi( unit whichHero, bool includeBonuses );
+        public static extern int GetHeroAgi(unit whichHero, bool includeBonuses);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroInt( unit whichHero, bool includeBonuses );
+        public static extern int GetHeroInt(unit whichHero, bool includeBonuses);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitStripHeroLevel( unit whichHero, int howManyLevels );
+        public static extern bool UnitStripHeroLevel(unit whichHero, int howManyLevels);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroXP( unit whichHero );
+        public static extern int GetHeroXP(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern void SetHeroXP( unit whichHero, int newXpVal, bool showEyeCandy );
+        public static extern void SetHeroXP(unit whichHero, int newXpVal, bool showEyeCandy);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroSkillPoints( unit whichHero );
+        public static extern int GetHeroSkillPoints(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitModifySkillPoints( unit whichHero, int skillPointDelta );
+        public static extern bool UnitModifySkillPoints(unit whichHero, int skillPointDelta);
         [NativeLuaMemberAttribute]
-        public static extern void AddHeroXP( unit whichHero, int xpToAdd, bool showEyeCandy );
+        public static extern void AddHeroXP(unit whichHero, int xpToAdd, bool showEyeCandy);
         [NativeLuaMemberAttribute]
-        public static extern void SetHeroLevel( unit whichHero, int level, bool showEyeCandy );
+        public static extern void SetHeroLevel(unit whichHero, int level, bool showEyeCandy);
         [NativeLuaMemberAttribute]
-        public static extern int GetHeroLevel( unit whichHero );
+        public static extern int GetHeroLevel(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitLevel( unit whichUnit );
+        public static extern int GetUnitLevel(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern string GetHeroProperName( unit whichHero );
+        public static extern string GetHeroProperName(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern void SuspendHeroXP( unit whichHero, bool flag );
+        public static extern void SuspendHeroXP(unit whichHero, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool IsSuspendedXP( unit whichHero );
+        public static extern bool IsSuspendedXP(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern void SelectHeroSkill( unit whichHero, int abilcode );
+        public static extern void SelectHeroSkill(unit whichHero, int abilcode);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitAbilityLevel( unit whichUnit, int abilcode );
+        public static extern int GetUnitAbilityLevel(unit whichUnit, int abilcode);
         [NativeLuaMemberAttribute]
-        public static extern int DecUnitAbilityLevel( unit whichUnit, int abilcode );
+        public static extern int DecUnitAbilityLevel(unit whichUnit, int abilcode);
         [NativeLuaMemberAttribute]
-        public static extern int IncUnitAbilityLevel( unit whichUnit, int abilcode );
+        public static extern int IncUnitAbilityLevel(unit whichUnit, int abilcode);
         [NativeLuaMemberAttribute]
-        public static extern int SetUnitAbilityLevel( unit whichUnit, int abilcode, int level );
+        public static extern int SetUnitAbilityLevel(unit whichUnit, int abilcode, int level);
         [NativeLuaMemberAttribute]
-        public static extern bool ReviveHero( unit whichHero, float x, float y, bool doEyecandy );
+        public static extern bool ReviveHero(unit whichHero, float x, float y, bool doEyecandy);
         [NativeLuaMemberAttribute]
-        public static extern bool ReviveHeroLoc( unit whichHero, location loc, bool doEyecandy );
+        public static extern bool ReviveHeroLoc(unit whichHero, location loc, bool doEyecandy);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitExploded( unit whichUnit, bool exploded );
+        public static extern void SetUnitExploded(unit whichUnit, bool exploded);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitInvulnerable( unit whichUnit, bool flag );
+        public static extern void SetUnitInvulnerable(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void PauseUnit( unit whichUnit, bool flag );
+        public static extern void PauseUnit(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitPaused( unit whichHero );
+        public static extern bool IsUnitPaused(unit whichHero);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitPathing( unit whichUnit, bool flag );
+        public static extern void SetUnitPathing(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
         public static extern void ClearSelection();
         [NativeLuaMemberAttribute]
-        public static extern void SelectUnit( unit whichUnit, bool flag );
+        public static extern void SelectUnit(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitPointValue( unit whichUnit );
+        public static extern int GetUnitPointValue(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitPointValueByType( int unitType );
+        public static extern int GetUnitPointValueByType(int unitType);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitAddItem( unit whichUnit, item whichItem );
+        public static extern bool UnitAddItem(unit whichUnit, item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern item UnitAddItemById( unit whichUnit, int itemId );
+        public static extern item UnitAddItemById(unit whichUnit, int itemId);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitAddItemToSlotById( unit whichUnit, int itemId, int itemSlot );
+        public static extern bool UnitAddItemToSlotById(unit whichUnit, int itemId, int itemSlot);
         [NativeLuaMemberAttribute]
-        public static extern void UnitRemoveItem( unit whichUnit, item whichItem );
+        public static extern void UnitRemoveItem(unit whichUnit, item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern item UnitRemoveItemFromSlot( unit whichUnit, int itemSlot );
+        public static extern item UnitRemoveItemFromSlot(unit whichUnit, int itemSlot);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitHasItem( unit whichUnit, item whichItem );
+        public static extern bool UnitHasItem(unit whichUnit, item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern item UnitItemInSlot( unit whichUnit, int itemSlot );
+        public static extern item UnitItemInSlot(unit whichUnit, int itemSlot);
         [NativeLuaMemberAttribute]
-        public static extern int UnitInventorySize( unit whichUnit );
+        public static extern int UnitInventorySize(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitDropItemPoint( unit whichUnit, item whichItem, float x, float y );
+        public static extern bool UnitDropItemPoint(unit whichUnit, item whichItem, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitDropItemSlot( unit whichUnit, item whichItem, int slot );
+        public static extern bool UnitDropItemSlot(unit whichUnit, item whichItem, int slot);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitDropItemTarget( unit whichUnit, item whichItem, widget target );
+        public static extern bool UnitDropItemTarget(unit whichUnit, item whichItem, widget target);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitUseItem( unit whichUnit, item whichItem );
+        public static extern bool UnitUseItem(unit whichUnit, item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitUseItemPoint( unit whichUnit, item whichItem, float x, float y );
+        public static extern bool UnitUseItemPoint(unit whichUnit, item whichItem, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitUseItemTarget( unit whichUnit, item whichItem, widget target );
+        public static extern bool UnitUseItemTarget(unit whichUnit, item whichItem, widget target);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitX( unit whichUnit );
+        public static extern float GetUnitX(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitY( unit whichUnit );
+        public static extern float GetUnitY(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern location GetUnitLoc( unit whichUnit );
+        public static extern location GetUnitLoc(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitFacing( unit whichUnit );
+        public static extern float GetUnitFacing(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitMoveSpeed( unit whichUnit );
+        public static extern float GetUnitMoveSpeed(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitDefaultMoveSpeed( unit whichUnit );
+        public static extern float GetUnitDefaultMoveSpeed(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float GetUnitState( unit whichUnit, unitstate whichUnitState );
+        public static extern float GetUnitState(unit whichUnit, unitstate whichUnitState);
         [NativeLuaMemberAttribute]
-        public static extern player GetOwningPlayer( unit whichUnit );
+        public static extern player GetOwningPlayer(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitTypeId( unit whichUnit );
+        public static extern int GetUnitTypeId(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern race GetUnitRace( unit whichUnit );
+        public static extern race GetUnitRace(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern string GetUnitName( unit whichUnit );
+        public static extern string GetUnitName(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitFoodUsed( unit whichUnit );
+        public static extern int GetUnitFoodUsed(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitFoodMade( unit whichUnit );
+        public static extern int GetUnitFoodMade(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int GetFoodMade( int unitId );
+        public static extern int GetFoodMade(int unitId);
         [NativeLuaMemberAttribute]
-        public static extern int GetFoodUsed( int unitId );
+        public static extern int GetFoodUsed(int unitId);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitUseFood( unit whichUnit, bool useFood );
+        public static extern void SetUnitUseFood(unit whichUnit, bool useFood);
         [NativeLuaMemberAttribute]
-        public static extern location GetUnitRallyPoint( unit whichUnit );
+        public static extern location GetUnitRallyPoint(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern unit GetUnitRallyUnit( unit whichUnit );
+        public static extern unit GetUnitRallyUnit(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern destructable GetUnitRallyDestructable( unit whichUnit );
+        public static extern destructable GetUnitRallyDestructable(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInGroup( unit whichUnit, group whichGroup );
+        public static extern bool IsUnitInGroup(unit whichUnit, group whichGroup);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInForce( unit whichUnit, force whichForce );
+        public static extern bool IsUnitInForce(unit whichUnit, force whichForce);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitOwnedByPlayer( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitOwnedByPlayer(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitAlly( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitAlly(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitEnemy( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitEnemy(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitVisible( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitVisible(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitDetected( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitDetected(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInvisible( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitInvisible(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitFogged( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitFogged(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitMasked( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitMasked(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitSelected( unit whichUnit, player whichPlayer );
+        public static extern bool IsUnitSelected(unit whichUnit, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitRace( unit whichUnit, race whichRace );
+        public static extern bool IsUnitRace(unit whichUnit, race whichRace);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitType( unit whichUnit, unittype whichUnitType );
+        public static extern bool IsUnitType(unit whichUnit, unittype whichUnitType);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnit( unit whichUnit, unit whichSpecifiedUnit );
+        public static extern bool IsUnit(unit whichUnit, unit whichSpecifiedUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInRange( unit whichUnit, unit otherUnit, float distance );
+        public static extern bool IsUnitInRange(unit whichUnit, unit otherUnit, float distance);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInRangeXY( unit whichUnit, float x, float y, float distance );
+        public static extern bool IsUnitInRangeXY(unit whichUnit, float x, float y, float distance);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInRangeLoc( unit whichUnit, location whichLocation, float distance );
+        public static extern bool IsUnitInRangeLoc(unit whichUnit, location whichLocation, float distance);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitHidden( unit whichUnit );
+        public static extern bool IsUnitHidden(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitIllusion( unit whichUnit );
+        public static extern bool IsUnitIllusion(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitInTransport( unit whichUnit, unit whichTransport );
+        public static extern bool IsUnitInTransport(unit whichUnit, unit whichTransport);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitLoaded( unit whichUnit );
+        public static extern bool IsUnitLoaded(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool IsHeroUnitId( int unitId );
+        public static extern bool IsHeroUnitId(int unitId);
         [NativeLuaMemberAttribute]
-        public static extern bool IsUnitIdType( int unitId, unittype whichUnitType );
+        public static extern bool IsUnitIdType(int unitId, unittype whichUnitType);
         [NativeLuaMemberAttribute]
-        public static extern void UnitShareVision( unit whichUnit, player whichPlayer, bool share );
+        public static extern void UnitShareVision(unit whichUnit, player whichPlayer, bool share);
         [NativeLuaMemberAttribute]
-        public static extern void UnitSuspendDecay( unit whichUnit, bool suspend );
+        public static extern void UnitSuspendDecay(unit whichUnit, bool suspend);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitAddType( unit whichUnit, unittype whichUnitType );
+        public static extern bool UnitAddType(unit whichUnit, unittype whichUnitType);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitRemoveType( unit whichUnit, unittype whichUnitType );
+        public static extern bool UnitRemoveType(unit whichUnit, unittype whichUnitType);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitAddAbility( unit whichUnit, int abilityId );
+        public static extern bool UnitAddAbility(unit whichUnit, int abilityId);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitRemoveAbility( unit whichUnit, int abilityId );
+        public static extern bool UnitRemoveAbility(unit whichUnit, int abilityId);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitMakeAbilityPermanent( unit whichUnit, bool permanent, int abilityId );
+        public static extern bool UnitMakeAbilityPermanent(unit whichUnit, bool permanent, int abilityId);
         [NativeLuaMemberAttribute]
-        public static extern void UnitRemoveBuffs( unit whichUnit, bool removePositive, bool removeNegative );
+        public static extern void UnitRemoveBuffs(unit whichUnit, bool removePositive, bool removeNegative);
         [NativeLuaMemberAttribute]
-        public static extern void UnitRemoveBuffsEx( unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel );
+        public static extern void UnitRemoveBuffsEx(unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitHasBuffsEx( unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel );
+        public static extern bool UnitHasBuffsEx(unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel);
         [NativeLuaMemberAttribute]
-        public static extern int UnitCountBuffsEx( unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel );
+        public static extern int UnitCountBuffsEx(unit whichUnit, bool removePositive, bool removeNegative, bool magic, bool physical, bool timedLife, bool aura, bool autoDispel);
         [NativeLuaMemberAttribute]
-        public static extern void UnitAddSleep( unit whichUnit, bool add );
+        public static extern void UnitAddSleep(unit whichUnit, bool add);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitCanSleep( unit whichUnit );
+        public static extern bool UnitCanSleep(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void UnitAddSleepPerm( unit whichUnit, bool add );
+        public static extern void UnitAddSleepPerm(unit whichUnit, bool add);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitCanSleepPerm( unit whichUnit );
+        public static extern bool UnitCanSleepPerm(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitIsSleeping( unit whichUnit );
+        public static extern bool UnitIsSleeping(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void UnitWakeUp( unit whichUnit );
+        public static extern void UnitWakeUp(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void UnitApplyTimedLife( unit whichUnit, int buffId, float duration );
+        public static extern void UnitApplyTimedLife(unit whichUnit, int buffId, float duration);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitIgnoreAlarm( unit whichUnit, bool flag );
+        public static extern bool UnitIgnoreAlarm(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitIgnoreAlarmToggled( unit whichUnit );
+        public static extern bool UnitIgnoreAlarmToggled(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void UnitResetCooldown( unit whichUnit );
+        public static extern void UnitResetCooldown(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void UnitSetConstructionProgress( unit whichUnit, int constructionPercentage );
+        public static extern void UnitSetConstructionProgress(unit whichUnit, int constructionPercentage);
         [NativeLuaMemberAttribute]
-        public static extern void UnitSetUpgradeProgress( unit whichUnit, int upgradePercentage );
+        public static extern void UnitSetUpgradeProgress(unit whichUnit, int upgradePercentage);
         [NativeLuaMemberAttribute]
-        public static extern void UnitPauseTimedLife( unit whichUnit, bool flag );
+        public static extern void UnitPauseTimedLife(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void UnitSetUsesAltIcon( unit whichUnit, bool flag );
+        public static extern void UnitSetUsesAltIcon(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitDamagePoint( unit whichUnit, float delay, float radius, float x, float y, float amount, bool attack, bool ranged, attacktype attackType, damagetype damageType, weapontype weaponType );
+        public static extern bool UnitDamagePoint(unit whichUnit, float delay, float radius, float x, float y, float amount, bool attack, bool ranged, attacktype attackType, damagetype damageType, weapontype weaponType);
         [NativeLuaMemberAttribute]
-        public static extern bool UnitDamageTarget( unit whichUnit, widget target, float amount, bool attack, bool ranged, attacktype attackType, damagetype damageType, weapontype weaponType );
+        public static extern bool UnitDamageTarget(unit whichUnit, widget target, float amount, bool attack, bool ranged, attacktype attackType, damagetype damageType, weapontype weaponType);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueImmediateOrder( unit whichUnit, string order );
+        public static extern bool IssueImmediateOrder(unit whichUnit, string order);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueImmediateOrderById( unit whichUnit, int order );
+        public static extern bool IssueImmediateOrderById(unit whichUnit, int order);
         [NativeLuaMemberAttribute]
-        public static extern bool IssuePointOrder( unit whichUnit, string order, float x, float y );
+        public static extern bool IssuePointOrder(unit whichUnit, string order, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssuePointOrderLoc( unit whichUnit, string order, location whichLocation );
+        public static extern bool IssuePointOrderLoc(unit whichUnit, string order, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool IssuePointOrderById( unit whichUnit, int order, float x, float y );
+        public static extern bool IssuePointOrderById(unit whichUnit, int order, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssuePointOrderByIdLoc( unit whichUnit, int order, location whichLocation );
+        public static extern bool IssuePointOrderByIdLoc(unit whichUnit, int order, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueTargetOrder( unit whichUnit, string order, widget targetWidget );
+        public static extern bool IssueTargetOrder(unit whichUnit, string order, widget targetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueTargetOrderById( unit whichUnit, int order, widget targetWidget );
+        public static extern bool IssueTargetOrderById(unit whichUnit, int order, widget targetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueInstantPointOrder( unit whichUnit, string order, float x, float y, widget instantTargetWidget );
+        public static extern bool IssueInstantPointOrder(unit whichUnit, string order, float x, float y, widget instantTargetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueInstantPointOrderById( unit whichUnit, int order, float x, float y, widget instantTargetWidget );
+        public static extern bool IssueInstantPointOrderById(unit whichUnit, int order, float x, float y, widget instantTargetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueInstantTargetOrder( unit whichUnit, string order, widget targetWidget, widget instantTargetWidget );
+        public static extern bool IssueInstantTargetOrder(unit whichUnit, string order, widget targetWidget, widget instantTargetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueInstantTargetOrderById( unit whichUnit, int order, widget targetWidget, widget instantTargetWidget );
+        public static extern bool IssueInstantTargetOrderById(unit whichUnit, int order, widget targetWidget, widget instantTargetWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueBuildOrder( unit whichPeon, string unitToBuild, float x, float y );
+        public static extern bool IssueBuildOrder(unit whichPeon, string unitToBuild, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueBuildOrderById( unit whichPeon, int unitId, float x, float y );
+        public static extern bool IssueBuildOrderById(unit whichPeon, int unitId, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralImmediateOrder( player forWhichPlayer, unit neutralStructure, string unitToBuild );
+        public static extern bool IssueNeutralImmediateOrder(player forWhichPlayer, unit neutralStructure, string unitToBuild);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralImmediateOrderById( player forWhichPlayer, unit neutralStructure, int unitId );
+        public static extern bool IssueNeutralImmediateOrderById(player forWhichPlayer, unit neutralStructure, int unitId);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralPointOrder( player forWhichPlayer, unit neutralStructure, string unitToBuild, float x, float y );
+        public static extern bool IssueNeutralPointOrder(player forWhichPlayer, unit neutralStructure, string unitToBuild, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralPointOrderById( player forWhichPlayer, unit neutralStructure, int unitId, float x, float y );
+        public static extern bool IssueNeutralPointOrderById(player forWhichPlayer, unit neutralStructure, int unitId, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralTargetOrder( player forWhichPlayer, unit neutralStructure, string unitToBuild, widget target );
+        public static extern bool IssueNeutralTargetOrder(player forWhichPlayer, unit neutralStructure, string unitToBuild, widget target);
         [NativeLuaMemberAttribute]
-        public static extern bool IssueNeutralTargetOrderById( player forWhichPlayer, unit neutralStructure, int unitId, widget target );
+        public static extern bool IssueNeutralTargetOrderById(player forWhichPlayer, unit neutralStructure, int unitId, widget target);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitCurrentOrder( unit whichUnit );
+        public static extern int GetUnitCurrentOrder(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void SetResourceAmount( unit whichUnit, int amount );
+        public static extern void SetResourceAmount(unit whichUnit, int amount);
         [NativeLuaMemberAttribute]
-        public static extern void AddResourceAmount( unit whichUnit, int amount );
+        public static extern void AddResourceAmount(unit whichUnit, int amount);
         [NativeLuaMemberAttribute]
-        public static extern int GetResourceAmount( unit whichUnit );
+        public static extern int GetResourceAmount(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float WaygateGetDestinationX( unit waygate );
+        public static extern float WaygateGetDestinationX(unit waygate);
         [NativeLuaMemberAttribute]
-        public static extern float WaygateGetDestinationY( unit waygate );
+        public static extern float WaygateGetDestinationY(unit waygate);
         [NativeLuaMemberAttribute]
-        public static extern void WaygateSetDestination( unit waygate, float x, float y );
+        public static extern void WaygateSetDestination(unit waygate, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void WaygateActivate( unit waygate, bool activate );
+        public static extern void WaygateActivate(unit waygate, bool activate);
         [NativeLuaMemberAttribute]
-        public static extern bool WaygateIsActive( unit waygate );
+        public static extern bool WaygateIsActive(unit waygate);
         [NativeLuaMemberAttribute]
-        public static extern void AddItemToAllStock( int itemId, int currentStock, int stockMax );
+        public static extern void AddItemToAllStock(int itemId, int currentStock, int stockMax);
         [NativeLuaMemberAttribute]
-        public static extern void AddItemToStock( unit whichUnit, int itemId, int currentStock, int stockMax );
+        public static extern void AddItemToStock(unit whichUnit, int itemId, int currentStock, int stockMax);
         [NativeLuaMemberAttribute]
-        public static extern void AddUnitToAllStock( int unitId, int currentStock, int stockMax );
+        public static extern void AddUnitToAllStock(int unitId, int currentStock, int stockMax);
         [NativeLuaMemberAttribute]
-        public static extern void AddUnitToStock( unit whichUnit, int unitId, int currentStock, int stockMax );
+        public static extern void AddUnitToStock(unit whichUnit, int unitId, int currentStock, int stockMax);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveItemFromAllStock( int itemId );
+        public static extern void RemoveItemFromAllStock(int itemId);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveItemFromStock( unit whichUnit, int itemId );
+        public static extern void RemoveItemFromStock(unit whichUnit, int itemId);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveUnitFromAllStock( int unitId );
+        public static extern void RemoveUnitFromAllStock(int unitId);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveUnitFromStock( unit whichUnit, int unitId );
+        public static extern void RemoveUnitFromStock(unit whichUnit, int unitId);
         [NativeLuaMemberAttribute]
-        public static extern void SetAllItemTypeSlots( int slots );
+        public static extern void SetAllItemTypeSlots(int slots);
         [NativeLuaMemberAttribute]
-        public static extern void SetAllUnitTypeSlots( int slots );
+        public static extern void SetAllUnitTypeSlots(int slots);
         [NativeLuaMemberAttribute]
-        public static extern void SetItemTypeSlots( unit whichUnit, int slots );
+        public static extern void SetItemTypeSlots(unit whichUnit, int slots);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitTypeSlots( unit whichUnit, int slots );
+        public static extern void SetUnitTypeSlots(unit whichUnit, int slots);
         [NativeLuaMemberAttribute]
-        public static extern int GetUnitUserData( unit whichUnit );
+        public static extern int GetUnitUserData(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitUserData( unit whichUnit, int data );
+        public static extern void SetUnitUserData(unit whichUnit, int data);
         [NativeLuaMemberAttribute]
-        public static extern player Player( int number );
+        public static extern player Player(int number);
         [NativeLuaMemberAttribute]
         public static extern player GetLocalPlayer();
         [NativeLuaMemberAttribute]
-        public static extern bool IsPlayerAlly( player whichPlayer, player otherPlayer );
+        public static extern bool IsPlayerAlly(player whichPlayer, player otherPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPlayerEnemy( player whichPlayer, player otherPlayer );
+        public static extern bool IsPlayerEnemy(player whichPlayer, player otherPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPlayerInForce( player whichPlayer, force whichForce );
+        public static extern bool IsPlayerInForce(player whichPlayer, force whichForce);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPlayerObserver( player whichPlayer );
+        public static extern bool IsPlayerObserver(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsVisibleToPlayer( float x, float y, player whichPlayer );
+        public static extern bool IsVisibleToPlayer(float x, float y, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsLocationVisibleToPlayer( location whichLocation, player whichPlayer );
+        public static extern bool IsLocationVisibleToPlayer(location whichLocation, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsFoggedToPlayer( float x, float y, player whichPlayer );
+        public static extern bool IsFoggedToPlayer(float x, float y, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsLocationFoggedToPlayer( location whichLocation, player whichPlayer );
+        public static extern bool IsLocationFoggedToPlayer(location whichLocation, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsMaskedToPlayer( float x, float y, player whichPlayer );
+        public static extern bool IsMaskedToPlayer(float x, float y, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool IsLocationMaskedToPlayer( location whichLocation, player whichPlayer );
+        public static extern bool IsLocationMaskedToPlayer(location whichLocation, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern race GetPlayerRace( player whichPlayer );
+        public static extern race GetPlayerRace(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerId( player whichPlayer );
+        public static extern int GetPlayerId(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerUnitCount( player whichPlayer, bool includeIncomplete );
+        public static extern int GetPlayerUnitCount(player whichPlayer, bool includeIncomplete);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerTypedUnitCount( player whichPlayer, string unitName, bool includeIncomplete, bool includeUpgrades );
+        public static extern int GetPlayerTypedUnitCount(player whichPlayer, string unitName, bool includeIncomplete, bool includeUpgrades);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerStructureCount( player whichPlayer, bool includeIncomplete );
+        public static extern int GetPlayerStructureCount(player whichPlayer, bool includeIncomplete);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerState( player whichPlayer, playerstate whichPlayerState );
+        public static extern int GetPlayerState(player whichPlayer, playerstate whichPlayerState);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerScore( player whichPlayer, playerscore whichPlayerScore );
+        public static extern int GetPlayerScore(player whichPlayer, playerscore whichPlayerScore);
         [NativeLuaMemberAttribute]
-        public static extern bool GetPlayerAlliance( player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting );
+        public static extern bool GetPlayerAlliance(player sourcePlayer, player otherPlayer, alliancetype whichAllianceSetting);
         [NativeLuaMemberAttribute]
-        public static extern float GetPlayerHandicap( player whichPlayer );
+        public static extern float GetPlayerHandicap(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern float GetPlayerHandicapXP( player whichPlayer );
+        public static extern float GetPlayerHandicapXP(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerHandicap( player whichPlayer, float handicap );
+        public static extern void SetPlayerHandicap(player whichPlayer, float handicap);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerHandicapXP( player whichPlayer, float handicap );
+        public static extern void SetPlayerHandicapXP(player whichPlayer, float handicap);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerTechMaxAllowed( player whichPlayer, int techid, int maximum );
+        public static extern void SetPlayerTechMaxAllowed(player whichPlayer, int techid, int maximum);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerTechMaxAllowed( player whichPlayer, int techid );
+        public static extern int GetPlayerTechMaxAllowed(player whichPlayer, int techid);
         [NativeLuaMemberAttribute]
-        public static extern void AddPlayerTechResearched( player whichPlayer, int techid, int levels );
+        public static extern void AddPlayerTechResearched(player whichPlayer, int techid, int levels);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerTechResearched( player whichPlayer, int techid, int setToLevel );
+        public static extern void SetPlayerTechResearched(player whichPlayer, int techid, int setToLevel);
         [NativeLuaMemberAttribute]
-        public static extern bool GetPlayerTechResearched( player whichPlayer, int techid, bool specificonly );
+        public static extern bool GetPlayerTechResearched(player whichPlayer, int techid, bool specificonly);
         [NativeLuaMemberAttribute]
-        public static extern int GetPlayerTechCount( player whichPlayer, int techid, bool specificonly );
+        public static extern int GetPlayerTechCount(player whichPlayer, int techid, bool specificonly);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerUnitsOwner( player whichPlayer, int newOwner );
+        public static extern void SetPlayerUnitsOwner(player whichPlayer, int newOwner);
         [NativeLuaMemberAttribute]
-        public static extern void CripplePlayer( player whichPlayer, force toWhichPlayers, bool flag );
+        public static extern void CripplePlayer(player whichPlayer, force toWhichPlayers, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerAbilityAvailable( player whichPlayer, int abilid, bool avail );
+        public static extern void SetPlayerAbilityAvailable(player whichPlayer, int abilid, bool avail);
         [NativeLuaMemberAttribute]
-        public static extern void SetPlayerState( player whichPlayer, playerstate whichPlayerState, int value );
+        public static extern void SetPlayerState(player whichPlayer, playerstate whichPlayerState, int value);
         [NativeLuaMemberAttribute]
-        public static extern void RemovePlayer( player whichPlayer, playergameresult gameResult );
+        public static extern void RemovePlayer(player whichPlayer, playergameresult gameResult);
         [NativeLuaMemberAttribute]
-        public static extern void CachePlayerHeroData( player whichPlayer );
+        public static extern void CachePlayerHeroData(player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void SetFogStateRect( player forWhichPlayer, fogstate whichState, rect where, bool useSharedVision );
+        public static extern void SetFogStateRect(player forWhichPlayer, fogstate whichState, rect where, bool useSharedVision);
         [NativeLuaMemberAttribute]
-        public static extern void SetFogStateRadius( player forWhichPlayer, fogstate whichState, float centerx, float centerY, float radius, bool useSharedVision );
+        public static extern void SetFogStateRadius(player forWhichPlayer, fogstate whichState, float centerx, float centerY, float radius, bool useSharedVision);
         [NativeLuaMemberAttribute]
-        public static extern void SetFogStateRadiusLoc( player forWhichPlayer, fogstate whichState, location center, float radius, bool useSharedVision );
+        public static extern void SetFogStateRadiusLoc(player forWhichPlayer, fogstate whichState, location center, float radius, bool useSharedVision);
         [NativeLuaMemberAttribute]
-        public static extern void FogMaskEnable( bool enable );
+        public static extern void FogMaskEnable(bool enable);
         [NativeLuaMemberAttribute]
         public static extern bool IsFogMaskEnabled();
         [NativeLuaMemberAttribute]
-        public static extern void FogEnable( bool enable );
+        public static extern void FogEnable(bool enable);
         [NativeLuaMemberAttribute]
         public static extern bool IsFogEnabled();
         [NativeLuaMemberAttribute]
-        public static extern fogmodifier CreateFogModifierRect( player forWhichPlayer, fogstate whichState, rect where, bool useSharedVision, bool afterUnits );
+        public static extern fogmodifier CreateFogModifierRect(player forWhichPlayer, fogstate whichState, rect where, bool useSharedVision, bool afterUnits);
         [NativeLuaMemberAttribute]
-        public static extern fogmodifier CreateFogModifierRadius( player forWhichPlayer, fogstate whichState, float centerx, float centerY, float radius, bool useSharedVision, bool afterUnits );
+        public static extern fogmodifier CreateFogModifierRadius(player forWhichPlayer, fogstate whichState, float centerx, float centerY, float radius, bool useSharedVision, bool afterUnits);
         [NativeLuaMemberAttribute]
-        public static extern fogmodifier CreateFogModifierRadiusLoc( player forWhichPlayer, fogstate whichState, location center, float radius, bool useSharedVision, bool afterUnits );
+        public static extern fogmodifier CreateFogModifierRadiusLoc(player forWhichPlayer, fogstate whichState, location center, float radius, bool useSharedVision, bool afterUnits);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyFogModifier( fogmodifier whichFogModifier );
+        public static extern void DestroyFogModifier(fogmodifier whichFogModifier);
         [NativeLuaMemberAttribute]
-        public static extern void FogModifierStart( fogmodifier whichFogModifier );
+        public static extern void FogModifierStart(fogmodifier whichFogModifier);
         [NativeLuaMemberAttribute]
-        public static extern void FogModifierStop( fogmodifier whichFogModifier );
+        public static extern void FogModifierStop(fogmodifier whichFogModifier);
         [NativeLuaMemberAttribute]
         public static extern version VersionGet();
         [NativeLuaMemberAttribute]
-        public static extern bool VersionCompatible( version whichVersion );
+        public static extern bool VersionCompatible(version whichVersion);
         [NativeLuaMemberAttribute]
-        public static extern bool VersionSupported( version whichVersion );
+        public static extern bool VersionSupported(version whichVersion);
         [NativeLuaMemberAttribute]
-        public static extern void EndGame( bool doScoreScreen );
+        public static extern void EndGame(bool doScoreScreen);
         [NativeLuaMemberAttribute]
-        public static extern void ChangeLevel( string newLevel, bool doScoreScreen );
+        public static extern void ChangeLevel(string newLevel, bool doScoreScreen);
         [NativeLuaMemberAttribute]
-        public static extern void RestartGame( bool doScoreScreen );
+        public static extern void RestartGame(bool doScoreScreen);
         [NativeLuaMemberAttribute]
         public static extern void ReloadGame();
         [NativeLuaMemberAttribute]
-        public static extern void SetCampaignMenuRace( race r );
+        public static extern void SetCampaignMenuRace(race r);
         [NativeLuaMemberAttribute]
-        public static extern void SetCampaignMenuRaceEx( int campaignIndex );
+        public static extern void SetCampaignMenuRaceEx(int campaignIndex);
         [NativeLuaMemberAttribute]
         public static extern void ForceCampaignSelectScreen();
         [NativeLuaMemberAttribute]
-        public static extern void LoadGame( string saveFileName, bool doScoreScreen );
+        public static extern void LoadGame(string saveFileName, bool doScoreScreen);
         [NativeLuaMemberAttribute]
-        public static extern void SaveGame( string saveFileName );
+        public static extern void SaveGame(string saveFileName);
         [NativeLuaMemberAttribute]
-        public static extern bool RenameSaveDirectory( string sourceDirName, string destDirName );
+        public static extern bool RenameSaveDirectory(string sourceDirName, string destDirName);
         [NativeLuaMemberAttribute]
-        public static extern bool RemoveSaveDirectory( string sourceDirName );
+        public static extern bool RemoveSaveDirectory(string sourceDirName);
         [NativeLuaMemberAttribute]
-        public static extern bool CopySaveGame( string sourceSaveName, string destSaveName );
+        public static extern bool CopySaveGame(string sourceSaveName, string destSaveName);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveGameExists( string saveName );
+        public static extern bool SaveGameExists(string saveName);
         [NativeLuaMemberAttribute]
         public static extern void SyncSelections();
         [NativeLuaMemberAttribute]
-        public static extern void SetFloatGameState( fgamestate whichFloatGameState, float value );
+        public static extern void SetFloatGameState(fgamestate whichFloatGameState, float value);
         [NativeLuaMemberAttribute]
-        public static extern float GetFloatGameState( fgamestate whichFloatGameState );
+        public static extern float GetFloatGameState(fgamestate whichFloatGameState);
         [NativeLuaMemberAttribute]
-        public static extern void SetIntegerGameState( igamestate whichIntegerGameState, int value );
+        public static extern void SetIntegerGameState(igamestate whichIntegerGameState, int value);
         [NativeLuaMemberAttribute]
-        public static extern int GetIntegerGameState( igamestate whichIntegerGameState );
+        public static extern int GetIntegerGameState(igamestate whichIntegerGameState);
         [NativeLuaMemberAttribute]
-        public static extern void SetTutorialCleared( bool cleared );
+        public static extern void SetTutorialCleared(bool cleared);
         [NativeLuaMemberAttribute]
-        public static extern void SetMissionAvailable( int campaignNumber, int missionNumber, bool available );
+        public static extern void SetMissionAvailable(int campaignNumber, int missionNumber, bool available);
         [NativeLuaMemberAttribute]
-        public static extern void SetCampaignAvailable( int campaignNumber, bool available );
+        public static extern void SetCampaignAvailable(int campaignNumber, bool available);
         [NativeLuaMemberAttribute]
-        public static extern void SetOpCinematicAvailable( int campaignNumber, bool available );
+        public static extern void SetOpCinematicAvailable(int campaignNumber, bool available);
         [NativeLuaMemberAttribute]
-        public static extern void SetEdCinematicAvailable( int campaignNumber, bool available );
+        public static extern void SetEdCinematicAvailable(int campaignNumber, bool available);
         [NativeLuaMemberAttribute]
         public static extern gamedifficulty GetDefaultDifficulty();
         [NativeLuaMemberAttribute]
-        public static extern void SetDefaultDifficulty( gamedifficulty g );
+        public static extern void SetDefaultDifficulty(gamedifficulty g);
         [NativeLuaMemberAttribute]
-        public static extern void SetCustomCampaignButtonVisible( int whichButton, bool visible );
+        public static extern void SetCustomCampaignButtonVisible(int whichButton, bool visible);
         [NativeLuaMemberAttribute]
-        public static extern bool GetCustomCampaignButtonVisible( int whichButton );
+        public static extern bool GetCustomCampaignButtonVisible(int whichButton);
         [NativeLuaMemberAttribute]
         public static extern void DoNotSaveReplay();
         [NativeLuaMemberAttribute]
         public static extern dialog DialogCreate();
         [NativeLuaMemberAttribute]
-        public static extern void DialogDestroy( dialog whichDialog );
+        public static extern void DialogDestroy(dialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern void DialogClear( dialog whichDialog );
+        public static extern void DialogClear(dialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern void DialogSetMessage( dialog whichDialog, string messageText );
+        public static extern void DialogSetMessage(dialog whichDialog, string messageText);
         [NativeLuaMemberAttribute]
-        public static extern button DialogAddButton( dialog whichDialog, string buttonText, int hotkey );
+        public static extern button DialogAddButton(dialog whichDialog, string buttonText, int hotkey);
         [NativeLuaMemberAttribute]
-        public static extern button DialogAddQuitButton( dialog whichDialog, bool doScoreScreen, string buttonText, int hotkey );
+        public static extern button DialogAddQuitButton(dialog whichDialog, bool doScoreScreen, string buttonText, int hotkey);
         [NativeLuaMemberAttribute]
-        public static extern void DialogDisplay( player whichPlayer, dialog whichDialog, bool flag );
+        public static extern void DialogDisplay(player whichPlayer, dialog whichDialog, bool flag);
         [NativeLuaMemberAttribute]
         public static extern bool ReloadGameCachesFromDisk();
         [NativeLuaMemberAttribute]
-        public static extern gamecache InitGameCache( string campaignFile );
+        public static extern gamecache InitGameCache(string campaignFile);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveGameCache( gamecache whichCache );
+        public static extern bool SaveGameCache(gamecache whichCache);
         [NativeLuaMemberAttribute]
-        public static extern void StoreInteger( gamecache cache, string missionKey, string key, int value );
+        public static extern void StoreInteger(gamecache cache, string missionKey, string key, int value);
         [NativeLuaMemberAttribute]
-        public static extern void StoreReal( gamecache cache, string missionKey, string key, float value );
+        public static extern void StoreReal(gamecache cache, string missionKey, string key, float value);
         [NativeLuaMemberAttribute]
-        public static extern void StoreBoolean( gamecache cache, string missionKey, string key, bool value );
+        public static extern void StoreBoolean(gamecache cache, string missionKey, string key, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool StoreUnit( gamecache cache, string missionKey, string key, unit whichUnit );
+        public static extern bool StoreUnit(gamecache cache, string missionKey, string key, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool StoreString( gamecache cache, string missionKey, string key, string value );
+        public static extern bool StoreString(gamecache cache, string missionKey, string key, string value);
         [NativeLuaMemberAttribute]
-        public static extern void SyncStoredInteger( gamecache cache, string missionKey, string key );
+        public static extern void SyncStoredInteger(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void SyncStoredReal( gamecache cache, string missionKey, string key );
+        public static extern void SyncStoredReal(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void SyncStoredBoolean( gamecache cache, string missionKey, string key );
+        public static extern void SyncStoredBoolean(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void SyncStoredUnit( gamecache cache, string missionKey, string key );
+        public static extern void SyncStoredUnit(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void SyncStoredString( gamecache cache, string missionKey, string key );
+        public static extern void SyncStoredString(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveStoredInteger( gamecache cache, string missionKey, string key );
+        public static extern bool HaveStoredInteger(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveStoredReal( gamecache cache, string missionKey, string key );
+        public static extern bool HaveStoredReal(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveStoredBoolean( gamecache cache, string missionKey, string key );
+        public static extern bool HaveStoredBoolean(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveStoredUnit( gamecache cache, string missionKey, string key );
+        public static extern bool HaveStoredUnit(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveStoredString( gamecache cache, string missionKey, string key );
+        public static extern bool HaveStoredString(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void FlushGameCache( gamecache cache );
+        public static extern void FlushGameCache(gamecache cache);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredMission( gamecache cache, string missionKey );
+        public static extern void FlushStoredMission(gamecache cache, string missionKey);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredInteger( gamecache cache, string missionKey, string key );
+        public static extern void FlushStoredInteger(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredReal( gamecache cache, string missionKey, string key );
+        public static extern void FlushStoredReal(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredBoolean( gamecache cache, string missionKey, string key );
+        public static extern void FlushStoredBoolean(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredUnit( gamecache cache, string missionKey, string key );
+        public static extern void FlushStoredUnit(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern void FlushStoredString( gamecache cache, string missionKey, string key );
+        public static extern void FlushStoredString(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern int GetStoredInteger( gamecache cache, string missionKey, string key );
+        public static extern int GetStoredInteger(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern float GetStoredReal( gamecache cache, string missionKey, string key );
+        public static extern float GetStoredReal(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern bool GetStoredBoolean( gamecache cache, string missionKey, string key );
+        public static extern bool GetStoredBoolean(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern string GetStoredString( gamecache cache, string missionKey, string key );
+        public static extern string GetStoredString(gamecache cache, string missionKey, string key);
         [NativeLuaMemberAttribute]
-        public static extern unit RestoreUnit( gamecache cache, string missionKey, string key, player forWhichPlayer, float x, float y, float facing );
+        public static extern unit RestoreUnit(gamecache cache, string missionKey, string key, player forWhichPlayer, float x, float y, float facing);
         [NativeLuaMemberAttribute]
         public static extern hashtable InitHashtable();
         [NativeLuaMemberAttribute]
-        public static extern void SaveInteger( hashtable table, int parentKey, int childKey, int value );
+        public static extern void SaveInteger(hashtable table, int parentKey, int childKey, int value);
         [NativeLuaMemberAttribute]
-        public static extern void SaveReal( hashtable table, int parentKey, int childKey, float value );
+        public static extern void SaveReal(hashtable table, int parentKey, int childKey, float value);
         [NativeLuaMemberAttribute]
-        public static extern void SaveBoolean( hashtable table, int parentKey, int childKey, bool value );
+        public static extern void SaveBoolean(hashtable table, int parentKey, int childKey, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveStr( hashtable table, int parentKey, int childKey, string value );
+        public static extern bool SaveStr(hashtable table, int parentKey, int childKey, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool SavePlayerHandle( hashtable table, int parentKey, int childKey, player whichPlayer );
+        public static extern bool SavePlayerHandle(hashtable table, int parentKey, int childKey, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveWidgetHandle( hashtable table, int parentKey, int childKey, widget whichWidget );
+        public static extern bool SaveWidgetHandle(hashtable table, int parentKey, int childKey, widget whichWidget);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveDestructableHandle( hashtable table, int parentKey, int childKey, destructable whichDestructable );
+        public static extern bool SaveDestructableHandle(hashtable table, int parentKey, int childKey, destructable whichDestructable);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveItemHandle( hashtable table, int parentKey, int childKey, item whichItem );
+        public static extern bool SaveItemHandle(hashtable table, int parentKey, int childKey, item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveUnitHandle( hashtable table, int parentKey, int childKey, unit whichUnit );
+        public static extern bool SaveUnitHandle(hashtable table, int parentKey, int childKey, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveAbilityHandle( hashtable table, int parentKey, int childKey, ability whichAbility );
+        public static extern bool SaveAbilityHandle(hashtable table, int parentKey, int childKey, ability whichAbility);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTimerHandle( hashtable table, int parentKey, int childKey, timer whichTimer );
+        public static extern bool SaveTimerHandle(hashtable table, int parentKey, int childKey, timer whichTimer);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTriggerHandle( hashtable table, int parentKey, int childKey, trigger whichTrigger );
+        public static extern bool SaveTriggerHandle(hashtable table, int parentKey, int childKey, trigger whichTrigger);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTriggerConditionHandle( hashtable table, int parentKey, int childKey, triggercondition whichTriggercondition );
+        public static extern bool SaveTriggerConditionHandle(hashtable table, int parentKey, int childKey, triggercondition whichTriggercondition);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTriggerActionHandle( hashtable table, int parentKey, int childKey, triggeraction whichTriggeraction );
+        public static extern bool SaveTriggerActionHandle(hashtable table, int parentKey, int childKey, triggeraction whichTriggeraction);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTriggerEventHandle( hashtable table, int parentKey, int childKey, @event whichEvent );
+        public static extern bool SaveTriggerEventHandle(hashtable table, int parentKey, int childKey, @event whichEvent);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveForceHandle( hashtable table, int parentKey, int childKey, force whichForce );
+        public static extern bool SaveForceHandle(hashtable table, int parentKey, int childKey, force whichForce);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveGroupHandle( hashtable table, int parentKey, int childKey, group whichGroup );
+        public static extern bool SaveGroupHandle(hashtable table, int parentKey, int childKey, group whichGroup);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveLocationHandle( hashtable table, int parentKey, int childKey, location whichLocation );
+        public static extern bool SaveLocationHandle(hashtable table, int parentKey, int childKey, location whichLocation);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveRectHandle( hashtable table, int parentKey, int childKey, rect whichRect );
+        public static extern bool SaveRectHandle(hashtable table, int parentKey, int childKey, rect whichRect);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveBooleanExprHandle( hashtable table, int parentKey, int childKey, boolexpr whichBoolexpr );
+        public static extern bool SaveBooleanExprHandle(hashtable table, int parentKey, int childKey, boolexpr whichBoolexpr);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveSoundHandle( hashtable table, int parentKey, int childKey, sound whichSound );
+        public static extern bool SaveSoundHandle(hashtable table, int parentKey, int childKey, sound whichSound);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveEffectHandle( hashtable table, int parentKey, int childKey, effect whichEffect );
+        public static extern bool SaveEffectHandle(hashtable table, int parentKey, int childKey, effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveUnitPoolHandle( hashtable table, int parentKey, int childKey, unitpool whichUnitpool );
+        public static extern bool SaveUnitPoolHandle(hashtable table, int parentKey, int childKey, unitpool whichUnitpool);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveItemPoolHandle( hashtable table, int parentKey, int childKey, itempool whichItempool );
+        public static extern bool SaveItemPoolHandle(hashtable table, int parentKey, int childKey, itempool whichItempool);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveQuestHandle( hashtable table, int parentKey, int childKey, quest whichQuest );
+        public static extern bool SaveQuestHandle(hashtable table, int parentKey, int childKey, quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveQuestItemHandle( hashtable table, int parentKey, int childKey, questitem whichQuestitem );
+        public static extern bool SaveQuestItemHandle(hashtable table, int parentKey, int childKey, questitem whichQuestitem);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveDefeatConditionHandle( hashtable table, int parentKey, int childKey, defeatcondition whichDefeatcondition );
+        public static extern bool SaveDefeatConditionHandle(hashtable table, int parentKey, int childKey, defeatcondition whichDefeatcondition);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTimerDialogHandle( hashtable table, int parentKey, int childKey, timerdialog whichTimerdialog );
+        public static extern bool SaveTimerDialogHandle(hashtable table, int parentKey, int childKey, timerdialog whichTimerdialog);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveLeaderboardHandle( hashtable table, int parentKey, int childKey, leaderboard whichLeaderboard );
+        public static extern bool SaveLeaderboardHandle(hashtable table, int parentKey, int childKey, leaderboard whichLeaderboard);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveMultiboardHandle( hashtable table, int parentKey, int childKey, multiboard whichMultiboard );
+        public static extern bool SaveMultiboardHandle(hashtable table, int parentKey, int childKey, multiboard whichMultiboard);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveMultiboardItemHandle( hashtable table, int parentKey, int childKey, multiboarditem whichMultiboarditem );
+        public static extern bool SaveMultiboardItemHandle(hashtable table, int parentKey, int childKey, multiboarditem whichMultiboarditem);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTrackableHandle( hashtable table, int parentKey, int childKey, trackable whichTrackable );
+        public static extern bool SaveTrackableHandle(hashtable table, int parentKey, int childKey, trackable whichTrackable);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveDialogHandle( hashtable table, int parentKey, int childKey, dialog whichDialog );
+        public static extern bool SaveDialogHandle(hashtable table, int parentKey, int childKey, dialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveButtonHandle( hashtable table, int parentKey, int childKey, button whichButton );
+        public static extern bool SaveButtonHandle(hashtable table, int parentKey, int childKey, button whichButton);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveTextTagHandle( hashtable table, int parentKey, int childKey, texttag whichTexttag );
+        public static extern bool SaveTextTagHandle(hashtable table, int parentKey, int childKey, texttag whichTexttag);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveLightningHandle( hashtable table, int parentKey, int childKey, lightning whichLightning );
+        public static extern bool SaveLightningHandle(hashtable table, int parentKey, int childKey, lightning whichLightning);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveImageHandle( hashtable table, int parentKey, int childKey, image whichImage );
+        public static extern bool SaveImageHandle(hashtable table, int parentKey, int childKey, image whichImage);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveUbersplatHandle( hashtable table, int parentKey, int childKey, ubersplat whichUbersplat );
+        public static extern bool SaveUbersplatHandle(hashtable table, int parentKey, int childKey, ubersplat whichUbersplat);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveRegionHandle( hashtable table, int parentKey, int childKey, region whichRegion );
+        public static extern bool SaveRegionHandle(hashtable table, int parentKey, int childKey, region whichRegion);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveFogStateHandle( hashtable table, int parentKey, int childKey, fogstate whichFogState );
+        public static extern bool SaveFogStateHandle(hashtable table, int parentKey, int childKey, fogstate whichFogState);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveFogModifierHandle( hashtable table, int parentKey, int childKey, fogmodifier whichFogModifier );
+        public static extern bool SaveFogModifierHandle(hashtable table, int parentKey, int childKey, fogmodifier whichFogModifier);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveAgentHandle( hashtable table, int parentKey, int childKey, agent whichAgent );
+        public static extern bool SaveAgentHandle(hashtable table, int parentKey, int childKey, agent whichAgent);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveHashtableHandle( hashtable table, int parentKey, int childKey, hashtable whichHashtable );
+        public static extern bool SaveHashtableHandle(hashtable table, int parentKey, int childKey, hashtable whichHashtable);
         [NativeLuaMemberAttribute]
-        public static extern bool SaveFrameHandle( hashtable table, int parentKey, int childKey, framehandle whichFrameHandle );
+        public static extern bool SaveFrameHandle(hashtable table, int parentKey, int childKey, framehandle whichFrameHandle);
         [NativeLuaMemberAttribute]
-        public static extern int LoadInteger( hashtable table, int parentKey, int childKey );
+        public static extern int LoadInteger(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern float LoadReal( hashtable table, int parentKey, int childKey );
+        public static extern float LoadReal(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool LoadBoolean( hashtable table, int parentKey, int childKey );
+        public static extern bool LoadBoolean(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern string LoadStr( hashtable table, int parentKey, int childKey );
+        public static extern string LoadStr(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern player LoadPlayerHandle( hashtable table, int parentKey, int childKey );
+        public static extern player LoadPlayerHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern widget LoadWidgetHandle( hashtable table, int parentKey, int childKey );
+        public static extern widget LoadWidgetHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern destructable LoadDestructableHandle( hashtable table, int parentKey, int childKey );
+        public static extern destructable LoadDestructableHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern item LoadItemHandle( hashtable table, int parentKey, int childKey );
+        public static extern item LoadItemHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern unit LoadUnitHandle( hashtable table, int parentKey, int childKey );
+        public static extern unit LoadUnitHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern ability LoadAbilityHandle( hashtable table, int parentKey, int childKey );
+        public static extern ability LoadAbilityHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern timer LoadTimerHandle( hashtable table, int parentKey, int childKey );
+        public static extern timer LoadTimerHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern trigger LoadTriggerHandle( hashtable table, int parentKey, int childKey );
+        public static extern trigger LoadTriggerHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern triggercondition LoadTriggerConditionHandle( hashtable table, int parentKey, int childKey );
+        public static extern triggercondition LoadTriggerConditionHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern triggeraction LoadTriggerActionHandle( hashtable table, int parentKey, int childKey );
+        public static extern triggeraction LoadTriggerActionHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern @event LoadTriggerEventHandle( hashtable table, int parentKey, int childKey );
+        public static extern @event LoadTriggerEventHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern force LoadForceHandle( hashtable table, int parentKey, int childKey );
+        public static extern force LoadForceHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern group LoadGroupHandle( hashtable table, int parentKey, int childKey );
+        public static extern group LoadGroupHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern location LoadLocationHandle( hashtable table, int parentKey, int childKey );
+        public static extern location LoadLocationHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern rect LoadRectHandle( hashtable table, int parentKey, int childKey );
+        public static extern rect LoadRectHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern boolexpr LoadBooleanExprHandle( hashtable table, int parentKey, int childKey );
+        public static extern boolexpr LoadBooleanExprHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern sound LoadSoundHandle( hashtable table, int parentKey, int childKey );
+        public static extern sound LoadSoundHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern effect LoadEffectHandle( hashtable table, int parentKey, int childKey );
+        public static extern effect LoadEffectHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern unitpool LoadUnitPoolHandle( hashtable table, int parentKey, int childKey );
+        public static extern unitpool LoadUnitPoolHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern itempool LoadItemPoolHandle( hashtable table, int parentKey, int childKey );
+        public static extern itempool LoadItemPoolHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern quest LoadQuestHandle( hashtable table, int parentKey, int childKey );
+        public static extern quest LoadQuestHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern questitem LoadQuestItemHandle( hashtable table, int parentKey, int childKey );
+        public static extern questitem LoadQuestItemHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern defeatcondition LoadDefeatConditionHandle( hashtable table, int parentKey, int childKey );
+        public static extern defeatcondition LoadDefeatConditionHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern timerdialog LoadTimerDialogHandle( hashtable table, int parentKey, int childKey );
+        public static extern timerdialog LoadTimerDialogHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern leaderboard LoadLeaderboardHandle( hashtable table, int parentKey, int childKey );
+        public static extern leaderboard LoadLeaderboardHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern multiboard LoadMultiboardHandle( hashtable table, int parentKey, int childKey );
+        public static extern multiboard LoadMultiboardHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern multiboarditem LoadMultiboardItemHandle( hashtable table, int parentKey, int childKey );
+        public static extern multiboarditem LoadMultiboardItemHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern trackable LoadTrackableHandle( hashtable table, int parentKey, int childKey );
+        public static extern trackable LoadTrackableHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern dialog LoadDialogHandle( hashtable table, int parentKey, int childKey );
+        public static extern dialog LoadDialogHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern button LoadButtonHandle( hashtable table, int parentKey, int childKey );
+        public static extern button LoadButtonHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern texttag LoadTextTagHandle( hashtable table, int parentKey, int childKey );
+        public static extern texttag LoadTextTagHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern lightning LoadLightningHandle( hashtable table, int parentKey, int childKey );
+        public static extern lightning LoadLightningHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern image LoadImageHandle( hashtable table, int parentKey, int childKey );
+        public static extern image LoadImageHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern ubersplat LoadUbersplatHandle( hashtable table, int parentKey, int childKey );
+        public static extern ubersplat LoadUbersplatHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern region LoadRegionHandle( hashtable table, int parentKey, int childKey );
+        public static extern region LoadRegionHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern fogstate LoadFogStateHandle( hashtable table, int parentKey, int childKey );
+        public static extern fogstate LoadFogStateHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern fogmodifier LoadFogModifierHandle( hashtable table, int parentKey, int childKey );
+        public static extern fogmodifier LoadFogModifierHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern hashtable LoadHashtableHandle( hashtable table, int parentKey, int childKey );
+        public static extern hashtable LoadHashtableHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern framehandle LoadFrameHandle( hashtable table, int parentKey, int childKey );
+        public static extern framehandle LoadFrameHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveSavedInteger( hashtable table, int parentKey, int childKey );
+        public static extern bool HaveSavedInteger(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveSavedReal( hashtable table, int parentKey, int childKey );
+        public static extern bool HaveSavedReal(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveSavedBoolean( hashtable table, int parentKey, int childKey );
+        public static extern bool HaveSavedBoolean(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveSavedString( hashtable table, int parentKey, int childKey );
+        public static extern bool HaveSavedString(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern bool HaveSavedHandle( hashtable table, int parentKey, int childKey );
+        public static extern bool HaveSavedHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveSavedInteger( hashtable table, int parentKey, int childKey );
+        public static extern void RemoveSavedInteger(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveSavedReal( hashtable table, int parentKey, int childKey );
+        public static extern void RemoveSavedReal(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveSavedBoolean( hashtable table, int parentKey, int childKey );
+        public static extern void RemoveSavedBoolean(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveSavedString( hashtable table, int parentKey, int childKey );
+        public static extern void RemoveSavedString(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveSavedHandle( hashtable table, int parentKey, int childKey );
+        public static extern void RemoveSavedHandle(hashtable table, int parentKey, int childKey);
         [NativeLuaMemberAttribute]
-        public static extern void FlushParentHashtable( hashtable table );
+        public static extern void FlushParentHashtable(hashtable table);
         [NativeLuaMemberAttribute]
-        public static extern void FlushChildHashtable( hashtable table, int parentKey );
+        public static extern void FlushChildHashtable(hashtable table, int parentKey);
         [NativeLuaMemberAttribute]
-        public static extern int GetRandomInt( int lowBound, int highBound );
+        public static extern int GetRandomInt(int lowBound, int highBound);
         [NativeLuaMemberAttribute]
-        public static extern float GetRandomReal( float lowBound, float highBound );
+        public static extern float GetRandomReal(float lowBound, float highBound);
         [NativeLuaMemberAttribute]
         public static extern unitpool CreateUnitPool();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyUnitPool( unitpool whichPool );
+        public static extern void DestroyUnitPool(unitpool whichPool);
         [NativeLuaMemberAttribute]
-        public static extern void UnitPoolAddUnitType( unitpool whichPool, int unitId, float weight );
+        public static extern void UnitPoolAddUnitType(unitpool whichPool, int unitId, float weight);
         [NativeLuaMemberAttribute]
-        public static extern void UnitPoolRemoveUnitType( unitpool whichPool, int unitId );
+        public static extern void UnitPoolRemoveUnitType(unitpool whichPool, int unitId);
         [NativeLuaMemberAttribute]
-        public static extern unit PlaceRandomUnit( unitpool whichPool, player forWhichPlayer, float x, float y, float facing );
+        public static extern unit PlaceRandomUnit(unitpool whichPool, player forWhichPlayer, float x, float y, float facing);
         [NativeLuaMemberAttribute]
         public static extern itempool CreateItemPool();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyItemPool( itempool whichItemPool );
+        public static extern void DestroyItemPool(itempool whichItemPool);
         [NativeLuaMemberAttribute]
-        public static extern void ItemPoolAddItemType( itempool whichItemPool, int itemId, float weight );
+        public static extern void ItemPoolAddItemType(itempool whichItemPool, int itemId, float weight);
         [NativeLuaMemberAttribute]
-        public static extern void ItemPoolRemoveItemType( itempool whichItemPool, int itemId );
+        public static extern void ItemPoolRemoveItemType(itempool whichItemPool, int itemId);
         [NativeLuaMemberAttribute]
-        public static extern item PlaceRandomItem( itempool whichItemPool, float x, float y );
+        public static extern item PlaceRandomItem(itempool whichItemPool, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern int ChooseRandomCreep( int level );
+        public static extern int ChooseRandomCreep(int level);
         [NativeLuaMemberAttribute]
         public static extern int ChooseRandomNPBuilding();
         [NativeLuaMemberAttribute]
-        public static extern int ChooseRandomItem( int level );
+        public static extern int ChooseRandomItem(int level);
         [NativeLuaMemberAttribute]
-        public static extern int ChooseRandomItemEx( itemtype whichType, int level );
+        public static extern int ChooseRandomItemEx(itemtype whichType, int level);
         [NativeLuaMemberAttribute]
-        public static extern void SetRandomSeed( int seed );
+        public static extern void SetRandomSeed(int seed);
         [NativeLuaMemberAttribute]
-        public static extern void SetTerrainFog( float a, float b, float c, float d, float e );
+        public static extern void SetTerrainFog(float a, float b, float c, float d, float e);
         [NativeLuaMemberAttribute]
         public static extern void ResetTerrainFog();
         [NativeLuaMemberAttribute]
-        public static extern void SetUnitFog( float a, float b, float c, float d, float e );
+        public static extern void SetUnitFog(float a, float b, float c, float d, float e);
         [NativeLuaMemberAttribute]
-        public static extern void SetTerrainFogEx( int style, float zstart, float zend, float density, float red, float green, float blue );
+        public static extern void SetTerrainFogEx(int style, float zstart, float zend, float density, float red, float green, float blue);
         [NativeLuaMemberAttribute]
-        public static extern void DisplayTextToPlayer( player toPlayer, float x, float y, string message );
+        public static extern void DisplayTextToPlayer(player toPlayer, float x, float y, string message);
         [NativeLuaMemberAttribute]
-        public static extern void DisplayTimedTextToPlayer( player toPlayer, float x, float y, float duration, string message );
+        public static extern void DisplayTimedTextToPlayer(player toPlayer, float x, float y, float duration, string message);
         [NativeLuaMemberAttribute]
-        public static extern void DisplayTimedTextFromPlayer( player toPlayer, float x, float y, float duration, string message );
+        public static extern void DisplayTimedTextFromPlayer(player toPlayer, float x, float y, float duration, string message);
         [NativeLuaMemberAttribute]
         public static extern void ClearTextMessages();
         [NativeLuaMemberAttribute]
-        public static extern void SetDayNightModels( string terrainDNCFile, string unitDNCFile );
+        public static extern void SetDayNightModels(string terrainDNCFile, string unitDNCFile);
         [NativeLuaMemberAttribute]
-        public static extern void SetSkyModel( string skyModelFile );
+        public static extern void SetSkyModel(string skyModelFile);
         [NativeLuaMemberAttribute]
-        public static extern void EnableUserControl( bool b );
+        public static extern void EnableUserControl(bool b);
         [NativeLuaMemberAttribute]
-        public static extern void EnableUserUI( bool b );
+        public static extern void EnableUserUI(bool b);
         [NativeLuaMemberAttribute]
-        public static extern void SuspendTimeOfDay( bool b );
+        public static extern void SuspendTimeOfDay(bool b);
         [NativeLuaMemberAttribute]
-        public static extern void SetTimeOfDayScale( float r );
+        public static extern void SetTimeOfDayScale(float r);
         [NativeLuaMemberAttribute]
         public static extern float GetTimeOfDayScale();
         [NativeLuaMemberAttribute]
-        public static extern void ShowInterface( bool flag, float fadeDuration );
+        public static extern void ShowInterface(bool flag, float fadeDuration);
         [NativeLuaMemberAttribute]
-        public static extern void PauseGame( bool flag );
+        public static extern void PauseGame(bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void UnitAddIndicator( unit whichUnit, int red, int green, int blue, int alpha );
+        public static extern void UnitAddIndicator(unit whichUnit, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void AddIndicator( widget whichWidget, int red, int green, int blue, int alpha );
+        public static extern void AddIndicator(widget whichWidget, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void PingMinimap( float x, float y, float duration );
+        public static extern void PingMinimap(float x, float y, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void PingMinimapEx( float x, float y, float duration, int red, int green, int blue, bool extraEffects );
+        public static extern void PingMinimapEx(float x, float y, float duration, int red, int green, int blue, bool extraEffects);
         [NativeLuaMemberAttribute]
-        public static extern void EnableOcclusion( bool flag );
+        public static extern void EnableOcclusion(bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetIntroShotText( string introText );
+        public static extern void SetIntroShotText(string introText);
         [NativeLuaMemberAttribute]
-        public static extern void SetIntroShotModel( string introModelPath );
+        public static extern void SetIntroShotModel(string introModelPath);
         [NativeLuaMemberAttribute]
-        public static extern void EnableWorldFogBoundary( bool b );
+        public static extern void EnableWorldFogBoundary(bool b);
         [NativeLuaMemberAttribute]
-        public static extern void PlayModelCinematic( string modelName );
+        public static extern void PlayModelCinematic(string modelName);
         [NativeLuaMemberAttribute]
-        public static extern void PlayCinematic( string movieName );
+        public static extern void PlayCinematic(string movieName);
         [NativeLuaMemberAttribute]
-        public static extern void ForceUIKey( string key );
+        public static extern void ForceUIKey(string key);
         [NativeLuaMemberAttribute]
         public static extern void ForceUICancel();
         [NativeLuaMemberAttribute]
         public static extern void DisplayLoadDialog();
         [NativeLuaMemberAttribute]
-        public static extern void SetAltMinimapIcon( string iconPath );
+        public static extern void SetAltMinimapIcon(string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern void DisableRestartMission( bool flag );
+        public static extern void DisableRestartMission(bool flag);
         [NativeLuaMemberAttribute]
         public static extern texttag CreateTextTag();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyTextTag( texttag t );
+        public static extern void DestroyTextTag(texttag t);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagText( texttag t, string s, float height );
+        public static extern void SetTextTagText(texttag t, string s, float height);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagPos( texttag t, float x, float y, float heightOffset );
+        public static extern void SetTextTagPos(texttag t, float x, float y, float heightOffset);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagPosUnit( texttag t, unit whichUnit, float heightOffset );
+        public static extern void SetTextTagPosUnit(texttag t, unit whichUnit, float heightOffset);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagColor( texttag t, int red, int green, int blue, int alpha );
+        public static extern void SetTextTagColor(texttag t, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagVelocity( texttag t, float xvel, float yvel );
+        public static extern void SetTextTagVelocity(texttag t, float xvel, float yvel);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagVisibility( texttag t, bool flag );
+        public static extern void SetTextTagVisibility(texttag t, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagSuspended( texttag t, bool flag );
+        public static extern void SetTextTagSuspended(texttag t, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagPermanent( texttag t, bool flag );
+        public static extern void SetTextTagPermanent(texttag t, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagAge( texttag t, float age );
+        public static extern void SetTextTagAge(texttag t, float age);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagLifespan( texttag t, float lifespan );
+        public static extern void SetTextTagLifespan(texttag t, float lifespan);
         [NativeLuaMemberAttribute]
-        public static extern void SetTextTagFadepoint( texttag t, float fadepoint );
+        public static extern void SetTextTagFadepoint(texttag t, float fadepoint);
         [NativeLuaMemberAttribute]
-        public static extern void SetReservedLocalHeroButtons( int reserved );
+        public static extern void SetReservedLocalHeroButtons(int reserved);
         [NativeLuaMemberAttribute]
         public static extern int GetAllyColorFilterState();
         [NativeLuaMemberAttribute]
-        public static extern void SetAllyColorFilterState( int state );
+        public static extern void SetAllyColorFilterState(int state);
         [NativeLuaMemberAttribute]
         public static extern bool GetCreepCampFilterState();
         [NativeLuaMemberAttribute]
-        public static extern void SetCreepCampFilterState( bool state );
+        public static extern void SetCreepCampFilterState(bool state);
         [NativeLuaMemberAttribute]
-        public static extern void EnableMinimapFilterButtons( bool enableAlly, bool enableCreep );
+        public static extern void EnableMinimapFilterButtons(bool enableAlly, bool enableCreep);
         [NativeLuaMemberAttribute]
-        public static extern void EnableDragSelect( bool state, bool ui );
+        public static extern void EnableDragSelect(bool state, bool ui);
         [NativeLuaMemberAttribute]
-        public static extern void EnablePreSelect( bool state, bool ui );
+        public static extern void EnablePreSelect(bool state, bool ui);
         [NativeLuaMemberAttribute]
-        public static extern void EnableSelect( bool state, bool ui );
+        public static extern void EnableSelect(bool state, bool ui);
         [NativeLuaMemberAttribute]
-        public static extern trackable CreateTrackable( string trackableModelPath, float x, float y, float facing );
+        public static extern trackable CreateTrackable(string trackableModelPath, float x, float y, float facing);
         [NativeLuaMemberAttribute]
         public static extern quest CreateQuest();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyQuest( quest whichQuest );
+        public static extern void DestroyQuest(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetTitle( quest whichQuest, string title );
+        public static extern void QuestSetTitle(quest whichQuest, string title);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetDescription( quest whichQuest, string description );
+        public static extern void QuestSetDescription(quest whichQuest, string description);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetIconPath( quest whichQuest, string iconPath );
+        public static extern void QuestSetIconPath(quest whichQuest, string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetRequired( quest whichQuest, bool required );
+        public static extern void QuestSetRequired(quest whichQuest, bool required);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetCompleted( quest whichQuest, bool completed );
+        public static extern void QuestSetCompleted(quest whichQuest, bool completed);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetDiscovered( quest whichQuest, bool discovered );
+        public static extern void QuestSetDiscovered(quest whichQuest, bool discovered);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetFailed( quest whichQuest, bool failed );
+        public static extern void QuestSetFailed(quest whichQuest, bool failed);
         [NativeLuaMemberAttribute]
-        public static extern void QuestSetEnabled( quest whichQuest, bool enabled );
+        public static extern void QuestSetEnabled(quest whichQuest, bool enabled);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestRequired( quest whichQuest );
+        public static extern bool IsQuestRequired(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestCompleted( quest whichQuest );
+        public static extern bool IsQuestCompleted(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestDiscovered( quest whichQuest );
+        public static extern bool IsQuestDiscovered(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestFailed( quest whichQuest );
+        public static extern bool IsQuestFailed(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestEnabled( quest whichQuest );
+        public static extern bool IsQuestEnabled(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern questitem QuestCreateItem( quest whichQuest );
+        public static extern questitem QuestCreateItem(quest whichQuest);
         [NativeLuaMemberAttribute]
-        public static extern void QuestItemSetDescription( questitem whichQuestItem, string description );
+        public static extern void QuestItemSetDescription(questitem whichQuestItem, string description);
         [NativeLuaMemberAttribute]
-        public static extern void QuestItemSetCompleted( questitem whichQuestItem, bool completed );
+        public static extern void QuestItemSetCompleted(questitem whichQuestItem, bool completed);
         [NativeLuaMemberAttribute]
-        public static extern bool IsQuestItemCompleted( questitem whichQuestItem );
+        public static extern bool IsQuestItemCompleted(questitem whichQuestItem);
         [NativeLuaMemberAttribute]
         public static extern defeatcondition CreateDefeatCondition();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyDefeatCondition( defeatcondition whichCondition );
+        public static extern void DestroyDefeatCondition(defeatcondition whichCondition);
         [NativeLuaMemberAttribute]
-        public static extern void DefeatConditionSetDescription( defeatcondition whichCondition, string description );
+        public static extern void DefeatConditionSetDescription(defeatcondition whichCondition, string description);
         [NativeLuaMemberAttribute]
         public static extern void FlashQuestDialogButton();
         [NativeLuaMemberAttribute]
         public static extern void ForceQuestDialogUpdate();
         [NativeLuaMemberAttribute]
-        public static extern timerdialog CreateTimerDialog( timer t );
+        public static extern timerdialog CreateTimerDialog(timer t);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyTimerDialog( timerdialog whichDialog );
+        public static extern void DestroyTimerDialog(timerdialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogSetTitle( timerdialog whichDialog, string title );
+        public static extern void TimerDialogSetTitle(timerdialog whichDialog, string title);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogSetTitleColor( timerdialog whichDialog, int red, int green, int blue, int alpha );
+        public static extern void TimerDialogSetTitleColor(timerdialog whichDialog, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogSetTimeColor( timerdialog whichDialog, int red, int green, int blue, int alpha );
+        public static extern void TimerDialogSetTimeColor(timerdialog whichDialog, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogSetSpeed( timerdialog whichDialog, float speedMultFactor );
+        public static extern void TimerDialogSetSpeed(timerdialog whichDialog, float speedMultFactor);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogDisplay( timerdialog whichDialog, bool display );
+        public static extern void TimerDialogDisplay(timerdialog whichDialog, bool display);
         [NativeLuaMemberAttribute]
-        public static extern bool IsTimerDialogDisplayed( timerdialog whichDialog );
+        public static extern bool IsTimerDialogDisplayed(timerdialog whichDialog);
         [NativeLuaMemberAttribute]
-        public static extern void TimerDialogSetRealTimeRemaining( timerdialog whichDialog, float timeRemaining );
+        public static extern void TimerDialogSetRealTimeRemaining(timerdialog whichDialog, float timeRemaining);
         [NativeLuaMemberAttribute]
         public static extern leaderboard CreateLeaderboard();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyLeaderboard( leaderboard lb );
+        public static extern void DestroyLeaderboard(leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardDisplay( leaderboard lb, bool show );
+        public static extern void LeaderboardDisplay(leaderboard lb, bool show);
         [NativeLuaMemberAttribute]
-        public static extern bool IsLeaderboardDisplayed( leaderboard lb );
+        public static extern bool IsLeaderboardDisplayed(leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern int LeaderboardGetItemCount( leaderboard lb );
+        public static extern int LeaderboardGetItemCount(leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetSizeByItemCount( leaderboard lb, int count );
+        public static extern void LeaderboardSetSizeByItemCount(leaderboard lb, int count);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardAddItem( leaderboard lb, string label, int value, player p );
+        public static extern void LeaderboardAddItem(leaderboard lb, string label, int value, player p);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardRemoveItem( leaderboard lb, int index );
+        public static extern void LeaderboardRemoveItem(leaderboard lb, int index);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardRemovePlayerItem( leaderboard lb, player p );
+        public static extern void LeaderboardRemovePlayerItem(leaderboard lb, player p);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardClear( leaderboard lb );
+        public static extern void LeaderboardClear(leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSortItemsByValue( leaderboard lb, bool ascending );
+        public static extern void LeaderboardSortItemsByValue(leaderboard lb, bool ascending);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSortItemsByPlayer( leaderboard lb, bool ascending );
+        public static extern void LeaderboardSortItemsByPlayer(leaderboard lb, bool ascending);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSortItemsByLabel( leaderboard lb, bool ascending );
+        public static extern void LeaderboardSortItemsByLabel(leaderboard lb, bool ascending);
         [NativeLuaMemberAttribute]
-        public static extern bool LeaderboardHasPlayerItem( leaderboard lb, player p );
+        public static extern bool LeaderboardHasPlayerItem(leaderboard lb, player p);
         [NativeLuaMemberAttribute]
-        public static extern int LeaderboardGetPlayerIndex( leaderboard lb, player p );
+        public static extern int LeaderboardGetPlayerIndex(leaderboard lb, player p);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetLabel( leaderboard lb, string label );
+        public static extern void LeaderboardSetLabel(leaderboard lb, string label);
         [NativeLuaMemberAttribute]
-        public static extern string LeaderboardGetLabelText( leaderboard lb );
+        public static extern string LeaderboardGetLabelText(leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void PlayerSetLeaderboard( player toPlayer, leaderboard lb );
+        public static extern void PlayerSetLeaderboard(player toPlayer, leaderboard lb);
         [NativeLuaMemberAttribute]
-        public static extern leaderboard PlayerGetLeaderboard( player toPlayer );
+        public static extern leaderboard PlayerGetLeaderboard(player toPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetLabelColor( leaderboard lb, int red, int green, int blue, int alpha );
+        public static extern void LeaderboardSetLabelColor(leaderboard lb, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetValueColor( leaderboard lb, int red, int green, int blue, int alpha );
+        public static extern void LeaderboardSetValueColor(leaderboard lb, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetStyle( leaderboard lb, bool showLabel, bool showNames, bool showValues, bool showIcons );
+        public static extern void LeaderboardSetStyle(leaderboard lb, bool showLabel, bool showNames, bool showValues, bool showIcons);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetItemValue( leaderboard lb, int whichItem, int val );
+        public static extern void LeaderboardSetItemValue(leaderboard lb, int whichItem, int val);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetItemLabel( leaderboard lb, int whichItem, string val );
+        public static extern void LeaderboardSetItemLabel(leaderboard lb, int whichItem, string val);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetItemStyle( leaderboard lb, int whichItem, bool showLabel, bool showValue, bool showIcon );
+        public static extern void LeaderboardSetItemStyle(leaderboard lb, int whichItem, bool showLabel, bool showValue, bool showIcon);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetItemLabelColor( leaderboard lb, int whichItem, int red, int green, int blue, int alpha );
+        public static extern void LeaderboardSetItemLabelColor(leaderboard lb, int whichItem, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void LeaderboardSetItemValueColor( leaderboard lb, int whichItem, int red, int green, int blue, int alpha );
+        public static extern void LeaderboardSetItemValueColor(leaderboard lb, int whichItem, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
         public static extern multiboard CreateMultiboard();
         [NativeLuaMemberAttribute]
-        public static extern void DestroyMultiboard( multiboard lb );
+        public static extern void DestroyMultiboard(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardDisplay( multiboard lb, bool show );
+        public static extern void MultiboardDisplay(multiboard lb, bool show);
         [NativeLuaMemberAttribute]
-        public static extern bool IsMultiboardDisplayed( multiboard lb );
+        public static extern bool IsMultiboardDisplayed(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardMinimize( multiboard lb, bool minimize );
+        public static extern void MultiboardMinimize(multiboard lb, bool minimize);
         [NativeLuaMemberAttribute]
-        public static extern bool IsMultiboardMinimized( multiboard lb );
+        public static extern bool IsMultiboardMinimized(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardClear( multiboard lb );
+        public static extern void MultiboardClear(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetTitleText( multiboard lb, string label );
+        public static extern void MultiboardSetTitleText(multiboard lb, string label);
         [NativeLuaMemberAttribute]
-        public static extern string MultiboardGetTitleText( multiboard lb );
+        public static extern string MultiboardGetTitleText(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetTitleTextColor( multiboard lb, int red, int green, int blue, int alpha );
+        public static extern void MultiboardSetTitleTextColor(multiboard lb, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern int MultiboardGetRowCount( multiboard lb );
+        public static extern int MultiboardGetRowCount(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern int MultiboardGetColumnCount( multiboard lb );
+        public static extern int MultiboardGetColumnCount(multiboard lb);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetColumnCount( multiboard lb, int count );
+        public static extern void MultiboardSetColumnCount(multiboard lb, int count);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetRowCount( multiboard lb, int count );
+        public static extern void MultiboardSetRowCount(multiboard lb, int count);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemsStyle( multiboard lb, bool showValues, bool showIcons );
+        public static extern void MultiboardSetItemsStyle(multiboard lb, bool showValues, bool showIcons);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemsValue( multiboard lb, string value );
+        public static extern void MultiboardSetItemsValue(multiboard lb, string value);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemsValueColor( multiboard lb, int red, int green, int blue, int alpha );
+        public static extern void MultiboardSetItemsValueColor(multiboard lb, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemsWidth( multiboard lb, float width );
+        public static extern void MultiboardSetItemsWidth(multiboard lb, float width);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemsIcon( multiboard lb, string iconPath );
+        public static extern void MultiboardSetItemsIcon(multiboard lb, string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern multiboarditem MultiboardGetItem( multiboard lb, int row, int column );
+        public static extern multiboarditem MultiboardGetItem(multiboard lb, int row, int column);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardReleaseItem( multiboarditem mbi );
+        public static extern void MultiboardReleaseItem(multiboarditem mbi);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemStyle( multiboarditem mbi, bool showValue, bool showIcon );
+        public static extern void MultiboardSetItemStyle(multiboarditem mbi, bool showValue, bool showIcon);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemValue( multiboarditem mbi, string val );
+        public static extern void MultiboardSetItemValue(multiboarditem mbi, string val);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemValueColor( multiboarditem mbi, int red, int green, int blue, int alpha );
+        public static extern void MultiboardSetItemValueColor(multiboarditem mbi, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemWidth( multiboarditem mbi, float width );
+        public static extern void MultiboardSetItemWidth(multiboarditem mbi, float width);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSetItemIcon( multiboarditem mbi, string iconFileName );
+        public static extern void MultiboardSetItemIcon(multiboarditem mbi, string iconFileName);
         [NativeLuaMemberAttribute]
-        public static extern void MultiboardSuppressDisplay( bool flag );
+        public static extern void MultiboardSuppressDisplay(bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraPosition( float x, float y );
+        public static extern void SetCameraPosition(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraQuickPosition( float x, float y );
+        public static extern void SetCameraQuickPosition(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraBounds( float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4 );
+        public static extern void SetCameraBounds(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
         [NativeLuaMemberAttribute]
         public static extern void StopCamera();
         [NativeLuaMemberAttribute]
-        public static extern void ResetToGameCamera( float duration );
+        public static extern void ResetToGameCamera(float duration);
         [NativeLuaMemberAttribute]
-        public static extern void PanCameraTo( float x, float y );
+        public static extern void PanCameraTo(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void PanCameraToTimed( float x, float y, float duration );
+        public static extern void PanCameraToTimed(float x, float y, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void PanCameraToWithZ( float x, float y, float zOffsetDest );
+        public static extern void PanCameraToWithZ(float x, float y, float zOffsetDest);
         [NativeLuaMemberAttribute]
-        public static extern void PanCameraToTimedWithZ( float x, float y, float zOffsetDest, float duration );
+        public static extern void PanCameraToTimedWithZ(float x, float y, float zOffsetDest, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void SetCinematicCamera( string cameraModelFile );
+        public static extern void SetCinematicCamera(string cameraModelFile);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraRotateMode( float x, float y, float radiansToSweep, float duration );
+        public static extern void SetCameraRotateMode(float x, float y, float radiansToSweep, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraField( camerafield whichField, float value, float duration );
+        public static extern void SetCameraField(camerafield whichField, float value, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void AdjustCameraField( camerafield whichField, float offset, float duration );
+        public static extern void AdjustCameraField(camerafield whichField, float offset, float duration);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraTargetController( unit whichUnit, float xoffset, float yoffset, bool inheritOrientation );
+        public static extern void SetCameraTargetController(unit whichUnit, float xoffset, float yoffset, bool inheritOrientation);
         [NativeLuaMemberAttribute]
-        public static extern void SetCameraOrientController( unit whichUnit, float xoffset, float yoffset );
+        public static extern void SetCameraOrientController(unit whichUnit, float xoffset, float yoffset);
         [NativeLuaMemberAttribute]
         public static extern camerasetup CreateCameraSetup();
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupSetField( camerasetup whichSetup, camerafield whichField, float value, float duration );
+        public static extern void CameraSetupSetField(camerasetup whichSetup, camerafield whichField, float value, float duration);
         [NativeLuaMemberAttribute]
-        public static extern float CameraSetupGetField( camerasetup whichSetup, camerafield whichField );
+        public static extern float CameraSetupGetField(camerasetup whichSetup, camerafield whichField);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupSetDestPosition( camerasetup whichSetup, float x, float y, float duration );
+        public static extern void CameraSetupSetDestPosition(camerasetup whichSetup, float x, float y, float duration);
         [NativeLuaMemberAttribute]
-        public static extern location CameraSetupGetDestPositionLoc( camerasetup whichSetup );
+        public static extern location CameraSetupGetDestPositionLoc(camerasetup whichSetup);
         [NativeLuaMemberAttribute]
-        public static extern float CameraSetupGetDestPositionX( camerasetup whichSetup );
+        public static extern float CameraSetupGetDestPositionX(camerasetup whichSetup);
         [NativeLuaMemberAttribute]
-        public static extern float CameraSetupGetDestPositionY( camerasetup whichSetup );
+        public static extern float CameraSetupGetDestPositionY(camerasetup whichSetup);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupApply( camerasetup whichSetup, bool doPan, bool panTimed );
+        public static extern void CameraSetupApply(camerasetup whichSetup, bool doPan, bool panTimed);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupApplyWithZ( camerasetup whichSetup, float zDestOffset );
+        public static extern void CameraSetupApplyWithZ(camerasetup whichSetup, float zDestOffset);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupApplyForceDuration( camerasetup whichSetup, bool doPan, float forceDuration );
+        public static extern void CameraSetupApplyForceDuration(camerasetup whichSetup, bool doPan, float forceDuration);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetupApplyForceDurationWithZ( camerasetup whichSetup, float zDestOffset, float forceDuration );
+        public static extern void CameraSetupApplyForceDurationWithZ(camerasetup whichSetup, float zDestOffset, float forceDuration);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetTargetNoise( float mag, float velocity );
+        public static extern void CameraSetTargetNoise(float mag, float velocity);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetSourceNoise( float mag, float velocity );
+        public static extern void CameraSetSourceNoise(float mag, float velocity);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetTargetNoiseEx( float mag, float velocity, bool vertOnly );
+        public static extern void CameraSetTargetNoiseEx(float mag, float velocity, bool vertOnly);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetSourceNoiseEx( float mag, float velocity, bool vertOnly );
+        public static extern void CameraSetSourceNoiseEx(float mag, float velocity, bool vertOnly);
         [NativeLuaMemberAttribute]
-        public static extern void CameraSetSmoothingFactor( float factor );
+        public static extern void CameraSetSmoothingFactor(float factor);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterTexture( string filename );
+        public static extern void SetCineFilterTexture(string filename);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterBlendMode( blendmode whichMode );
+        public static extern void SetCineFilterBlendMode(blendmode whichMode);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterTexMapFlags( texmapflags whichFlags );
+        public static extern void SetCineFilterTexMapFlags(texmapflags whichFlags);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterStartUV( float minu, float minv, float maxu, float maxv );
+        public static extern void SetCineFilterStartUV(float minu, float minv, float maxu, float maxv);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterEndUV( float minu, float minv, float maxu, float maxv );
+        public static extern void SetCineFilterEndUV(float minu, float minv, float maxu, float maxv);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterStartColor( int red, int green, int blue, int alpha );
+        public static extern void SetCineFilterStartColor(int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterEndColor( int red, int green, int blue, int alpha );
+        public static extern void SetCineFilterEndColor(int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetCineFilterDuration( float duration );
+        public static extern void SetCineFilterDuration(float duration);
         [NativeLuaMemberAttribute]
-        public static extern void DisplayCineFilter( bool flag );
+        public static extern void DisplayCineFilter(bool flag);
         [NativeLuaMemberAttribute]
         public static extern bool IsCineFilterDisplayed();
         [NativeLuaMemberAttribute]
-        public static extern void SetCinematicScene( int portraitUnitId, playercolor color, string speakerTitle, string text, float sceneDuration, float voiceoverDuration );
+        public static extern void SetCinematicScene(int portraitUnitId, playercolor color, string speakerTitle, string text, float sceneDuration, float voiceoverDuration);
         [NativeLuaMemberAttribute]
         public static extern void EndCinematicScene();
         [NativeLuaMemberAttribute]
-        public static extern void ForceCinematicSubtitles( bool flag );
+        public static extern void ForceCinematicSubtitles(bool flag);
         [NativeLuaMemberAttribute]
-        public static extern float GetCameraMargin( int whichMargin );
+        public static extern float GetCameraMargin(int whichMargin);
         [NativeLuaMemberAttribute]
         public static extern float GetCameraBoundMinX();
         [NativeLuaMemberAttribute]
@@ -6575,7 +6575,7 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern float GetCameraBoundMaxY();
         [NativeLuaMemberAttribute]
-        public static extern float GetCameraField( camerafield whichField );
+        public static extern float GetCameraField(camerafield whichField);
         [NativeLuaMemberAttribute]
         public static extern float GetCameraTargetPositionX();
         [NativeLuaMemberAttribute]
@@ -6593,245 +6593,245 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern location GetCameraEyePositionLoc();
         [NativeLuaMemberAttribute]
-        public static extern void NewSoundEnvironment( string environmentName );
+        public static extern void NewSoundEnvironment(string environmentName);
         [NativeLuaMemberAttribute]
-        public static extern sound CreateSound( string fileName, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate, string eaxSetting );
+        public static extern sound CreateSound(string fileName, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate, string eaxSetting);
         [NativeLuaMemberAttribute]
-        public static extern sound CreateSoundFilenameWithLabel( string fileName, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate, string SLKEntryName );
+        public static extern sound CreateSoundFilenameWithLabel(string fileName, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate, string SLKEntryName);
         [NativeLuaMemberAttribute]
-        public static extern sound CreateSoundFromLabel( string soundLabel, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate );
+        public static extern sound CreateSoundFromLabel(string soundLabel, bool looping, bool is3D, bool stopwhenoutofrange, int fadeInRate, int fadeOutRate);
         [NativeLuaMemberAttribute]
-        public static extern sound CreateMIDISound( string soundLabel, int fadeInRate, int fadeOutRate );
+        public static extern sound CreateMIDISound(string soundLabel, int fadeInRate, int fadeOutRate);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundParamsFromLabel( sound soundHandle, string soundLabel );
+        public static extern void SetSoundParamsFromLabel(sound soundHandle, string soundLabel);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundDistanceCutoff( sound soundHandle, float cutoff );
+        public static extern void SetSoundDistanceCutoff(sound soundHandle, float cutoff);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundChannel( sound soundHandle, int channel );
+        public static extern void SetSoundChannel(sound soundHandle, int channel);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundVolume( sound soundHandle, int volume );
+        public static extern void SetSoundVolume(sound soundHandle, int volume);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundPitch( sound soundHandle, float pitch );
+        public static extern void SetSoundPitch(sound soundHandle, float pitch);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundPlayPosition( sound soundHandle, int millisecs );
+        public static extern void SetSoundPlayPosition(sound soundHandle, int millisecs);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundDistances( sound soundHandle, float minDist, float maxDist );
+        public static extern void SetSoundDistances(sound soundHandle, float minDist, float maxDist);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundConeAngles( sound soundHandle, float inside, float outside, int outsideVolume );
+        public static extern void SetSoundConeAngles(sound soundHandle, float inside, float outside, int outsideVolume);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundConeOrientation( sound soundHandle, float x, float y, float z );
+        public static extern void SetSoundConeOrientation(sound soundHandle, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundPosition( sound soundHandle, float x, float y, float z );
+        public static extern void SetSoundPosition(sound soundHandle, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundVelocity( sound soundHandle, float x, float y, float z );
+        public static extern void SetSoundVelocity(sound soundHandle, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void AttachSoundToUnit( sound soundHandle, unit whichUnit );
+        public static extern void AttachSoundToUnit(sound soundHandle, unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void StartSound( sound soundHandle );
+        public static extern void StartSound(sound soundHandle);
         [NativeLuaMemberAttribute]
-        public static extern void StopSound( sound soundHandle, bool killWhenDone, bool fadeOut );
+        public static extern void StopSound(sound soundHandle, bool killWhenDone, bool fadeOut);
         [NativeLuaMemberAttribute]
-        public static extern void KillSoundWhenDone( sound soundHandle );
+        public static extern void KillSoundWhenDone(sound soundHandle);
         [NativeLuaMemberAttribute]
-        public static extern void SetMapMusic( string musicName, bool random, int index );
+        public static extern void SetMapMusic(string musicName, bool random, int index);
         [NativeLuaMemberAttribute]
         public static extern void ClearMapMusic();
         [NativeLuaMemberAttribute]
-        public static extern void PlayMusic( string musicName );
+        public static extern void PlayMusic(string musicName);
         [NativeLuaMemberAttribute]
-        public static extern void PlayMusicEx( string musicName, int frommsecs, int fadeinmsecs );
+        public static extern void PlayMusicEx(string musicName, int frommsecs, int fadeinmsecs);
         [NativeLuaMemberAttribute]
-        public static extern void StopMusic( bool fadeOut );
+        public static extern void StopMusic(bool fadeOut);
         [NativeLuaMemberAttribute]
         public static extern void ResumeMusic();
         [NativeLuaMemberAttribute]
-        public static extern void PlayThematicMusic( string musicFileName );
+        public static extern void PlayThematicMusic(string musicFileName);
         [NativeLuaMemberAttribute]
-        public static extern void PlayThematicMusicEx( string musicFileName, int frommsecs );
+        public static extern void PlayThematicMusicEx(string musicFileName, int frommsecs);
         [NativeLuaMemberAttribute]
         public static extern void EndThematicMusic();
         [NativeLuaMemberAttribute]
-        public static extern void SetMusicVolume( int volume );
+        public static extern void SetMusicVolume(int volume);
         [NativeLuaMemberAttribute]
-        public static extern void SetMusicPlayPosition( int millisecs );
+        public static extern void SetMusicPlayPosition(int millisecs);
         [NativeLuaMemberAttribute]
-        public static extern void SetThematicMusicPlayPosition( int millisecs );
+        public static extern void SetThematicMusicPlayPosition(int millisecs);
         [NativeLuaMemberAttribute]
-        public static extern void SetSoundDuration( sound soundHandle, int duration );
+        public static extern void SetSoundDuration(sound soundHandle, int duration);
         [NativeLuaMemberAttribute]
-        public static extern int GetSoundDuration( sound soundHandle );
+        public static extern int GetSoundDuration(sound soundHandle);
         [NativeLuaMemberAttribute]
-        public static extern int GetSoundFileDuration( string musicFileName );
+        public static extern int GetSoundFileDuration(string musicFileName);
         [NativeLuaMemberAttribute]
-        public static extern void VolumeGroupSetVolume( volumegroup vgroup, float scale );
+        public static extern void VolumeGroupSetVolume(volumegroup vgroup, float scale);
         [NativeLuaMemberAttribute]
         public static extern void VolumeGroupReset();
         [NativeLuaMemberAttribute]
-        public static extern bool GetSoundIsPlaying( sound soundHandle );
+        public static extern bool GetSoundIsPlaying(sound soundHandle);
         [NativeLuaMemberAttribute]
-        public static extern bool GetSoundIsLoading( sound soundHandle );
+        public static extern bool GetSoundIsLoading(sound soundHandle);
         [NativeLuaMemberAttribute]
-        public static extern void RegisterStackedSound( sound soundHandle, bool byPosition, float rectwidth, float rectheight );
+        public static extern void RegisterStackedSound(sound soundHandle, bool byPosition, float rectwidth, float rectheight);
         [NativeLuaMemberAttribute]
-        public static extern void UnregisterStackedSound( sound soundHandle, bool byPosition, float rectwidth, float rectheight );
+        public static extern void UnregisterStackedSound(sound soundHandle, bool byPosition, float rectwidth, float rectheight);
         [NativeLuaMemberAttribute]
-        public static extern weathereffect AddWeatherEffect( rect where, int effectID );
+        public static extern weathereffect AddWeatherEffect(rect where, int effectID);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveWeatherEffect( weathereffect whichEffect );
+        public static extern void RemoveWeatherEffect(weathereffect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern void EnableWeatherEffect( weathereffect whichEffect, bool enable );
+        public static extern void EnableWeatherEffect(weathereffect whichEffect, bool enable);
         [NativeLuaMemberAttribute]
-        public static extern terraindeformation TerrainDeformCrater( float x, float y, float radius, float depth, int duration, bool permanent );
+        public static extern terraindeformation TerrainDeformCrater(float x, float y, float radius, float depth, int duration, bool permanent);
         [NativeLuaMemberAttribute]
-        public static extern terraindeformation TerrainDeformRipple( float x, float y, float radius, float depth, int duration, int count, float spaceWaves, float timeWaves, float radiusStartPct, bool limitNeg );
+        public static extern terraindeformation TerrainDeformRipple(float x, float y, float radius, float depth, int duration, int count, float spaceWaves, float timeWaves, float radiusStartPct, bool limitNeg);
         [NativeLuaMemberAttribute]
-        public static extern terraindeformation TerrainDeformWave( float x, float y, float dirX, float dirY, float distance, float speed, float radius, float depth, int trailTime, int count );
+        public static extern terraindeformation TerrainDeformWave(float x, float y, float dirX, float dirY, float distance, float speed, float radius, float depth, int trailTime, int count);
         [NativeLuaMemberAttribute]
-        public static extern terraindeformation TerrainDeformRandom( float x, float y, float radius, float minDelta, float maxDelta, int duration, int updateInterval );
+        public static extern terraindeformation TerrainDeformRandom(float x, float y, float radius, float minDelta, float maxDelta, int duration, int updateInterval);
         [NativeLuaMemberAttribute]
-        public static extern void TerrainDeformStop( terraindeformation deformation, int duration );
+        public static extern void TerrainDeformStop(terraindeformation deformation, int duration);
         [NativeLuaMemberAttribute]
         public static extern void TerrainDeformStopAll();
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpecialEffect( string modelName, float x, float y );
+        public static extern effect AddSpecialEffect(string modelName, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpecialEffectLoc( string modelName, location where );
+        public static extern effect AddSpecialEffectLoc(string modelName, location where);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpecialEffectTarget( string modelName, widget targetWidget, string attachPointName );
+        public static extern effect AddSpecialEffectTarget(string modelName, widget targetWidget, string attachPointName);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyEffect( effect whichEffect );
+        public static extern void DestroyEffect(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffect( string abilityString, effecttype t, float x, float y );
+        public static extern effect AddSpellEffect(string abilityString, effecttype t, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffectLoc( string abilityString, effecttype t, location where );
+        public static extern effect AddSpellEffectLoc(string abilityString, effecttype t, location where);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffectById( int abilityId, effecttype t, float x, float y );
+        public static extern effect AddSpellEffectById(int abilityId, effecttype t, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffectByIdLoc( int abilityId, effecttype t, location where );
+        public static extern effect AddSpellEffectByIdLoc(int abilityId, effecttype t, location where);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffectTarget( string modelName, effecttype t, widget targetWidget, string attachPoint );
+        public static extern effect AddSpellEffectTarget(string modelName, effecttype t, widget targetWidget, string attachPoint);
         [NativeLuaMemberAttribute]
-        public static extern effect AddSpellEffectTargetById( int abilityId, effecttype t, widget targetWidget, string attachPoint );
+        public static extern effect AddSpellEffectTargetById(int abilityId, effecttype t, widget targetWidget, string attachPoint);
         [NativeLuaMemberAttribute]
-        public static extern lightning AddLightning( string codeName, bool checkVisibility, float x1, float y1, float x2, float y2 );
+        public static extern lightning AddLightning(string codeName, bool checkVisibility, float x1, float y1, float x2, float y2);
         [NativeLuaMemberAttribute]
-        public static extern lightning AddLightningEx( string codeName, bool checkVisibility, float x1, float y1, float z1, float x2, float y2, float z2 );
+        public static extern lightning AddLightningEx(string codeName, bool checkVisibility, float x1, float y1, float z1, float x2, float y2, float z2);
         [NativeLuaMemberAttribute]
-        public static extern bool DestroyLightning( lightning whichBolt );
+        public static extern bool DestroyLightning(lightning whichBolt);
         [NativeLuaMemberAttribute]
-        public static extern bool MoveLightning( lightning whichBolt, bool checkVisibility, float x1, float y1, float x2, float y2 );
+        public static extern bool MoveLightning(lightning whichBolt, bool checkVisibility, float x1, float y1, float x2, float y2);
         [NativeLuaMemberAttribute]
-        public static extern bool MoveLightningEx( lightning whichBolt, bool checkVisibility, float x1, float y1, float z1, float x2, float y2, float z2 );
+        public static extern bool MoveLightningEx(lightning whichBolt, bool checkVisibility, float x1, float y1, float z1, float x2, float y2, float z2);
         [NativeLuaMemberAttribute]
-        public static extern float GetLightningColorA( lightning whichBolt );
+        public static extern float GetLightningColorA(lightning whichBolt);
         [NativeLuaMemberAttribute]
-        public static extern float GetLightningColorR( lightning whichBolt );
+        public static extern float GetLightningColorR(lightning whichBolt);
         [NativeLuaMemberAttribute]
-        public static extern float GetLightningColorG( lightning whichBolt );
+        public static extern float GetLightningColorG(lightning whichBolt);
         [NativeLuaMemberAttribute]
-        public static extern float GetLightningColorB( lightning whichBolt );
+        public static extern float GetLightningColorB(lightning whichBolt);
         [NativeLuaMemberAttribute]
-        public static extern bool SetLightningColor( lightning whichBolt, float r, float g, float b, float a );
+        public static extern bool SetLightningColor(lightning whichBolt, float r, float g, float b, float a);
         [NativeLuaMemberAttribute]
-        public static extern string GetAbilityEffect( string abilityString, effecttype t, int index );
+        public static extern string GetAbilityEffect(string abilityString, effecttype t, int index);
         [NativeLuaMemberAttribute]
-        public static extern string GetAbilityEffectById( int abilityId, effecttype t, int index );
+        public static extern string GetAbilityEffectById(int abilityId, effecttype t, int index);
         [NativeLuaMemberAttribute]
-        public static extern string GetAbilitySound( string abilityString, soundtype t );
+        public static extern string GetAbilitySound(string abilityString, soundtype t);
         [NativeLuaMemberAttribute]
-        public static extern string GetAbilitySoundById( int abilityId, soundtype t );
+        public static extern string GetAbilitySoundById(int abilityId, soundtype t);
         [NativeLuaMemberAttribute]
-        public static extern int GetTerrainCliffLevel( float x, float y );
+        public static extern int GetTerrainCliffLevel(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetWaterBaseColor( int red, int green, int blue, int alpha );
+        public static extern void SetWaterBaseColor(int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetWaterDeforms( bool val );
+        public static extern void SetWaterDeforms(bool val);
         [NativeLuaMemberAttribute]
-        public static extern int GetTerrainType( float x, float y );
+        public static extern int GetTerrainType(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern int GetTerrainVariance( float x, float y );
+        public static extern int GetTerrainVariance(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetTerrainType( float x, float y, int terrainType, int variation, int area, int shape );
+        public static extern void SetTerrainType(float x, float y, int terrainType, int variation, int area, int shape);
         [NativeLuaMemberAttribute]
-        public static extern bool IsTerrainPathable( float x, float y, pathingtype t );
+        public static extern bool IsTerrainPathable(float x, float y, pathingtype t);
         [NativeLuaMemberAttribute]
-        public static extern void SetTerrainPathable( float x, float y, pathingtype t, bool flag );
+        public static extern void SetTerrainPathable(float x, float y, pathingtype t, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern image CreateImage( string file, float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ, float originX, float originY, float originZ, int imageType );
+        public static extern image CreateImage(string file, float sizeX, float sizeY, float sizeZ, float posX, float posY, float posZ, float originX, float originY, float originZ, int imageType);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyImage( image whichImage );
+        public static extern void DestroyImage(image whichImage);
         [NativeLuaMemberAttribute]
-        public static extern void ShowImage( image whichImage, bool flag );
+        public static extern void ShowImage(image whichImage, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageConstantHeight( image whichImage, bool flag, float height );
+        public static extern void SetImageConstantHeight(image whichImage, bool flag, float height);
         [NativeLuaMemberAttribute]
-        public static extern void SetImagePosition( image whichImage, float x, float y, float z );
+        public static extern void SetImagePosition(image whichImage, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageColor( image whichImage, int red, int green, int blue, int alpha );
+        public static extern void SetImageColor(image whichImage, int red, int green, int blue, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageRender( image whichImage, bool flag );
+        public static extern void SetImageRender(image whichImage, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageRenderAlways( image whichImage, bool flag );
+        public static extern void SetImageRenderAlways(image whichImage, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageAboveWater( image whichImage, bool flag, bool useWaterAlpha );
+        public static extern void SetImageAboveWater(image whichImage, bool flag, bool useWaterAlpha);
         [NativeLuaMemberAttribute]
-        public static extern void SetImageType( image whichImage, int imageType );
+        public static extern void SetImageType(image whichImage, int imageType);
         [NativeLuaMemberAttribute]
-        public static extern ubersplat CreateUbersplat( float x, float y, string name, int red, int green, int blue, int alpha, bool forcePaused, bool noBirthTime );
+        public static extern ubersplat CreateUbersplat(float x, float y, string name, int red, int green, int blue, int alpha, bool forcePaused, bool noBirthTime);
         [NativeLuaMemberAttribute]
-        public static extern void DestroyUbersplat( ubersplat whichSplat );
+        public static extern void DestroyUbersplat(ubersplat whichSplat);
         [NativeLuaMemberAttribute]
-        public static extern void ResetUbersplat( ubersplat whichSplat );
+        public static extern void ResetUbersplat(ubersplat whichSplat);
         [NativeLuaMemberAttribute]
-        public static extern void FinishUbersplat( ubersplat whichSplat );
+        public static extern void FinishUbersplat(ubersplat whichSplat);
         [NativeLuaMemberAttribute]
-        public static extern void ShowUbersplat( ubersplat whichSplat, bool flag );
+        public static extern void ShowUbersplat(ubersplat whichSplat, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetUbersplatRender( ubersplat whichSplat, bool flag );
+        public static extern void SetUbersplatRender(ubersplat whichSplat, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetUbersplatRenderAlways( ubersplat whichSplat, bool flag );
+        public static extern void SetUbersplatRenderAlways(ubersplat whichSplat, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void SetBlight( player whichPlayer, float x, float y, float radius, bool addBlight );
+        public static extern void SetBlight(player whichPlayer, float x, float y, float radius, bool addBlight);
         [NativeLuaMemberAttribute]
-        public static extern void SetBlightRect( player whichPlayer, rect r, bool addBlight );
+        public static extern void SetBlightRect(player whichPlayer, rect r, bool addBlight);
         [NativeLuaMemberAttribute]
-        public static extern void SetBlightPoint( player whichPlayer, float x, float y, bool addBlight );
+        public static extern void SetBlightPoint(player whichPlayer, float x, float y, bool addBlight);
         [NativeLuaMemberAttribute]
-        public static extern void SetBlightLoc( player whichPlayer, location whichLocation, float radius, bool addBlight );
+        public static extern void SetBlightLoc(player whichPlayer, location whichLocation, float radius, bool addBlight);
         [NativeLuaMemberAttribute]
-        public static extern unit CreateBlightedGoldmine( player id, float x, float y, float face );
+        public static extern unit CreateBlightedGoldmine(player id, float x, float y, float face);
         [NativeLuaMemberAttribute]
-        public static extern bool IsPointBlighted( float x, float y );
+        public static extern bool IsPointBlighted(float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void SetDoodadAnimation( float x, float y, float radius, int doodadID, bool nearestOnly, string animName, bool animRandom );
+        public static extern void SetDoodadAnimation(float x, float y, float radius, int doodadID, bool nearestOnly, string animName, bool animRandom);
         [NativeLuaMemberAttribute]
-        public static extern void SetDoodadAnimationRect( rect r, int doodadID, string animName, bool animRandom );
+        public static extern void SetDoodadAnimationRect(rect r, int doodadID, string animName, bool animRandom);
         [NativeLuaMemberAttribute]
-        public static extern void StartMeleeAI( player num, string script );
+        public static extern void StartMeleeAI(player num, string script);
         [NativeLuaMemberAttribute]
-        public static extern void StartCampaignAI( player num, string script );
+        public static extern void StartCampaignAI(player num, string script);
         [NativeLuaMemberAttribute]
-        public static extern void CommandAI( player num, int command, int data );
+        public static extern void CommandAI(player num, int command, int data);
         [NativeLuaMemberAttribute]
-        public static extern void PauseCompAI( player p, bool pause );
+        public static extern void PauseCompAI(player p, bool pause);
         [NativeLuaMemberAttribute]
-        public static extern aidifficulty GetAIDifficulty( player num );
+        public static extern aidifficulty GetAIDifficulty(player num);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveGuardPosition( unit hUnit );
+        public static extern void RemoveGuardPosition(unit hUnit);
         [NativeLuaMemberAttribute]
-        public static extern void RecycleGuardPosition( unit hUnit );
+        public static extern void RecycleGuardPosition(unit hUnit);
         [NativeLuaMemberAttribute]
-        public static extern void RemoveAllGuardPositions( player num );
+        public static extern void RemoveAllGuardPositions(player num);
         [NativeLuaMemberAttribute]
-        public static extern void Cheat( string cheatStr );
+        public static extern void Cheat(string cheatStr);
         [NativeLuaMemberAttribute]
         public static extern bool IsNoVictoryCheat();
         [NativeLuaMemberAttribute]
         public static extern bool IsNoDefeatCheat();
         [NativeLuaMemberAttribute]
-        public static extern void Preload( string filename );
+        public static extern void Preload(string filename);
         [NativeLuaMemberAttribute]
-        public static extern void PreloadEnd( float timeout );
+        public static extern void PreloadEnd(float timeout);
         [NativeLuaMemberAttribute]
         public static extern void PreloadStart();
         [NativeLuaMemberAttribute]
@@ -6843,13 +6843,13 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern void PreloadGenStart();
         [NativeLuaMemberAttribute]
-        public static extern void PreloadGenEnd( string filename );
+        public static extern void PreloadGenEnd(string filename);
         [NativeLuaMemberAttribute]
-        public static extern void Preloader( string filename );
+        public static extern void Preloader(string filename);
         [NativeLuaMemberAttribute]
-        public static extern void AutomationSetTestType( string testType );
+        public static extern void AutomationSetTestType(string testType);
         [NativeLuaMemberAttribute]
-        public static extern void AutomationTestStart( string testName );
+        public static extern void AutomationTestStart(string testName);
         [NativeLuaMemberAttribute]
         public static extern void AutomationTestEnd();
         [NativeLuaMemberAttribute]
@@ -6863,189 +6863,189 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern mousebuttontype BlzGetTriggerPlayerMouseButton();
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityTooltip( int abilCode, string tooltip, int level );
+        public static extern void BlzSetAbilityTooltip(int abilCode, string tooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityActivatedTooltip( int abilCode, string tooltip, int level );
+        public static extern void BlzSetAbilityActivatedTooltip(int abilCode, string tooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityExtendedTooltip( int abilCode, string extendedTooltip, int level );
+        public static extern void BlzSetAbilityExtendedTooltip(int abilCode, string extendedTooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityActivatedExtendedTooltip( int abilCode, string extendedTooltip, int level );
+        public static extern void BlzSetAbilityActivatedExtendedTooltip(int abilCode, string extendedTooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityResearchTooltip( int abilCode, string researchTooltip, int level );
+        public static extern void BlzSetAbilityResearchTooltip(int abilCode, string researchTooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityResearchExtendedTooltip( int abilCode, string researchExtendedTooltip, int level );
+        public static extern void BlzSetAbilityResearchExtendedTooltip(int abilCode, string researchExtendedTooltip, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityActivatedTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityActivatedTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityExtendedTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityExtendedTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityActivatedExtendedTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityActivatedExtendedTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityResearchTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityResearchTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityResearchExtendedTooltip( int abilCode, int level );
+        public static extern string BlzGetAbilityResearchExtendedTooltip(int abilCode, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityIcon( int abilCode, string iconPath );
+        public static extern void BlzSetAbilityIcon(int abilCode, string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityIcon( int abilCode );
+        public static extern string BlzGetAbilityIcon(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityActivatedIcon( int abilCode, string iconPath );
+        public static extern void BlzSetAbilityActivatedIcon(int abilCode, string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityActivatedIcon( int abilCode );
+        public static extern string BlzGetAbilityActivatedIcon(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityPosX( int abilCode );
+        public static extern int BlzGetAbilityPosX(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityPosY( int abilCode );
+        public static extern int BlzGetAbilityPosY(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityPosX( int abilCode, int x );
+        public static extern void BlzSetAbilityPosX(int abilCode, int x);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityPosY( int abilCode, int y );
+        public static extern void BlzSetAbilityPosY(int abilCode, int y);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityActivatedPosX( int abilCode );
+        public static extern int BlzGetAbilityActivatedPosX(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityActivatedPosY( int abilCode );
+        public static extern int BlzGetAbilityActivatedPosY(int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityActivatedPosX( int abilCode, int x );
+        public static extern void BlzSetAbilityActivatedPosX(int abilCode, int x);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetAbilityActivatedPosY( int abilCode, int y );
+        public static extern void BlzSetAbilityActivatedPosY(int abilCode, int y);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitMaxHP( unit whichUnit );
+        public static extern int BlzGetUnitMaxHP(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitMaxHP( unit whichUnit, int hp );
+        public static extern void BlzSetUnitMaxHP(unit whichUnit, int hp);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitMaxMana( unit whichUnit );
+        public static extern int BlzGetUnitMaxMana(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitMaxMana( unit whichUnit, int mana );
+        public static extern void BlzSetUnitMaxMana(unit whichUnit, int mana);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetItemName( item whichItem, string name );
+        public static extern void BlzSetItemName(item whichItem, string name);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetItemDescription( item whichItem, string description );
+        public static extern void BlzSetItemDescription(item whichItem, string description);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetItemDescription( item whichItem );
+        public static extern string BlzGetItemDescription(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetItemTooltip( item whichItem, string tooltip );
+        public static extern void BlzSetItemTooltip(item whichItem, string tooltip);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetItemTooltip( item whichItem );
+        public static extern string BlzGetItemTooltip(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetItemExtendedTooltip( item whichItem, string extendedTooltip );
+        public static extern void BlzSetItemExtendedTooltip(item whichItem, string extendedTooltip);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetItemExtendedTooltip( item whichItem );
+        public static extern string BlzGetItemExtendedTooltip(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetItemIconPath( item whichItem, string iconPath );
+        public static extern void BlzSetItemIconPath(item whichItem, string iconPath);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetItemIconPath( item whichItem );
+        public static extern string BlzGetItemIconPath(item whichItem);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitName( unit whichUnit, string name );
+        public static extern void BlzSetUnitName(unit whichUnit, string name);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetHeroProperName( unit whichUnit, string heroProperName );
+        public static extern void BlzSetHeroProperName(unit whichUnit, string heroProperName);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitBaseDamage( unit whichUnit, int weaponIndex );
+        public static extern int BlzGetUnitBaseDamage(unit whichUnit, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitBaseDamage( unit whichUnit, int baseDamage, int weaponIndex );
+        public static extern void BlzSetUnitBaseDamage(unit whichUnit, int baseDamage, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitDiceNumber( unit whichUnit, int weaponIndex );
+        public static extern int BlzGetUnitDiceNumber(unit whichUnit, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitDiceNumber( unit whichUnit, int diceNumber, int weaponIndex );
+        public static extern void BlzSetUnitDiceNumber(unit whichUnit, int diceNumber, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitDiceSides( unit whichUnit, int weaponIndex );
+        public static extern int BlzGetUnitDiceSides(unit whichUnit, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitDiceSides( unit whichUnit, int diceSides, int weaponIndex );
+        public static extern void BlzSetUnitDiceSides(unit whichUnit, int diceSides, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitAttackCooldown( unit whichUnit, int weaponIndex );
+        public static extern float BlzGetUnitAttackCooldown(unit whichUnit, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitAttackCooldown( unit whichUnit, float cooldown, int weaponIndex );
+        public static extern void BlzSetUnitAttackCooldown(unit whichUnit, float cooldown, int weaponIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectColorByPlayer( effect whichEffect, player whichPlayer );
+        public static extern void BlzSetSpecialEffectColorByPlayer(effect whichEffect, player whichPlayer);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectColor( effect whichEffect, int r, int g, int b );
+        public static extern void BlzSetSpecialEffectColor(effect whichEffect, int r, int g, int b);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectAlpha( effect whichEffect, int alpha );
+        public static extern void BlzSetSpecialEffectAlpha(effect whichEffect, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectScale( effect whichEffect, float scale );
+        public static extern void BlzSetSpecialEffectScale(effect whichEffect, float scale);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectPosition( effect whichEffect, float x, float y, float z );
+        public static extern void BlzSetSpecialEffectPosition(effect whichEffect, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectHeight( effect whichEffect, float height );
+        public static extern void BlzSetSpecialEffectHeight(effect whichEffect, float height);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectTimeScale( effect whichEffect, float timeScale );
+        public static extern void BlzSetSpecialEffectTimeScale(effect whichEffect, float timeScale);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectTime( effect whichEffect, float time );
+        public static extern void BlzSetSpecialEffectTime(effect whichEffect, float time);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectOrientation( effect whichEffect, float yaw, float pitch, float roll );
+        public static extern void BlzSetSpecialEffectOrientation(effect whichEffect, float yaw, float pitch, float roll);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectYaw( effect whichEffect, float yaw );
+        public static extern void BlzSetSpecialEffectYaw(effect whichEffect, float yaw);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectPitch( effect whichEffect, float pitch );
+        public static extern void BlzSetSpecialEffectPitch(effect whichEffect, float pitch);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectRoll( effect whichEffect, float roll );
+        public static extern void BlzSetSpecialEffectRoll(effect whichEffect, float roll);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectX( effect whichEffect, float x );
+        public static extern void BlzSetSpecialEffectX(effect whichEffect, float x);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectY( effect whichEffect, float y );
+        public static extern void BlzSetSpecialEffectY(effect whichEffect, float y);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectZ( effect whichEffect, float z );
+        public static extern void BlzSetSpecialEffectZ(effect whichEffect, float z);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectPositionLoc( effect whichEffect, location loc );
+        public static extern void BlzSetSpecialEffectPositionLoc(effect whichEffect, location loc);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetLocalSpecialEffectX( effect whichEffect );
+        public static extern float BlzGetLocalSpecialEffectX(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetLocalSpecialEffectY( effect whichEffect );
+        public static extern float BlzGetLocalSpecialEffectY(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetLocalSpecialEffectZ( effect whichEffect );
+        public static extern float BlzGetLocalSpecialEffectZ(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSpecialEffectClearSubAnimations( effect whichEffect );
+        public static extern void BlzSpecialEffectClearSubAnimations(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSpecialEffectRemoveSubAnimation( effect whichEffect, subanimtype whichSubAnim );
+        public static extern void BlzSpecialEffectRemoveSubAnimation(effect whichEffect, subanimtype whichSubAnim);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSpecialEffectAddSubAnimation( effect whichEffect, subanimtype whichSubAnim );
+        public static extern void BlzSpecialEffectAddSubAnimation(effect whichEffect, subanimtype whichSubAnim);
         [NativeLuaMemberAttribute]
-        public static extern void BlzPlaySpecialEffect( effect whichEffect, animtype whichAnim );
+        public static extern void BlzPlaySpecialEffect(effect whichEffect, animtype whichAnim);
         [NativeLuaMemberAttribute]
-        public static extern void BlzPlaySpecialEffectWithTimeScale( effect whichEffect, animtype whichAnim, float timeScale );
+        public static extern void BlzPlaySpecialEffectWithTimeScale(effect whichEffect, animtype whichAnim, float timeScale);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAnimName( animtype whichAnim );
+        public static extern string BlzGetAnimName(animtype whichAnim);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitArmor( unit whichUnit );
+        public static extern float BlzGetUnitArmor(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitArmor( unit whichUnit, float armorAmount );
+        public static extern void BlzSetUnitArmor(unit whichUnit, float armorAmount);
         [NativeLuaMemberAttribute]
-        public static extern void BlzUnitHideAbility( unit whichUnit, int abilId, bool flag );
+        public static extern void BlzUnitHideAbility(unit whichUnit, int abilId, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void BlzUnitDisableAbility( unit whichUnit, int abilId, bool flag, bool hideUI );
+        public static extern void BlzUnitDisableAbility(unit whichUnit, int abilId, bool flag, bool hideUI);
         [NativeLuaMemberAttribute]
-        public static extern void BlzUnitCancelTimedLife( unit whichUnit );
+        public static extern void BlzUnitCancelTimedLife(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzIsUnitSelectable( unit whichUnit );
+        public static extern bool BlzIsUnitSelectable(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzIsUnitInvulnerable( unit whichUnit );
+        public static extern bool BlzIsUnitInvulnerable(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzUnitInterruptAttack( unit whichUnit );
+        public static extern void BlzUnitInterruptAttack(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitCollisionSize( unit whichUnit );
+        public static extern float BlzGetUnitCollisionSize(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityManaCost( int abilId, int level );
+        public static extern int BlzGetAbilityManaCost(int abilId, int level);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetAbilityCooldown( int abilId, int level );
+        public static extern float BlzGetAbilityCooldown(int abilId, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitAbilityCooldown( unit whichUnit, int abilId, int level, float cooldown );
+        public static extern void BlzSetUnitAbilityCooldown(unit whichUnit, int abilId, int level, float cooldown);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitAbilityCooldown( unit whichUnit, int abilId, int level );
+        public static extern float BlzGetUnitAbilityCooldown(unit whichUnit, int abilId, int level);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitAbilityCooldownRemaining( unit whichUnit, int abilId );
+        public static extern float BlzGetUnitAbilityCooldownRemaining(unit whichUnit, int abilId);
         [NativeLuaMemberAttribute]
-        public static extern void BlzEndUnitAbilityCooldown( unit whichUnit, int abilCode );
+        public static extern void BlzEndUnitAbilityCooldown(unit whichUnit, int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitAbilityManaCost( unit whichUnit, int abilId, int level );
+        public static extern int BlzGetUnitAbilityManaCost(unit whichUnit, int abilId, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetUnitAbilityManaCost( unit whichUnit, int abilId, int level, int manaCost );
+        public static extern void BlzSetUnitAbilityManaCost(unit whichUnit, int abilId, int level, int manaCost);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetLocalUnitZ( unit whichUnit );
+        public static extern float BlzGetLocalUnitZ(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzDecPlayerTechResearched( player whichPlayer, int techid, int levels );
+        public static extern void BlzDecPlayerTechResearched(player whichPlayer, int techid, int levels);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetEventDamage( float damage );
+        public static extern void BlzSetEventDamage(float damage);
         [NativeLuaMemberAttribute]
         public static extern unit BlzGetEventDamageTarget();
         [NativeLuaMemberAttribute]
@@ -7055,131 +7055,131 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern weapontype BlzGetEventWeaponType();
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetEventAttackType( attacktype attackType );
+        public static extern bool BlzSetEventAttackType(attacktype attackType);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetEventDamageType( damagetype damageType );
+        public static extern bool BlzSetEventDamageType(damagetype damageType);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetEventWeaponType( weapontype weaponType );
+        public static extern bool BlzSetEventWeaponType(weapontype weaponType);
         [NativeLuaMemberAttribute]
-        public static extern int RequestExtraIntegerData( int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6 );
+        public static extern int RequestExtraIntegerData(int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6);
         [NativeLuaMemberAttribute]
-        public static extern bool RequestExtraBooleanData( int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6 );
+        public static extern bool RequestExtraBooleanData(int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6);
         [NativeLuaMemberAttribute]
-        public static extern string RequestExtraStringData( int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6 );
+        public static extern string RequestExtraStringData(int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6);
         [NativeLuaMemberAttribute]
-        public static extern float RequestExtraRealData( int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6 );
+        public static extern float RequestExtraRealData(int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitZ( unit whichUnit );
+        public static extern float BlzGetUnitZ(unit whichUnit);
         [NativeLuaMemberAttribute]
-        public static extern void BlzEnableSelections( bool enableSelection, bool enableSelectionCircle );
+        public static extern void BlzEnableSelections(bool enableSelection, bool enableSelectionCircle);
         [NativeLuaMemberAttribute]
         public static extern bool BlzIsSelectionEnabled();
         [NativeLuaMemberAttribute]
         public static extern bool BlzIsSelectionCircleEnabled();
         [NativeLuaMemberAttribute]
-        public static extern void BlzCameraSetupApplyForceDurationSmooth( camerasetup whichSetup, bool doPan, float forcedDuration, float easeInDuration, float easeOutDuration, float smoothFactor );
+        public static extern void BlzCameraSetupApplyForceDurationSmooth(camerasetup whichSetup, bool doPan, float forcedDuration, float easeInDuration, float easeOutDuration, float smoothFactor);
         [NativeLuaMemberAttribute]
-        public static extern void BlzEnableTargetIndicator( bool enable );
+        public static extern void BlzEnableTargetIndicator(bool enable);
         [NativeLuaMemberAttribute]
         public static extern bool BlzIsTargetIndicatorEnabled();
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzGetOriginFrame( originframetype frameType, int index );
+        public static extern framehandle BlzGetOriginFrame(originframetype frameType, int index);
         [NativeLuaMemberAttribute]
-        public static extern void BlzEnableUIAutoPosition( bool enable );
+        public static extern void BlzEnableUIAutoPosition(bool enable);
         [NativeLuaMemberAttribute]
-        public static extern void BlzHideOriginFrames( bool enable );
+        public static extern void BlzHideOriginFrames(bool enable);
         [NativeLuaMemberAttribute]
-        public static extern int BlzConvertColor( int a, int r, int g, int b );
+        public static extern int BlzConvertColor(int a, int r, int g, int b);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzLoadTOCFile( string TOCFile );
+        public static extern bool BlzLoadTOCFile(string TOCFile);
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzCreateFrame( string name, framehandle owner, int priority, int createContext );
+        public static extern framehandle BlzCreateFrame(string name, framehandle owner, int priority, int createContext);
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzCreateSimpleFrame( string name, framehandle owner, int createContext );
+        public static extern framehandle BlzCreateSimpleFrame(string name, framehandle owner, int createContext);
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzCreateFrameByType( string typeName, string name, framehandle owner, string inherits, int createContext );
+        public static extern framehandle BlzCreateFrameByType(string typeName, string name, framehandle owner, string inherits, int createContext);
         [NativeLuaMemberAttribute]
-        public static extern void BlzDestroyFrame( framehandle frame );
+        public static extern void BlzDestroyFrame(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetPoint( framehandle frame, framepointtype point, framehandle relative, framepointtype relativePoint, float x, float y );
+        public static extern void BlzFrameSetPoint(framehandle frame, framepointtype point, framehandle relative, framepointtype relativePoint, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetAbsPoint( framehandle frame, framepointtype point, float x, float y );
+        public static extern void BlzFrameSetAbsPoint(framehandle frame, framepointtype point, float x, float y);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameClearAllPoints( framehandle frame );
+        public static extern void BlzFrameClearAllPoints(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetAllPoints( framehandle frame, framehandle relative );
+        public static extern void BlzFrameSetAllPoints(framehandle frame, framehandle relative);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetVisible( framehandle frame, bool visible );
+        public static extern void BlzFrameSetVisible(framehandle frame, bool visible);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzFrameIsVisible( framehandle frame );
+        public static extern bool BlzFrameIsVisible(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzGetFrameByName( string name, int createContext );
+        public static extern framehandle BlzGetFrameByName(string name, int createContext);
         [NativeLuaMemberAttribute]
-        public static extern string BlzFrameGetName( framehandle frame );
+        public static extern string BlzFrameGetName(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameClick( framehandle frame );
+        public static extern void BlzFrameClick(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetText( framehandle frame, string text );
+        public static extern void BlzFrameSetText(framehandle frame, string text);
         [NativeLuaMemberAttribute]
-        public static extern string BlzFrameGetText( framehandle frame );
+        public static extern string BlzFrameGetText(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameAddText( framehandle frame, string text );
+        public static extern void BlzFrameAddText(framehandle frame, string text);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetTextSizeLimit( framehandle frame, int size );
+        public static extern void BlzFrameSetTextSizeLimit(framehandle frame, int size);
         [NativeLuaMemberAttribute]
-        public static extern int BlzFrameGetTextSizeLimit( framehandle frame );
+        public static extern int BlzFrameGetTextSizeLimit(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetTextColor( framehandle frame, int color );
+        public static extern void BlzFrameSetTextColor(framehandle frame, int color);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetFocus( framehandle frame, bool flag );
+        public static extern void BlzFrameSetFocus(framehandle frame, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetModel( framehandle frame, string modelFile, int cameraIndex );
+        public static extern void BlzFrameSetModel(framehandle frame, string modelFile, int cameraIndex);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetEnable( framehandle frame, bool enabled );
+        public static extern void BlzFrameSetEnable(framehandle frame, bool enabled);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzFrameGetEnable( framehandle frame );
+        public static extern bool BlzFrameGetEnable(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetAlpha( framehandle frame, int alpha );
+        public static extern void BlzFrameSetAlpha(framehandle frame, int alpha);
         [NativeLuaMemberAttribute]
-        public static extern int BlzFrameGetAlpha( framehandle frame );
+        public static extern int BlzFrameGetAlpha(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetSpriteAnimate( framehandle frame, int primaryProp, int flags );
+        public static extern void BlzFrameSetSpriteAnimate(framehandle frame, int primaryProp, int flags);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetTexture( framehandle frame, string texFile, int flag, bool blend );
+        public static extern void BlzFrameSetTexture(framehandle frame, string texFile, int flag, bool blend);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetScale( framehandle frame, float scale );
+        public static extern void BlzFrameSetScale(framehandle frame, float scale);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetTooltip( framehandle frame, framehandle tooltip );
+        public static extern void BlzFrameSetTooltip(framehandle frame, framehandle tooltip);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameCageMouse( framehandle frame, bool enable );
+        public static extern void BlzFrameCageMouse(framehandle frame, bool enable);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetValue( framehandle frame, float value );
+        public static extern void BlzFrameSetValue(framehandle frame, float value);
         [NativeLuaMemberAttribute]
-        public static extern float BlzFrameGetValue( framehandle frame );
+        public static extern float BlzFrameGetValue(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetMinMaxValue( framehandle frame, float minValue, float maxValue );
+        public static extern void BlzFrameSetMinMaxValue(framehandle frame, float minValue, float maxValue);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetStepSize( framehandle frame, float stepSize );
+        public static extern void BlzFrameSetStepSize(framehandle frame, float stepSize);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetSize( framehandle frame, float width, float height );
+        public static extern void BlzFrameSetSize(framehandle frame, float width, float height);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetVertexColor( framehandle frame, int color );
+        public static extern void BlzFrameSetVertexColor(framehandle frame, int color);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetLevel( framehandle frame, int level );
+        public static extern void BlzFrameSetLevel(framehandle frame, int level);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetParent( framehandle frame, framehandle parent );
+        public static extern void BlzFrameSetParent(framehandle frame, framehandle parent);
         [NativeLuaMemberAttribute]
-        public static extern framehandle BlzFrameGetParent( framehandle frame );
+        public static extern framehandle BlzFrameGetParent(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern float BlzFrameGetHeight( framehandle frame );
+        public static extern float BlzFrameGetHeight(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern float BlzFrameGetWidth( framehandle frame );
+        public static extern float BlzFrameGetWidth(framehandle frame);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetFont( framehandle frame, string fileName, float height, int flags );
+        public static extern void BlzFrameSetFont(framehandle frame, string fileName, float height, int flags);
         [NativeLuaMemberAttribute]
-        public static extern void BlzFrameSetTextAlignment( framehandle frame, textaligntype vert, textaligntype horz );
+        public static extern void BlzFrameSetTextAlignment(framehandle frame, textaligntype vert, textaligntype horz);
         [NativeLuaMemberAttribute]
-        public static extern @event BlzTriggerRegisterFrameEvent( trigger whichTrigger, framehandle frame, frameeventtype eventId );
+        public static extern @event BlzTriggerRegisterFrameEvent(trigger whichTrigger, framehandle frame, frameeventtype eventId);
         [NativeLuaMemberAttribute]
         public static extern framehandle BlzGetTriggerFrame();
         [NativeLuaMemberAttribute]
@@ -7189,15 +7189,15 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern string BlzGetTriggerFrameText();
         [NativeLuaMemberAttribute]
-        public static extern @event BlzTriggerRegisterPlayerSyncEvent( trigger whichTrigger, player whichPlayer, string prefix, bool fromServer );
+        public static extern @event BlzTriggerRegisterPlayerSyncEvent(trigger whichTrigger, player whichPlayer, string prefix, bool fromServer);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSendSyncData( string prefix, string data );
+        public static extern bool BlzSendSyncData(string prefix, string data);
         [NativeLuaMemberAttribute]
         public static extern string BlzGetTriggerSyncPrefix();
         [NativeLuaMemberAttribute]
         public static extern string BlzGetTriggerSyncData();
         [NativeLuaMemberAttribute]
-        public static extern @event BlzTriggerRegisterPlayerKeyEvent( trigger whichTrigger, player whichPlayer, oskeytype key, int metaKey, bool keyDown );
+        public static extern @event BlzTriggerRegisterPlayerKeyEvent(trigger whichTrigger, player whichPlayer, oskeytype key, int metaKey, bool keyDown);
         [NativeLuaMemberAttribute]
         public static extern oskeytype BlzGetTriggerPlayerKey();
         [NativeLuaMemberAttribute]
@@ -7205,9 +7205,9 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern bool BlzGetTriggerPlayerIsKeyDown();
         [NativeLuaMemberAttribute]
-        public static extern void BlzEnableCursor( bool enable );
+        public static extern void BlzEnableCursor(bool enable);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetMousePos( int x, int y );
+        public static extern void BlzSetMousePos(int x, int y);
         [NativeLuaMemberAttribute]
         public static extern int BlzGetLocalClientWidth();
         [NativeLuaMemberAttribute]
@@ -7217,150 +7217,148 @@ namespace War3Api
         [NativeLuaMemberAttribute]
         public static extern unit BlzGetMouseFocusUnit();
         [NativeLuaMemberAttribute]
-        public static extern bool BlzChangeMinimapTerrainTex( string texFile );
+        public static extern bool BlzChangeMinimapTerrainTex(string texFile);
         [NativeLuaMemberAttribute]
         public static extern string BlzGetLocale();
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetSpecialEffectScale( effect whichEffect );
+        public static extern float BlzGetSpecialEffectScale(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern void BlzSetSpecialEffectMatrixScale( effect whichEffect, float x, float y, float z );
+        public static extern void BlzSetSpecialEffectMatrixScale(effect whichEffect, float x, float y, float z);
         [NativeLuaMemberAttribute]
-        public static extern void BlzResetSpecialEffectMatrix( effect whichEffect );
+        public static extern void BlzResetSpecialEffectMatrix(effect whichEffect);
         [NativeLuaMemberAttribute]
-        public static extern ability BlzGetUnitAbility( unit whichUnit, int abilId );
+        public static extern ability BlzGetUnitAbility(unit whichUnit, int abilId);
         [NativeLuaMemberAttribute]
-        public static extern ability BlzGetUnitAbilityByIndex( unit whichUnit, int index );
+        public static extern ability BlzGetUnitAbilityByIndex(unit whichUnit, int index);
         [NativeLuaMemberAttribute]
-        public static extern void BlzDisplayChatMessage( player whichPlayer, int recipient, string message );
+        public static extern void BlzDisplayChatMessage(player whichPlayer, int recipient, string message);
         [NativeLuaMemberAttribute]
-        public static extern void BlzPauseUnitEx( unit whichUnit, bool flag );
+        public static extern void BlzPauseUnitEx(unit whichUnit, bool flag);
         [NativeLuaMemberAttribute]
-        public static extern int FourCC( string value );
+        public static extern int BlzBitOr(int x, int y);
         [NativeLuaMemberAttribute]
-        public static extern int BlzBitOr( int x, int y );
+        public static extern int BlzBitAnd(int x, int y);
         [NativeLuaMemberAttribute]
-        public static extern int BlzBitAnd( int x, int y );
+        public static extern int BlzBitXor(int x, int y);
         [NativeLuaMemberAttribute]
-        public static extern int BlzBitXor( int x, int y );
+        public static extern bool BlzGetAbilityBooleanField(ability whichAbility, abilitybooleanfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetAbilityBooleanField( ability whichAbility, abilitybooleanfield whichField );
+        public static extern int BlzGetAbilityIntegerField(ability whichAbility, abilityintegerfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityIntegerField( ability whichAbility, abilityintegerfield whichField );
+        public static extern float BlzGetAbilityRealField(ability whichAbility, abilityrealfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetAbilityRealField( ability whichAbility, abilityrealfield whichField );
+        public static extern string BlzGetAbilityStringField(ability whichAbility, abilitystringfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityStringField( ability whichAbility, abilitystringfield whichField );
+        public static extern bool BlzGetAbilityBooleanLevelField(ability whichAbility, abilitybooleanlevelfield whichField, int level);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetAbilityBooleanLevelField( ability whichAbility, abilitybooleanlevelfield whichField, int level );
+        public static extern int BlzGetAbilityIntegerLevelField(ability whichAbility, abilityintegerlevelfield whichField, int level);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityIntegerLevelField( ability whichAbility, abilityintegerlevelfield whichField, int level );
+        public static extern float BlzGetAbilityRealLevelField(ability whichAbility, abilityreallevelfield whichField, int level);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetAbilityRealLevelField( ability whichAbility, abilityreallevelfield whichField, int level );
+        public static extern string BlzGetAbilityStringLevelField(ability whichAbility, abilitystringlevelfield whichField, int level);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityStringLevelField( ability whichAbility, abilitystringlevelfield whichField, int level );
+        public static extern bool BlzGetAbilityBooleanLevelArrayField(ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, int index);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetAbilityBooleanLevelArrayField( ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, int index );
+        public static extern int BlzGetAbilityIntegerLevelArrayField(ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int index);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetAbilityIntegerLevelArrayField( ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int index );
+        public static extern float BlzGetAbilityRealLevelArrayField(ability whichAbility, abilityreallevelarrayfield whichField, int level, int index);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetAbilityRealLevelArrayField( ability whichAbility, abilityreallevelarrayfield whichField, int level, int index );
+        public static extern string BlzGetAbilityStringLevelArrayField(ability whichAbility, abilitystringlevelarrayfield whichField, int level, int index);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetAbilityStringLevelArrayField( ability whichAbility, abilitystringlevelarrayfield whichField, int level, int index );
+        public static extern bool BlzSetAbilityBooleanField(ability whichAbility, abilitybooleanfield whichField, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityBooleanField( ability whichAbility, abilitybooleanfield whichField, bool value );
+        public static extern bool BlzSetAbilityIntegerField(ability whichAbility, abilityintegerfield whichField, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityIntegerField( ability whichAbility, abilityintegerfield whichField, int value );
+        public static extern bool BlzSetAbilityRealField(ability whichAbility, abilityrealfield whichField, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityRealField( ability whichAbility, abilityrealfield whichField, float value );
+        public static extern bool BlzSetAbilityStringField(ability whichAbility, abilitystringfield whichField, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityStringField( ability whichAbility, abilitystringfield whichField, string value );
+        public static extern bool BlzSetAbilityBooleanLevelField(ability whichAbility, abilitybooleanlevelfield whichField, int level, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityBooleanLevelField( ability whichAbility, abilitybooleanlevelfield whichField, int level, bool value );
+        public static extern bool BlzSetAbilityIntegerLevelField(ability whichAbility, abilityintegerlevelfield whichField, int level, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityIntegerLevelField( ability whichAbility, abilityintegerlevelfield whichField, int level, int value );
+        public static extern bool BlzSetAbilityRealLevelField(ability whichAbility, abilityreallevelfield whichField, int level, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityRealLevelField( ability whichAbility, abilityreallevelfield whichField, int level, float value );
+        public static extern bool BlzSetAbilityStringLevelField(ability whichAbility, abilitystringlevelfield whichField, int level, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityStringLevelField( ability whichAbility, abilitystringlevelfield whichField, int level, string value );
+        public static extern bool BlzSetAbilityBooleanLevelArrayField(ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, int index, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityBooleanLevelArrayField( ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, int index, bool value );
+        public static extern bool BlzSetAbilityIntegerLevelArrayField(ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int index, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityIntegerLevelArrayField( ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int index, int value );
+        public static extern bool BlzSetAbilityRealLevelArrayField(ability whichAbility, abilityreallevelarrayfield whichField, int level, int index, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityRealLevelArrayField( ability whichAbility, abilityreallevelarrayfield whichField, int level, int index, float value );
+        public static extern bool BlzSetAbilityStringLevelArrayField(ability whichAbility, abilitystringlevelarrayfield whichField, int level, int index, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetAbilityStringLevelArrayField( ability whichAbility, abilitystringlevelarrayfield whichField, int level, int index, string value );
+        public static extern bool BlzAddAbilityBooleanLevelArrayField(ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzAddAbilityBooleanLevelArrayField( ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, bool value );
+        public static extern bool BlzAddAbilityIntegerLevelArrayField(ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzAddAbilityIntegerLevelArrayField( ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int value );
+        public static extern bool BlzAddAbilityRealLevelArrayField(ability whichAbility, abilityreallevelarrayfield whichField, int level, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzAddAbilityRealLevelArrayField( ability whichAbility, abilityreallevelarrayfield whichField, int level, float value );
+        public static extern bool BlzAddAbilityStringLevelArrayField(ability whichAbility, abilitystringlevelarrayfield whichField, int level, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzAddAbilityStringLevelArrayField( ability whichAbility, abilitystringlevelarrayfield whichField, int level, string value );
+        public static extern bool BlzRemoveAbilityBooleanLevelArrayField(ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzRemoveAbilityBooleanLevelArrayField( ability whichAbility, abilitybooleanlevelarrayfield whichField, int level, bool value );
+        public static extern bool BlzRemoveAbilityIntegerLevelArrayField(ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzRemoveAbilityIntegerLevelArrayField( ability whichAbility, abilityintegerlevelarrayfield whichField, int level, int value );
+        public static extern bool BlzRemoveAbilityRealLevelArrayField(ability whichAbility, abilityreallevelarrayfield whichField, int level, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzRemoveAbilityRealLevelArrayField( ability whichAbility, abilityreallevelarrayfield whichField, int level, float value );
+        public static extern bool BlzRemoveAbilityStringLevelArrayField(ability whichAbility, abilitystringlevelarrayfield whichField, int level, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzRemoveAbilityStringLevelArrayField( ability whichAbility, abilitystringlevelarrayfield whichField, int level, string value );
+        public static extern ability BlzGetItemAbilityByIndex(item whichItem, int index);
         [NativeLuaMemberAttribute]
-        public static extern ability BlzGetItemAbilityByIndex( item whichItem, int index );
+        public static extern ability BlzGetItemAbility(item whichItem, int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern ability BlzGetItemAbility( item whichItem, int abilCode );
+        public static extern bool BlzItemAddAbility(item whichItem, int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzItemAddAbility( item whichItem, int abilCode );
+        public static extern bool BlzGetItemBooleanField(item whichItem, itembooleanfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetItemBooleanField( item whichItem, itembooleanfield whichField );
+        public static extern int BlzGetItemIntegerField(item whichItem, itemintegerfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetItemIntegerField( item whichItem, itemintegerfield whichField );
+        public static extern float BlzGetItemRealField(item whichItem, itemrealfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetItemRealField( item whichItem, itemrealfield whichField );
+        public static extern string BlzGetItemStringField(item whichItem, itemstringfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetItemStringField( item whichItem, itemstringfield whichField );
+        public static extern bool BlzSetItemBooleanField(item whichItem, itembooleanfield whichField, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetItemBooleanField( item whichItem, itembooleanfield whichField, bool value );
+        public static extern bool BlzSetItemIntegerField(item whichItem, itemintegerfield whichField, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetItemIntegerField( item whichItem, itemintegerfield whichField, int value );
+        public static extern bool BlzSetItemRealField(item whichItem, itemrealfield whichField, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetItemRealField( item whichItem, itemrealfield whichField, float value );
+        public static extern bool BlzSetItemStringField(item whichItem, itemstringfield whichField, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetItemStringField( item whichItem, itemstringfield whichField, string value );
+        public static extern bool BlzItemRemoveAbility(item whichItem, int abilCode);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzItemRemoveAbility( item whichItem, int abilCode );
+        public static extern bool BlzGetUnitBooleanField(unit whichUnit, unitbooleanfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetUnitBooleanField( unit whichUnit, unitbooleanfield whichField );
+        public static extern int BlzGetUnitIntegerField(unit whichUnit, unitintegerfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitIntegerField( unit whichUnit, unitintegerfield whichField );
+        public static extern float BlzGetUnitRealField(unit whichUnit, unitrealfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitRealField( unit whichUnit, unitrealfield whichField );
+        public static extern string BlzGetUnitStringField(unit whichUnit, unitstringfield whichField);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetUnitStringField( unit whichUnit, unitstringfield whichField );
+        public static extern bool BlzSetUnitBooleanField(unit whichUnit, unitbooleanfield whichField, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitBooleanField( unit whichUnit, unitbooleanfield whichField, bool value );
+        public static extern bool BlzSetUnitIntegerField(unit whichUnit, unitintegerfield whichField, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitIntegerField( unit whichUnit, unitintegerfield whichField, int value );
+        public static extern bool BlzSetUnitRealField(unit whichUnit, unitrealfield whichField, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitRealField( unit whichUnit, unitrealfield whichField, float value );
+        public static extern bool BlzSetUnitStringField(unit whichUnit, unitstringfield whichField, string value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitStringField( unit whichUnit, unitstringfield whichField, string value );
+        public static extern bool BlzGetUnitWeaponBooleanField(unit whichUnit, unitweaponbooleanfield whichField, int index);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzGetUnitWeaponBooleanField( unit whichUnit, unitweaponbooleanfield whichField, int index );
+        public static extern int BlzGetUnitWeaponIntegerField(unit whichUnit, unitweaponintegerfield whichField, int index);
         [NativeLuaMemberAttribute]
-        public static extern int BlzGetUnitWeaponIntegerField( unit whichUnit, unitweaponintegerfield whichField, int index );
+        public static extern float BlzGetUnitWeaponRealField(unit whichUnit, unitweaponrealfield whichField, int index);
         [NativeLuaMemberAttribute]
-        public static extern float BlzGetUnitWeaponRealField( unit whichUnit, unitweaponrealfield whichField, int index );
+        public static extern string BlzGetUnitWeaponStringField(unit whichUnit, unitweaponstringfield whichField, int index);
         [NativeLuaMemberAttribute]
-        public static extern string BlzGetUnitWeaponStringField( unit whichUnit, unitweaponstringfield whichField, int index );
+        public static extern bool BlzSetUnitWeaponBooleanField(unit whichUnit, unitweaponbooleanfield whichField, int index, bool value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitWeaponBooleanField( unit whichUnit, unitweaponbooleanfield whichField, int index, bool value );
+        public static extern bool BlzSetUnitWeaponIntegerField(unit whichUnit, unitweaponintegerfield whichField, int index, int value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitWeaponIntegerField( unit whichUnit, unitweaponintegerfield whichField, int index, int value );
+        public static extern bool BlzSetUnitWeaponRealField(unit whichUnit, unitweaponrealfield whichField, int index, float value);
         [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitWeaponRealField( unit whichUnit, unitweaponrealfield whichField, int index, float value );
-        [NativeLuaMemberAttribute]
-        public static extern bool BlzSetUnitWeaponStringField( unit whichUnit, unitweaponstringfield whichField, int index, string value );
+        public static extern bool BlzSetUnitWeaponStringField(unit whichUnit, unitweaponstringfield whichField, int index, string value);
     }
 }
