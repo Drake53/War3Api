@@ -30,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.0" />
+    <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
