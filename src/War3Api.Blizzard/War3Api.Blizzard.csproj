@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
-    <RootNamespace>War3Api</RootNamespace>
+    <TargetFrameworks>netstandard1.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -11,23 +10,22 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-
-    <Owners>Drake53</Owners>
     <Authors>Drake53</Authors>
-    <Copyright>© Drake53. All rights reserved.</Copyright>
 
-    <Description>Warcraft III's standard library made available in C#.</Description>
+    <Description>Warcraft III's standard library API made available in C#.</Description>
+    <PackageProjectUrl>https://github.com/Drake53/War3Api/tree/master/src/War3Api.Blizzard</PackageProjectUrl>
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
 
     <Version>1.32.0.4-beta1</Version>
     <FileVersion>1.32.0.4</FileVersion>
     <AssemblyVersion>1.32.0</AssemblyVersion>
-
-    <RepositoryUrl>https://github.com/Drake53/War3Api</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Drake53/War3Api/tree/master/src/War3Api.Blizzard</PackageProjectUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <None Include="Generated\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.1" />
@@ -38,19 +36,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="War3Api.Common" Version="[1.31.1.1,1.32)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="LICENSE">
-      <Pack>true</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Generated\**" />
-    <None Include="Generated\**" />
+    <PackageReference Include="War3Api.Common" Version="[1.32.0.4-beta1,1.33)" />
   </ItemGroup>
 
 </Project>

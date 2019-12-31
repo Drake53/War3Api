@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
-    <RootNamespace>War3Api</RootNamespace>
+    <TargetFrameworks>netstandard1.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -11,38 +10,25 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-
-    <Owners>Drake53</Owners>
     <Authors>Drake53</Authors>
-    <Copyright>© Drake53. All rights reserved.</Copyright>
 
     <Description>Warcraft III's native API made available in C#.</Description>
+    <PackageProjectUrl>https://github.com/Drake53/War3Api/tree/master/src/War3Api.Common</PackageProjectUrl>
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
 
     <Version>1.32.0.4-beta1</Version>
     <FileVersion>1.32.0.4</FileVersion>
     <AssemblyVersion>1.32.0</AssemblyVersion>
-
-    <RepositoryUrl>https://github.com/Drake53/War3Api</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Drake53/War3Api/tree/master/src/War3Api.Common</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.1" />
+    <Compile Remove="Generated\**" />
+    <None Include="Generated\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="LICENSE">
-      <Pack>true</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Generated\**" />
-    <None Include="Generated\**" />
+    <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

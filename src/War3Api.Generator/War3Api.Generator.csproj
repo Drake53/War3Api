@@ -7,8 +7,12 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Copyright>Copyright (c) Drake53 and Contributors</Copyright>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="War3Net.CodeAnalysis.Jass" Version="1.0.2" />
+    <PackageReference Include="War3Net.CodeAnalysis.Jass" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

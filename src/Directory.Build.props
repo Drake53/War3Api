@@ -11,8 +11,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="LICENSE" />
     <None Remove="README.md" />
+    <None Remove="LICENSE" />
     <None Remove="stylecop.json" />
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
@@ -23,5 +23,12 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>../War3Api.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Owners>Drake53</Owners>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>false</IncludeSymbols>
+    <RepositoryUrl>https://github.com/Drake53/War3Api</RepositoryUrl>
   </PropertyGroup>
 </Project>
