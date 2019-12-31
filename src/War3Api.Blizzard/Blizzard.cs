@@ -65,6 +65,14 @@ namespace War3Api
         public const float bj_QUEUE_DELAY_SECRET = 3.00f;
         /// @CSharpLua.Template = "bj_HANDICAP_EASY"
         public const float bj_HANDICAP_EASY = 60.00f;
+        /// @CSharpLua.Template = "bj_HANDICAP_NORMAL"
+        public const float bj_HANDICAP_NORMAL = 90.00f;
+        /// @CSharpLua.Template = "bj_HANDICAPDAMAGE_EASY"
+        public const float bj_HANDICAPDAMAGE_EASY = 50.00f;
+        /// @CSharpLua.Template = "bj_HANDICAPDAMAGE_NORMAL"
+        public const float bj_HANDICAPDAMAGE_NORMAL = 90.00f;
+        /// @CSharpLua.Template = "bj_HANDICAPREVIVE_NOTHARD"
+        public const float bj_HANDICAPREVIVE_NOTHARD = 50.00f;
         /// @CSharpLua.Template = "bj_GAME_STARTED_THRESHOLD"
         public const float bj_GAME_STARTED_THRESHOLD = 0.01f;
         /// @CSharpLua.Template = "bj_WAIT_FOR_COND_MIN_INTERVAL"
@@ -91,6 +99,8 @@ namespace War3Api
         public const int bj_MAX_STOCK_UNIT_SLOTS = 11;
         /// @CSharpLua.Template = "bj_MAX_ITEM_LEVEL"
         public const int bj_MAX_ITEM_LEVEL = 10;
+        /// @CSharpLua.Template = "bj_MAX_CHECKPOINTS"
+        public const int bj_MAX_CHECKPOINTS = 5;
         /// @CSharpLua.Template = "bj_TOD_DAWN"
         public const float bj_TOD_DAWN = 6.00f;
         /// @CSharpLua.Template = "bj_TOD_DUSK"
@@ -236,17 +246,23 @@ namespace War3Api
         /// @CSharpLua.Template = "bj_CAMPAIGN_OFFSET_N"
         public const int bj_CAMPAIGN_OFFSET_N = 4;
         /// @CSharpLua.Template = "bj_CAMPAIGN_OFFSET_XN"
-        public const int bj_CAMPAIGN_OFFSET_XN = 0;
+        public const int bj_CAMPAIGN_OFFSET_XN = 5;
         /// @CSharpLua.Template = "bj_CAMPAIGN_OFFSET_XH"
-        public const int bj_CAMPAIGN_OFFSET_XH = 1;
+        public const int bj_CAMPAIGN_OFFSET_XH = 6;
         /// @CSharpLua.Template = "bj_CAMPAIGN_OFFSET_XU"
-        public const int bj_CAMPAIGN_OFFSET_XU = 2;
+        public const int bj_CAMPAIGN_OFFSET_XU = 7;
         /// @CSharpLua.Template = "bj_CAMPAIGN_OFFSET_XO"
-        public const int bj_CAMPAIGN_OFFSET_XO = 3;
+        public const int bj_CAMPAIGN_OFFSET_XO = 8;
         /// @CSharpLua.Template = "bj_MISSION_INDEX_T00"
         public static readonly int bj_MISSION_INDEX_T00 = bj_CAMPAIGN_OFFSET_T * 1000 + 0;
         /// @CSharpLua.Template = "bj_MISSION_INDEX_T01"
         public static readonly int bj_MISSION_INDEX_T01 = bj_CAMPAIGN_OFFSET_T * 1000 + 1;
+        /// @CSharpLua.Template = "bj_MISSION_INDEX_T02"
+        public static readonly int bj_MISSION_INDEX_T02 = bj_CAMPAIGN_OFFSET_T * 1000 + 2;
+        /// @CSharpLua.Template = "bj_MISSION_INDEX_T03"
+        public static readonly int bj_MISSION_INDEX_T03 = bj_CAMPAIGN_OFFSET_T * 1000 + 3;
+        /// @CSharpLua.Template = "bj_MISSION_INDEX_T04"
+        public static readonly int bj_MISSION_INDEX_T04 = bj_CAMPAIGN_OFFSET_T * 1000 + 4;
         /// @CSharpLua.Template = "bj_MISSION_INDEX_H00"
         public static readonly int bj_MISSION_INDEX_H00 = bj_CAMPAIGN_OFFSET_H * 1000 + 0;
         /// @CSharpLua.Template = "bj_MISSION_INDEX_H01"
@@ -615,6 +631,24 @@ namespace War3Api
         public const int bj_MINIMAPPINGSTYLE_FLASHY = 1;
         /// @CSharpLua.Template = "bj_MINIMAPPINGSTYLE_ATTACK"
         public const int bj_MINIMAPPINGSTYLE_ATTACK = 2;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_PRIMARY"
+        public const int bj_CAMPPINGSTYLE_PRIMARY = 0;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_PRIMARY_GREEN"
+        public const int bj_CAMPPINGSTYLE_PRIMARY_GREEN = 1;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_PRIMARY_RED"
+        public const int bj_CAMPPINGSTYLE_PRIMARY_RED = 2;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_BONUS"
+        public const int bj_CAMPPINGSTYLE_BONUS = 3;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_TURNIN"
+        public const int bj_CAMPPINGSTYLE_TURNIN = 4;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_BOSS"
+        public const int bj_CAMPPINGSTYLE_BOSS = 5;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_CONTROL_ALLY"
+        public const int bj_CAMPPINGSTYLE_CONTROL_ALLY = 6;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_CONTROL_NEUTRAL"
+        public const int bj_CAMPPINGSTYLE_CONTROL_NEUTRAL = 7;
+        /// @CSharpLua.Template = "bj_CAMPPINGSTYLE_CONTROL_ENEMY"
+        public const int bj_CAMPPINGSTYLE_CONTROL_ENEMY = 8;
         /// @CSharpLua.Template = "bj_CORPSE_MAX_DEATH_TIME"
         public const float bj_CORPSE_MAX_DEATH_TIME = 8.00f;
         /// @CSharpLua.Template = "bj_CORPSETYPE_FLESH"
@@ -955,6 +989,10 @@ namespace War3Api
         public static image bj_lastCreatedImage = null;
         /// @CSharpLua.Template = "bj_lastCreatedUbersplat"
         public static ubersplat bj_lastCreatedUbersplat = null;
+        /// @CSharpLua.Template = "bj_lastCreatedMinimapIcon"
+        public static minimapicon bj_lastCreatedMinimapIcon = null;
+        /// @CSharpLua.Template = "bj_lastCreatedCommandButtonEffect"
+        public static commandbuttoneffect bj_lastCreatedCommandButtonEffect = null;
         /// @CSharpLua.Template = "filterIssueHauntOrderAtLocBJ"
         public static boolexpr filterIssueHauntOrderAtLocBJ = null;
         /// @CSharpLua.Template = "filterEnumDestructablesInCircleBJ"
@@ -1111,6 +1149,8 @@ namespace War3Api
         public static extern camerasetup GetCurrentCameraSetup();
         /// @CSharpLua.Template = "CameraSetupApplyForPlayer({0}, {1}, {2}, {3})"
         public static extern void CameraSetupApplyForPlayer(bool doPan, camerasetup whichSetup, player whichPlayer, float duration);
+        /// @CSharpLua.Template = "CameraSetupApplyForPlayerSmooth({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern void CameraSetupApplyForPlayerSmooth(bool doPan, camerasetup whichSetup, player whichPlayer, float forcedDuration, float easeInDuration, float easeOutDuration, float smoothFactor);
         /// @CSharpLua.Template = "CameraSetupGetFieldSwap({0}, {1})"
         public static extern float CameraSetupGetFieldSwap(camerafield whichField, camerasetup whichSetup);
         /// @CSharpLua.Template = "SetCameraFieldForPlayer({0}, {1}, {2}, {3})"
@@ -1239,6 +1279,14 @@ namespace War3Api
         public static extern @event TriggerRegisterShowSkillEventBJ(trigger trig);
         /// @CSharpLua.Template = "TriggerRegisterBuildSubmenuEventBJ({0})"
         public static extern @event TriggerRegisterBuildSubmenuEventBJ(trigger trig);
+        /// @CSharpLua.Template = "TriggerRegisterBuildCommandEventBJ({0}, {1})"
+        public static extern @event TriggerRegisterBuildCommandEventBJ(trigger trig, int unitId);
+        /// @CSharpLua.Template = "TriggerRegisterTrainCommandEventBJ({0}, {1})"
+        public static extern @event TriggerRegisterTrainCommandEventBJ(trigger trig, int unitId);
+        /// @CSharpLua.Template = "TriggerRegisterUpgradeCommandEventBJ({0}, {1})"
+        public static extern @event TriggerRegisterUpgradeCommandEventBJ(trigger trig, int techId);
+        /// @CSharpLua.Template = "TriggerRegisterCommonCommandEventBJ({0}, {1})"
+        public static extern @event TriggerRegisterCommonCommandEventBJ(trigger trig, string order);
         /// @CSharpLua.Template = "TriggerRegisterGameLoadedEventBJ({0})"
         public static extern @event TriggerRegisterGameLoadedEventBJ(trigger trig);
         /// @CSharpLua.Template = "TriggerRegisterGameSavedEventBJ({0})"
@@ -1347,6 +1395,18 @@ namespace War3Api
         public static extern void ShowUbersplatBJ(bool flag, ubersplat whichSplat);
         /// @CSharpLua.Template = "GetLastCreatedUbersplat()"
         public static extern ubersplat GetLastCreatedUbersplat();
+        /// @CSharpLua.Template = "GetLastCreatedMinimapIcon()"
+        public static extern minimapicon GetLastCreatedMinimapIcon();
+        /// @CSharpLua.Template = "CreateMinimapIconOnUnitBJ({0}, {1}, {2}, {3}, {4}, {5})"
+        public static extern minimapicon CreateMinimapIconOnUnitBJ(unit whichUnit, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "CreateMinimapIconAtLocBJ({0}, {1}, {2}, {3}, {4}, {5})"
+        public static extern minimapicon CreateMinimapIconAtLocBJ(location where, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "CreateMinimapIconBJ({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern minimapicon CreateMinimapIconBJ(float x, float y, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "CampaignMinimapIconUnitBJ({0}, {1})"
+        public static extern void CampaignMinimapIconUnitBJ(unit whichUnit, int style);
+        /// @CSharpLua.Template = "CampaignMinimapIconLocBJ({0}, {1})"
+        public static extern void CampaignMinimapIconLocBJ(location where, int style);
         /// @CSharpLua.Template = "PlaySoundBJ({0})"
         public static extern void PlaySoundBJ(sound soundHandle);
         /// @CSharpLua.Template = "StopSoundBJ({0}, {1})"
@@ -1447,6 +1507,20 @@ namespace War3Api
         public static extern void DestroyEffectBJ(effect whichEffect);
         /// @CSharpLua.Template = "GetLastCreatedEffectBJ()"
         public static extern effect GetLastCreatedEffectBJ();
+        /// @CSharpLua.Template = "CreateCommandButtonEffectBJ({0}, {1})"
+        public static extern commandbuttoneffect CreateCommandButtonEffectBJ(int abilityId, string order);
+        /// @CSharpLua.Template = "CreateTrainCommandButtonEffectBJ({0})"
+        public static extern commandbuttoneffect CreateTrainCommandButtonEffectBJ(int unitId);
+        /// @CSharpLua.Template = "CreateUpgradeCommandButtonEffectBJ({0})"
+        public static extern commandbuttoneffect CreateUpgradeCommandButtonEffectBJ(int techId);
+        /// @CSharpLua.Template = "CreateCommonCommandButtonEffectBJ({0})"
+        public static extern commandbuttoneffect CreateCommonCommandButtonEffectBJ(string order);
+        /// @CSharpLua.Template = "CreateLearnCommandButtonEffectBJ({0})"
+        public static extern commandbuttoneffect CreateLearnCommandButtonEffectBJ(int abilityId);
+        /// @CSharpLua.Template = "CreateBuildCommandButtonEffectBJ({0})"
+        public static extern commandbuttoneffect CreateBuildCommandButtonEffectBJ(int unitId);
+        /// @CSharpLua.Template = "GetLastCreatedCommandButtonEffectBJ()"
+        public static extern commandbuttoneffect GetLastCreatedCommandButtonEffectBJ();
         /// @CSharpLua.Template = "GetItemLoc({0})"
         public static extern location GetItemLoc(item whichItem);
         /// @CSharpLua.Template = "GetItemLifeBJ({0})"
@@ -1489,6 +1563,14 @@ namespace War3Api
         public static extern int GetLearnedSkillBJ();
         /// @CSharpLua.Template = "SuspendHeroXPBJ({0}, {1})"
         public static extern void SuspendHeroXPBJ(bool flag, unit whichHero);
+        /// @CSharpLua.Template = "SetPlayerHandicapDamageBJ({0}, {1})"
+        public static extern void SetPlayerHandicapDamageBJ(player whichPlayer, float handicapPercent);
+        /// @CSharpLua.Template = "GetPlayerHandicapDamageBJ({0})"
+        public static extern float GetPlayerHandicapDamageBJ(player whichPlayer);
+        /// @CSharpLua.Template = "SetPlayerHandicapReviveTimeBJ({0}, {1})"
+        public static extern void SetPlayerHandicapReviveTimeBJ(player whichPlayer, float handicapPercent);
+        /// @CSharpLua.Template = "GetPlayerHandicapReviveTimeBJ({0})"
+        public static extern float GetPlayerHandicapReviveTimeBJ(player whichPlayer);
         /// @CSharpLua.Template = "SetPlayerHandicapXPBJ({0}, {1})"
         public static extern void SetPlayerHandicapXPBJ(player whichPlayer, float handicapPercent);
         /// @CSharpLua.Template = "GetPlayerHandicapXPBJ({0})"
@@ -2249,6 +2331,10 @@ namespace War3Api
         public static extern void DoTransmissionBasicsXYBJ(int unitId, playercolor color, float x, float y, sound soundHandle, string unitName, string message, float duration);
         /// @CSharpLua.Template = "TransmissionFromUnitWithNameBJ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
         public static extern void TransmissionFromUnitWithNameBJ(force toForce, unit whichUnit, string unitName, sound soundHandle, string message, int timeType, float timeVal, bool wait);
+        /// @CSharpLua.Template = "PlayDialogueFromSpeakerEx({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern bool PlayDialogueFromSpeakerEx(force toForce, unit speaker, int speakerType, sound soundHandle, int timeType, float timeVal, bool wait);
+        /// @CSharpLua.Template = "PlayDialogueFromSpeakerTypeEx({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
+        public static extern bool PlayDialogueFromSpeakerTypeEx(force toForce, player fromPlayer, int speakerType, location loc, sound soundHandle, int timeType, float timeVal, bool wait);
         /// @CSharpLua.Template = "TransmissionFromUnitTypeWithNameBJ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9})"
         public static extern void TransmissionFromUnitTypeWithNameBJ(force toForce, player fromPlayer, int unitId, string unitName, location loc, sound soundHandle, string message, int timeType, float timeVal, bool wait);
         /// @CSharpLua.Template = "GetLastTransmissionDurationBJ()"
@@ -2533,6 +2619,8 @@ namespace War3Api
         public static extern void ShowCustomCampaignButton(bool show, int whichButton);
         /// @CSharpLua.Template = "IsCustomCampaignButtonVisibile({0})"
         public static extern bool IsCustomCampaignButtonVisibile(int whichButton);
+        /// @CSharpLua.Template = "SaveGameCheckPointBJ({0}, {1})"
+        public static extern void SaveGameCheckPointBJ(string mapSaveName, bool doCheckpointHint);
         /// @CSharpLua.Template = "LoadGameBJ({0}, {1})"
         public static extern void LoadGameBJ(string loadFileName, bool doScoreScreen);
         /// @CSharpLua.Template = "SaveAndChangeLevelBJ({0}, {1}, {2})"

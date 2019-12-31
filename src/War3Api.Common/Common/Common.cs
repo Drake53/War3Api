@@ -439,6 +439,14 @@ namespace War3Api
         }
 
         [NativeLuaMemberAttribute]
+        public class minimapicon
+        {
+            internal minimapicon()
+            {
+            }
+        }
+
+        [NativeLuaMemberAttribute]
         public class playerslotstate
         {
             internal playerslotstate()
@@ -1074,6 +1082,14 @@ namespace War3Api
         public class pathingflag
         {
             internal pathingflag()
+            {
+            }
+        }
+
+        [NativeLuaMemberAttribute]
+        public class commandbuttoneffect
+        {
+            internal commandbuttoneffect()
             {
             }
         }
@@ -4638,6 +4654,8 @@ namespace War3Api
         public static extern float SquareRoot(float x);
         /// @CSharpLua.Template = "Pow({0}, {1})"
         public static extern float Pow(float x, float power);
+        /// @CSharpLua.Template = "MathRound({0})"
+        public static extern int MathRound(float r);
         /// @CSharpLua.Template = "I2R({0})"
         public static extern float I2R(int i);
         /// @CSharpLua.Template = "R2I({0})"
@@ -4686,6 +4704,10 @@ namespace War3Api
         public static extern int GetStartLocPrioSlot(int whichStartLoc, int prioSlotIndex);
         /// @CSharpLua.Template = "GetStartLocPrio({0}, {1})"
         public static extern startlocprio GetStartLocPrio(int whichStartLoc, int prioSlotIndex);
+        /// @CSharpLua.Template = "SetEnemyStartLocPrioCount({0}, {1})"
+        public static extern void SetEnemyStartLocPrioCount(int whichStartLoc, int prioSlotCount);
+        /// @CSharpLua.Template = "SetEnemyStartLocPrio({0}, {1}, {2}, {3})"
+        public static extern void SetEnemyStartLocPrio(int whichStartLoc, int prioSlotIndex, int otherStartLocIndex, startlocprio priority);
         /// @CSharpLua.Template = "SetGameTypeSupported({0}, {1})"
         public static extern void SetGameTypeSupported(gametype whichGameType, bool value);
         /// @CSharpLua.Template = "SetMapFlag({0}, {1})"
@@ -4954,6 +4976,8 @@ namespace War3Api
         public static extern item GetFilterItem();
         /// @CSharpLua.Template = "GetEnumItem()"
         public static extern item GetEnumItem();
+        /// @CSharpLua.Template = "ParseTags({0})"
+        public static extern string ParseTags(string taggedString);
         /// @CSharpLua.Template = "GetFilterPlayer()"
         public static extern player GetFilterPlayer();
         /// @CSharpLua.Template = "GetEnumPlayer()"
@@ -5016,6 +5040,10 @@ namespace War3Api
         public static extern @event TriggerRegisterTrackableHitEvent(trigger whichTrigger, trackable t);
         /// @CSharpLua.Template = "TriggerRegisterTrackableTrackEvent({0}, {1})"
         public static extern @event TriggerRegisterTrackableTrackEvent(trigger whichTrigger, trackable t);
+        /// @CSharpLua.Template = "TriggerRegisterCommandEvent({0}, {1}, {2})"
+        public static extern @event TriggerRegisterCommandEvent(trigger whichTrigger, int whichAbility, string order);
+        /// @CSharpLua.Template = "TriggerRegisterUpgradeCommandEvent({0}, {1})"
+        public static extern @event TriggerRegisterUpgradeCommandEvent(trigger whichTrigger, int whichUpgrade);
         /// @CSharpLua.Template = "GetTriggeringTrackable()"
         public static extern trackable GetTriggeringTrackable();
         /// @CSharpLua.Template = "GetClickedButton()"
@@ -5770,10 +5798,18 @@ namespace War3Api
         public static extern float GetPlayerHandicap(player whichPlayer);
         /// @CSharpLua.Template = "GetPlayerHandicapXP({0})"
         public static extern float GetPlayerHandicapXP(player whichPlayer);
+        /// @CSharpLua.Template = "GetPlayerHandicapReviveTime({0})"
+        public static extern float GetPlayerHandicapReviveTime(player whichPlayer);
+        /// @CSharpLua.Template = "GetPlayerHandicapDamage({0})"
+        public static extern float GetPlayerHandicapDamage(player whichPlayer);
         /// @CSharpLua.Template = "SetPlayerHandicap({0}, {1})"
         public static extern void SetPlayerHandicap(player whichPlayer, float handicap);
         /// @CSharpLua.Template = "SetPlayerHandicapXP({0}, {1})"
         public static extern void SetPlayerHandicapXP(player whichPlayer, float handicap);
+        /// @CSharpLua.Template = "SetPlayerHandicapReviveTime({0}, {1})"
+        public static extern void SetPlayerHandicapReviveTime(player whichPlayer, float handicap);
+        /// @CSharpLua.Template = "SetPlayerHandicapDamage({0}, {1})"
+        public static extern void SetPlayerHandicapDamage(player whichPlayer, float handicap);
         /// @CSharpLua.Template = "SetPlayerTechMaxAllowed({0}, {1}, {2})"
         public static extern void SetPlayerTechMaxAllowed(player whichPlayer, int techid, int maximum);
         /// @CSharpLua.Template = "GetPlayerTechMaxAllowed({0}, {1})"
@@ -5856,6 +5892,10 @@ namespace War3Api
         public static extern bool CopySaveGame(string sourceSaveName, string destSaveName);
         /// @CSharpLua.Template = "SaveGameExists({0})"
         public static extern bool SaveGameExists(string saveName);
+        /// @CSharpLua.Template = "SetMaxCheckpointSaves({0})"
+        public static extern void SetMaxCheckpointSaves(int maxCheckpointSaves);
+        /// @CSharpLua.Template = "SaveGameCheckpoint({0}, {1})"
+        public static extern void SaveGameCheckpoint(string saveFileName, bool showWindow);
         /// @CSharpLua.Template = "SyncSelections()"
         public static extern void SyncSelections();
         /// @CSharpLua.Template = "SetFloatGameState({0}, {1})"
@@ -6212,6 +6252,8 @@ namespace War3Api
         public static extern void ClearTextMessages();
         /// @CSharpLua.Template = "SetDayNightModels({0}, {1})"
         public static extern void SetDayNightModels(string terrainDNCFile, string unitDNCFile);
+        /// @CSharpLua.Template = "SetPortraitLight({0})"
+        public static extern void SetPortraitLight(string portraitDNCFile);
         /// @CSharpLua.Template = "SetSkyModel({0})"
         public static extern void SetSkyModel(string skyModelFile);
         /// @CSharpLua.Template = "EnableUserControl({0})"
@@ -6236,6 +6278,20 @@ namespace War3Api
         public static extern void PingMinimap(float x, float y, float duration);
         /// @CSharpLua.Template = "PingMinimapEx({0}, {1}, {2}, {3}, {4}, {5}, {6})"
         public static extern void PingMinimapEx(float x, float y, float duration, int red, int green, int blue, bool extraEffects);
+        /// @CSharpLua.Template = "CreateMinimapIconOnUnit({0}, {1}, {2}, {3}, {4}, {5})"
+        public static extern minimapicon CreateMinimapIconOnUnit(unit whichUnit, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "CreateMinimapIconAtLoc({0}, {1}, {2}, {3}, {4}, {5})"
+        public static extern minimapicon CreateMinimapIconAtLoc(location where, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "CreateMinimapIcon({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern minimapicon CreateMinimapIcon(float x, float y, int red, int green, int blue, string pingPath, fogstate fogVisibility);
+        /// @CSharpLua.Template = "SkinManagerGetLocalPath({0})"
+        public static extern string SkinManagerGetLocalPath(string key);
+        /// @CSharpLua.Template = "DestroyMinimapIcon({0})"
+        public static extern void DestroyMinimapIcon(minimapicon pingId);
+        /// @CSharpLua.Template = "SetMinimapIconVisible({0}, {1})"
+        public static extern void SetMinimapIconVisible(minimapicon whichMinimapIcon, bool visible);
+        /// @CSharpLua.Template = "SetMinimapIconOrphanDestroy({0}, {1})"
+        public static extern void SetMinimapIconOrphanDestroy(minimapicon whichMinimapIcon, bool doDestroy);
         /// @CSharpLua.Template = "EnableOcclusion({0})"
         public static extern void EnableOcclusion(bool flag);
         /// @CSharpLua.Template = "SetIntroShotText({0})"
@@ -6530,6 +6586,10 @@ namespace War3Api
         public static extern void CameraSetupApplyForceDuration(camerasetup whichSetup, bool doPan, float forceDuration);
         /// @CSharpLua.Template = "CameraSetupApplyForceDurationWithZ({0}, {1}, {2})"
         public static extern void CameraSetupApplyForceDurationWithZ(camerasetup whichSetup, float zDestOffset, float forceDuration);
+        /// @CSharpLua.Template = "BlzCameraSetupSetLabel({0}, {1})"
+        public static extern void BlzCameraSetupSetLabel(camerasetup whichSetup, string label);
+        /// @CSharpLua.Template = "BlzCameraSetupGetLabel({0})"
+        public static extern string BlzCameraSetupGetLabel(camerasetup whichSetup);
         /// @CSharpLua.Template = "CameraSetTargetNoise({0}, {1})"
         public static extern void CameraSetTargetNoise(float mag, float velocity);
         /// @CSharpLua.Template = "CameraSetSourceNoise({0}, {1})"
@@ -6540,6 +6600,10 @@ namespace War3Api
         public static extern void CameraSetSourceNoiseEx(float mag, float velocity, bool vertOnly);
         /// @CSharpLua.Template = "CameraSetSmoothingFactor({0})"
         public static extern void CameraSetSmoothingFactor(float factor);
+        /// @CSharpLua.Template = "CameraSetFocalDistance({0})"
+        public static extern void CameraSetFocalDistance(float distance);
+        /// @CSharpLua.Template = "CameraSetDepthOfFieldScale({0})"
+        public static extern void CameraSetDepthOfFieldScale(float scale);
         /// @CSharpLua.Template = "SetCineFilterTexture({0})"
         public static extern void SetCineFilterTexture(string filename);
         /// @CSharpLua.Template = "SetCineFilterBlendMode({0})"
@@ -6676,6 +6740,20 @@ namespace War3Api
         public static extern void RegisterStackedSound(sound soundHandle, bool byPosition, float rectwidth, float rectheight);
         /// @CSharpLua.Template = "UnregisterStackedSound({0}, {1}, {2}, {3})"
         public static extern void UnregisterStackedSound(sound soundHandle, bool byPosition, float rectwidth, float rectheight);
+        /// @CSharpLua.Template = "SetSoundFacialAnimationLabel({0}, {1})"
+        public static extern bool SetSoundFacialAnimationLabel(sound soundHandle, string animationLabel);
+        /// @CSharpLua.Template = "SetSoundFacialAnimationGroupLabel({0}, {1})"
+        public static extern bool SetSoundFacialAnimationGroupLabel(sound soundHandle, string groupLabel);
+        /// @CSharpLua.Template = "SetSoundFacialAnimationSetFilepath({0}, {1})"
+        public static extern bool SetSoundFacialAnimationSetFilepath(sound soundHandle, string animationSetFilepath);
+        /// @CSharpLua.Template = "SetDialogueSpeakerNameKey({0}, {1})"
+        public static extern bool SetDialogueSpeakerNameKey(sound soundHandle, string speakerName);
+        /// @CSharpLua.Template = "GetDialogueSpeakerNameKey({0})"
+        public static extern string GetDialogueSpeakerNameKey(sound soundHandle);
+        /// @CSharpLua.Template = "SetDialogueTextKey({0}, {1})"
+        public static extern bool SetDialogueTextKey(sound soundHandle, string dialogueText);
+        /// @CSharpLua.Template = "GetDialogueTextKey({0})"
+        public static extern string GetDialogueTextKey(sound soundHandle);
         /// @CSharpLua.Template = "AddWeatherEffect({0}, {1})"
         public static extern weathereffect AddWeatherEffect(rect where, int effectID);
         /// @CSharpLua.Template = "RemoveWeatherEffect({0})"
@@ -6848,6 +6926,8 @@ namespace War3Api
         public static extern void PreloadGenEnd(string filename);
         /// @CSharpLua.Template = "Preloader({0})"
         public static extern void Preloader(string filename);
+        /// @CSharpLua.Template = "BlzHideCinematicPanels({0})"
+        public static extern void BlzHideCinematicPanels(bool enable);
         /// @CSharpLua.Template = "AutomationSetTestType({0})"
         public static extern void AutomationSetTestType(string testType);
         /// @CSharpLua.Template = "AutomationTestStart({0})"
@@ -7084,6 +7164,16 @@ namespace War3Api
         public static extern void BlzEnableTargetIndicator(bool enable);
         /// @CSharpLua.Template = "BlzIsTargetIndicatorEnabled()"
         public static extern bool BlzIsTargetIndicatorEnabled();
+        /// @CSharpLua.Template = "BlzShowTerrain({0})"
+        public static extern void BlzShowTerrain(bool show);
+        /// @CSharpLua.Template = "BlzShowSkyBox({0})"
+        public static extern void BlzShowSkyBox(bool show);
+        /// @CSharpLua.Template = "BlzStartRecording({0})"
+        public static extern void BlzStartRecording(int fps);
+        /// @CSharpLua.Template = "BlzEndRecording()"
+        public static extern void BlzEndRecording();
+        /// @CSharpLua.Template = "BlzShowUnitTeamGlow({0}, {1})"
+        public static extern void BlzShowUnitTeamGlow(unit whichUnit, bool show);
         /// @CSharpLua.Template = "BlzGetOriginFrame({0}, {1})"
         public static extern framehandle BlzGetOriginFrame(originframetype frameType, int index);
         /// @CSharpLua.Template = "BlzEnableUIAutoPosition({0})"
@@ -7236,6 +7326,14 @@ namespace War3Api
         public static extern void BlzDisplayChatMessage(player whichPlayer, int recipient, string message);
         /// @CSharpLua.Template = "BlzPauseUnitEx({0}, {1})"
         public static extern void BlzPauseUnitEx(unit whichUnit, bool flag);
+        /// @CSharpLua.Template = "CreateCommandButtonEffect({0}, {1})"
+        public static extern commandbuttoneffect CreateCommandButtonEffect(int abilityId, string order);
+        /// @CSharpLua.Template = "CreateUpgradeCommandButtonEffect({0})"
+        public static extern commandbuttoneffect CreateUpgradeCommandButtonEffect(int whichUprgade);
+        /// @CSharpLua.Template = "CreateLearnCommandButtonEffect({0})"
+        public static extern commandbuttoneffect CreateLearnCommandButtonEffect(int abilityId);
+        /// @CSharpLua.Template = "DestroyCommandButtonEffect({0})"
+        public static extern void DestroyCommandButtonEffect(commandbuttoneffect whichEffect);
         /// @CSharpLua.Template = "BlzBitOr({0}, {1})"
         public static extern int BlzBitOr(int x, int y);
         /// @CSharpLua.Template = "BlzBitAnd({0}, {1})"
@@ -7362,5 +7460,27 @@ namespace War3Api
         public static extern bool BlzSetUnitWeaponRealField(unit whichUnit, unitweaponrealfield whichField, int index, float value);
         /// @CSharpLua.Template = "BlzSetUnitWeaponStringField({0}, {1}, {2}, {3})"
         public static extern bool BlzSetUnitWeaponStringField(unit whichUnit, unitweaponstringfield whichField, int index, string value);
+        /// @CSharpLua.Template = "BlzGetUnitSkin({0})"
+        public static extern int BlzGetUnitSkin(unit whichUnit);
+        /// @CSharpLua.Template = "BlzGetItemSkin({0})"
+        public static extern int BlzGetItemSkin(item whichItem);
+        /// @CSharpLua.Template = "BlzSetUnitSkin({0}, {1})"
+        public static extern void BlzSetUnitSkin(unit whichUnit, int skinId);
+        /// @CSharpLua.Template = "BlzSetItemSkin({0}, {1})"
+        public static extern void BlzSetItemSkin(item whichItem, int skinId);
+        /// @CSharpLua.Template = "BlzCreateItemWithSkin({0}, {1}, {2}, {3})"
+        public static extern item BlzCreateItemWithSkin(int itemid, float x, float y, int skinId);
+        /// @CSharpLua.Template = "BlzCreateUnitWithSkin({0}, {1}, {2}, {3}, {4}, {5})"
+        public static extern unit BlzCreateUnitWithSkin(player id, int unitid, float x, float y, float face, int skinId);
+        /// @CSharpLua.Template = "BlzCreateDestructableWithSkin({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern destructable BlzCreateDestructableWithSkin(int objectid, float x, float y, float face, float scale, int variation, int skinId);
+        /// @CSharpLua.Template = "BlzCreateDestructableZWithSkin({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
+        public static extern destructable BlzCreateDestructableZWithSkin(int objectid, float x, float y, float z, float face, float scale, int variation, int skinId);
+        /// @CSharpLua.Template = "BlzCreateDeadDestructableWithSkin({0}, {1}, {2}, {3}, {4}, {5}, {6})"
+        public static extern destructable BlzCreateDeadDestructableWithSkin(int objectid, float x, float y, float face, float scale, int variation, int skinId);
+        /// @CSharpLua.Template = "BlzCreateDeadDestructableZWithSkin({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
+        public static extern destructable BlzCreateDeadDestructableZWithSkin(int objectid, float x, float y, float z, float face, float scale, int variation, int skinId);
+        /// @CSharpLua.Template = "BlzGetPlayerTownHallCount({0})"
+        public static extern int BlzGetPlayerTownHallCount(player whichPlayer);
     }
 }
