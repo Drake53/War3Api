@@ -24,7 +24,8 @@ namespace War3Api.Generator
     {
         private static void Main(string[] args)
         {
-            const string LatestVersion = "1.31.1";
+            // const string LatestVersion = "1.31.1";
+            const string LatestVersion = "1.32.0.4-beta";
 
             // War3Net.CodeAnalysis.CSharp.CompilationHelper.SerializeTo();
             if (args.Length > 0)
@@ -59,7 +60,7 @@ namespace War3Api.Generator
                 const string CommonClassName = "Common";
                 const string BlizzardClassName = "Blizzard";
 
-                string apiNamespaceName = $@"War3Api.Generated.v{version.Replace('.', '_')}";
+                string apiNamespaceName = $@"War3Api.Generated.v{version.Replace('.', '_').Replace('-', '_')}";
 
                 var cSharpDirective = GetCSharpDirective();
 
