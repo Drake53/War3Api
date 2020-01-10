@@ -11,8 +11,6 @@
 #pragma warning disable CA1034, CA1707, CA1716, CA2211,
 #pragma warning disable SA1201, SA1202, SA1203, SA1300, SA1303, SA1307, SA1310, SA1311, SA1313, SA1401, SA1407, SA1514, SA1516, SA1600, SA1601, SA1604, SA1611, SA1615, SA1626
 
-using War3Net.CodeAnalysis.Common;
-
 // TODO: partial class to split in multiple files
 // TODO: documentation
 namespace War3Api
@@ -22,7 +20,6 @@ namespace War3Api
     /// </summary>
     public static partial class Common
     {
-        [NativeLuaMemberAttribute]
         public class agent
         {
             internal agent()
@@ -30,7 +27,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class @event : agent
         {
             internal @event()
@@ -38,7 +34,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class player : agent
         {
             internal player()
@@ -46,7 +41,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class widget : agent
         {
             internal widget()
@@ -54,7 +48,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unit : widget
         {
             internal unit()
@@ -62,7 +55,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class destructable : widget
         {
             internal destructable()
@@ -70,7 +62,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class item : widget
         {
             internal item()
@@ -78,7 +69,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class ability : agent
         {
             internal ability()
@@ -86,7 +76,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class buff : ability
         {
             internal buff()
@@ -94,7 +83,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class force : agent
         {
             internal force()
@@ -102,7 +90,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class group : agent
         {
             internal group()
@@ -110,7 +97,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class trigger : agent
         {
             internal trigger()
@@ -118,7 +104,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class triggercondition : agent
         {
             internal triggercondition()
@@ -126,7 +111,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class triggeraction
         {
             internal triggeraction()
@@ -134,7 +118,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class timer : agent
         {
             internal timer()
@@ -142,7 +125,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class location : agent
         {
             internal location()
@@ -150,7 +132,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class region : agent
         {
             internal region()
@@ -158,7 +139,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class rect : agent
         {
             internal rect()
@@ -166,7 +146,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class boolexpr : agent
         {
             internal boolexpr()
@@ -174,7 +153,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class sound : agent
         {
             internal sound()
@@ -182,7 +160,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class conditionfunc : boolexpr
         {
             internal conditionfunc()
@@ -190,7 +167,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class filterfunc : boolexpr
         {
             internal filterfunc()
@@ -198,7 +174,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitpool
         {
             internal unitpool()
@@ -206,7 +181,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itempool
         {
             internal itempool()
@@ -214,7 +188,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class race
         {
             internal race()
@@ -222,7 +195,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class alliancetype
         {
             internal alliancetype()
@@ -230,7 +202,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class racepreference
         {
             internal racepreference()
@@ -238,7 +209,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gamestate
         {
             internal gamestate()
@@ -246,7 +216,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class igamestate : gamestate
         {
             internal igamestate()
@@ -254,7 +223,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class fgamestate : gamestate
         {
             internal fgamestate()
@@ -262,7 +230,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playerstate
         {
             internal playerstate()
@@ -270,7 +237,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playerscore
         {
             internal playerscore()
@@ -278,7 +244,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playergameresult
         {
             internal playergameresult()
@@ -286,7 +251,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitstate
         {
             internal unitstate()
@@ -294,7 +258,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class aidifficulty
         {
             internal aidifficulty()
@@ -302,7 +265,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class eventid
         {
             internal eventid()
@@ -310,7 +272,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gameevent : eventid
         {
             internal gameevent()
@@ -318,7 +279,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playerevent : eventid
         {
             internal playerevent()
@@ -326,7 +286,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playerunitevent : eventid
         {
             internal playerunitevent()
@@ -334,7 +293,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitevent : eventid
         {
             internal unitevent()
@@ -342,7 +300,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class limitop : eventid
         {
             internal limitop()
@@ -350,7 +307,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class widgetevent : eventid
         {
             internal widgetevent()
@@ -358,7 +314,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class dialogevent : eventid
         {
             internal dialogevent()
@@ -366,7 +321,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unittype
         {
             internal unittype()
@@ -374,7 +328,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gamespeed
         {
             internal gamespeed()
@@ -382,7 +335,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gamedifficulty
         {
             internal gamedifficulty()
@@ -390,7 +342,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gametype
         {
             internal gametype()
@@ -398,7 +349,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mapflag
         {
             internal mapflag()
@@ -406,7 +356,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mapvisibility
         {
             internal mapvisibility()
@@ -414,7 +363,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mapsetting
         {
             internal mapsetting()
@@ -422,7 +370,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mapdensity
         {
             internal mapdensity()
@@ -430,7 +377,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mapcontrol
         {
             internal mapcontrol()
@@ -438,7 +384,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class minimapicon
         {
             internal minimapicon()
@@ -446,7 +391,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playerslotstate
         {
             internal playerslotstate()
@@ -454,7 +398,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class volumegroup
         {
             internal volumegroup()
@@ -462,7 +405,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class camerafield
         {
             internal camerafield()
@@ -470,7 +412,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class camerasetup
         {
             internal camerasetup()
@@ -478,7 +419,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class playercolor
         {
             internal playercolor()
@@ -486,7 +426,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class placement
         {
             internal placement()
@@ -494,7 +433,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class startlocprio
         {
             internal startlocprio()
@@ -502,7 +440,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class raritycontrol
         {
             internal raritycontrol()
@@ -510,7 +447,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class blendmode
         {
             internal blendmode()
@@ -518,7 +454,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class texmapflags
         {
             internal texmapflags()
@@ -526,7 +461,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class effect : agent
         {
             internal effect()
@@ -534,7 +468,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class effecttype
         {
             internal effecttype()
@@ -542,7 +475,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class weathereffect
         {
             internal weathereffect()
@@ -550,7 +482,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class terraindeformation
         {
             internal terraindeformation()
@@ -558,7 +489,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class fogstate
         {
             internal fogstate()
@@ -566,7 +496,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class fogmodifier : agent
         {
             internal fogmodifier()
@@ -574,7 +503,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class dialog : agent
         {
             internal dialog()
@@ -582,7 +510,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class button : agent
         {
             internal button()
@@ -590,7 +517,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class quest : agent
         {
             internal quest()
@@ -598,7 +524,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class questitem : agent
         {
             internal questitem()
@@ -606,7 +531,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class defeatcondition : agent
         {
             internal defeatcondition()
@@ -614,7 +538,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class timerdialog : agent
         {
             internal timerdialog()
@@ -622,7 +545,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class leaderboard : agent
         {
             internal leaderboard()
@@ -630,7 +552,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class multiboard : agent
         {
             internal multiboard()
@@ -638,7 +559,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class multiboarditem : agent
         {
             internal multiboarditem()
@@ -646,7 +566,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class trackable : agent
         {
             internal trackable()
@@ -654,7 +573,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class gamecache : agent
         {
             internal gamecache()
@@ -662,7 +580,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class version
         {
             internal version()
@@ -670,7 +587,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itemtype
         {
             internal itemtype()
@@ -678,7 +594,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class texttag
         {
             internal texttag()
@@ -686,7 +601,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class attacktype
         {
             internal attacktype()
@@ -694,7 +608,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class damagetype
         {
             internal damagetype()
@@ -702,7 +615,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class weapontype
         {
             internal weapontype()
@@ -710,7 +622,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class soundtype
         {
             internal soundtype()
@@ -718,7 +629,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class lightning
         {
             internal lightning()
@@ -726,7 +636,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class pathingtype
         {
             internal pathingtype()
@@ -734,7 +643,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class mousebuttontype
         {
             internal mousebuttontype()
@@ -742,7 +650,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class animtype
         {
             internal animtype()
@@ -750,7 +657,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class subanimtype
         {
             internal subanimtype()
@@ -758,7 +664,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class image
         {
             internal image()
@@ -766,7 +671,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class ubersplat
         {
             internal ubersplat()
@@ -774,7 +678,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class hashtable : agent
         {
             internal hashtable()
@@ -782,7 +685,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class framehandle
         {
             internal framehandle()
@@ -790,7 +692,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class originframetype
         {
             internal originframetype()
@@ -798,7 +699,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class framepointtype
         {
             internal framepointtype()
@@ -806,7 +706,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class textaligntype
         {
             internal textaligntype()
@@ -814,7 +713,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class frameeventtype
         {
             internal frameeventtype()
@@ -822,7 +720,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class oskeytype
         {
             internal oskeytype()
@@ -830,7 +727,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityintegerfield
         {
             internal abilityintegerfield()
@@ -838,7 +734,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityrealfield
         {
             internal abilityrealfield()
@@ -846,7 +741,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitybooleanfield
         {
             internal abilitybooleanfield()
@@ -854,7 +748,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitystringfield
         {
             internal abilitystringfield()
@@ -862,7 +755,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityintegerlevelfield
         {
             internal abilityintegerlevelfield()
@@ -870,7 +762,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityreallevelfield
         {
             internal abilityreallevelfield()
@@ -878,7 +769,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitybooleanlevelfield
         {
             internal abilitybooleanlevelfield()
@@ -886,7 +776,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitystringlevelfield
         {
             internal abilitystringlevelfield()
@@ -894,7 +783,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityintegerlevelarrayfield
         {
             internal abilityintegerlevelarrayfield()
@@ -902,7 +790,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilityreallevelarrayfield
         {
             internal abilityreallevelarrayfield()
@@ -910,7 +797,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitybooleanlevelarrayfield
         {
             internal abilitybooleanlevelarrayfield()
@@ -918,7 +804,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class abilitystringlevelarrayfield
         {
             internal abilitystringlevelarrayfield()
@@ -926,7 +811,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitintegerfield
         {
             internal unitintegerfield()
@@ -934,7 +818,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitrealfield
         {
             internal unitrealfield()
@@ -942,7 +825,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitbooleanfield
         {
             internal unitbooleanfield()
@@ -950,7 +832,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitstringfield
         {
             internal unitstringfield()
@@ -958,7 +839,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitweaponintegerfield
         {
             internal unitweaponintegerfield()
@@ -966,7 +846,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitweaponrealfield
         {
             internal unitweaponrealfield()
@@ -974,7 +853,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitweaponbooleanfield
         {
             internal unitweaponbooleanfield()
@@ -982,7 +860,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitweaponstringfield
         {
             internal unitweaponstringfield()
@@ -990,7 +867,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itemintegerfield
         {
             internal itemintegerfield()
@@ -998,7 +874,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itemrealfield
         {
             internal itemrealfield()
@@ -1006,7 +881,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itembooleanfield
         {
             internal itembooleanfield()
@@ -1014,7 +888,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class itemstringfield
         {
             internal itemstringfield()
@@ -1022,7 +895,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class movetype
         {
             internal movetype()
@@ -1030,7 +902,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class targetflag
         {
             internal targetflag()
@@ -1038,7 +909,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class armortype
         {
             internal armortype()
@@ -1046,7 +916,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class heroattribute
         {
             internal heroattribute()
@@ -1054,7 +923,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class defensetype
         {
             internal defensetype()
@@ -1062,7 +930,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class regentype
         {
             internal regentype()
@@ -1070,7 +937,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class unitcategory
         {
             internal unitcategory()
@@ -1078,7 +944,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class pathingflag
         {
             internal pathingflag()
@@ -1086,7 +951,6 @@ namespace War3Api
             }
         }
 
-        [NativeLuaMemberAttribute]
         public class commandbuttoneffect
         {
             internal commandbuttoneffect()

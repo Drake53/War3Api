@@ -17,7 +17,7 @@
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
 
-    <Version>1.32.0.4-beta1</Version>
+    <Version>1.32.0.4-beta2</Version>
     <FileVersion>1.32.0.4</FileVersion>
     <AssemblyVersion>1.32.0</AssemblyVersion>
   </PropertyGroup>
@@ -25,10 +25,6 @@
   <ItemGroup>
     <Compile Remove="Generated\**" />
     <None Include="Generated\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="War3Net.CodeAnalysis.Common" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
