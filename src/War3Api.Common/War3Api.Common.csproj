@@ -17,9 +17,9 @@
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
 
-    <Version>1.32.0.4-beta2</Version>
-    <FileVersion>1.32.0.4</FileVersion>
-    <AssemblyVersion>1.32.0</AssemblyVersion>
+    <Version>1.32.0</Version>
+    <FileVersion>1.32.0</FileVersion>
+    <AssemblyVersion>1.32</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

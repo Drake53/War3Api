@@ -2226,6 +2226,16 @@ namespace War3Api
         public static readonly originframetype ORIGIN_FRAME_PORTRAIT = ConvertOriginFrameType(16);
         /// @CSharpLua.Template = "ORIGIN_FRAME_WORLD_FRAME"
         public static readonly originframetype ORIGIN_FRAME_WORLD_FRAME = ConvertOriginFrameType(17);
+        /// @CSharpLua.Template = "ORIGIN_FRAME_SIMPLE_UI_PARENT"
+        public static readonly originframetype ORIGIN_FRAME_SIMPLE_UI_PARENT = ConvertOriginFrameType(18);
+        /// @CSharpLua.Template = "ORIGIN_FRAME_PORTRAIT_HP_TEXT"
+        public static readonly originframetype ORIGIN_FRAME_PORTRAIT_HP_TEXT = ConvertOriginFrameType(19);
+        /// @CSharpLua.Template = "ORIGIN_FRAME_PORTRAIT_MANA_TEXT"
+        public static readonly originframetype ORIGIN_FRAME_PORTRAIT_MANA_TEXT = ConvertOriginFrameType(20);
+        /// @CSharpLua.Template = "ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR"
+        public static readonly originframetype ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR = ConvertOriginFrameType(21);
+        /// @CSharpLua.Template = "ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR_LABEL"
+        public static readonly originframetype ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR_LABEL = ConvertOriginFrameType(22);
         /// @CSharpLua.Template = "FRAMEPOINT_TOPLEFT"
         public static readonly framepointtype FRAMEPOINT_TOPLEFT = ConvertFramePointType(0);
         /// @CSharpLua.Template = "FRAMEPOINT_TOP"
@@ -6494,6 +6504,8 @@ namespace War3Api
         public static extern void EndCinematicScene();
         /// @CSharpLua.Template = "ForceCinematicSubtitles({0})"
         public static extern void ForceCinematicSubtitles(bool flag);
+        /// @CSharpLua.Template = "SetCinematicAudio({0})"
+        public static extern void SetCinematicAudio(bool cinematicAudio);
         /// @CSharpLua.Template = "GetCameraMargin({0})"
         public static extern float GetCameraMargin(int whichMargin);
         /// @CSharpLua.Template = "GetCameraBoundMinX()"
@@ -6982,6 +6994,8 @@ namespace War3Api
         public static extern float BlzGetUnitAbilityCooldownRemaining(unit whichUnit, int abilId);
         /// @CSharpLua.Template = "BlzEndUnitAbilityCooldown({0}, {1})"
         public static extern void BlzEndUnitAbilityCooldown(unit whichUnit, int abilCode);
+        /// @CSharpLua.Template = "BlzStartUnitAbilityCooldown({0}, {1}, {2})"
+        public static extern void BlzStartUnitAbilityCooldown(unit whichUnit, int abilCode, float cooldown);
         /// @CSharpLua.Template = "BlzGetUnitAbilityManaCost({0}, {1}, {2})"
         public static extern int BlzGetUnitAbilityManaCost(unit whichUnit, int abilId, int level);
         /// @CSharpLua.Template = "BlzSetUnitAbilityManaCost({0}, {1}, {2}, {3})"
@@ -7006,6 +7020,8 @@ namespace War3Api
         public static extern bool BlzSetEventDamageType(damagetype damageType);
         /// @CSharpLua.Template = "BlzSetEventWeaponType({0})"
         public static extern bool BlzSetEventWeaponType(weapontype weaponType);
+        /// @CSharpLua.Template = "BlzGetEventIsAttack()"
+        public static extern bool BlzGetEventIsAttack();
         /// @CSharpLua.Template = "RequestExtraIntegerData({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
         public static extern int RequestExtraIntegerData(int dataType, player whichPlayer, string param1, string param2, bool param3, int param4, int param5, int param6);
         /// @CSharpLua.Template = "RequestExtraBooleanData({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})"
@@ -7190,6 +7206,8 @@ namespace War3Api
         public static extern void BlzDisplayChatMessage(player whichPlayer, int recipient, string message);
         /// @CSharpLua.Template = "BlzPauseUnitEx({0}, {1})"
         public static extern void BlzPauseUnitEx(unit whichUnit, bool flag);
+        /// @CSharpLua.Template = "BlzSetUnitFacingEx({0}, {1})"
+        public static extern void BlzSetUnitFacingEx(unit whichUnit, float facingAngle);
         /// @CSharpLua.Template = "CreateCommandButtonEffect({0}, {1})"
         public static extern commandbuttoneffect CreateCommandButtonEffect(int abilityId, string order);
         /// @CSharpLua.Template = "CreateUpgradeCommandButtonEffect({0})"
