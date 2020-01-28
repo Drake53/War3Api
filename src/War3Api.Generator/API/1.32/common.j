@@ -976,24 +976,29 @@ globals
 // Custom UI API constants
 //===================================================
 
-    constant originframetype        ORIGIN_FRAME_GAME_UI                 = ConvertOriginFrameType(0)
-    constant originframetype        ORIGIN_FRAME_COMMAND_BUTTON          = ConvertOriginFrameType(1)
-    constant originframetype        ORIGIN_FRAME_HERO_BAR                = ConvertOriginFrameType(2)
-    constant originframetype        ORIGIN_FRAME_HERO_BUTTON             = ConvertOriginFrameType(3)
-    constant originframetype        ORIGIN_FRAME_HERO_HP_BAR             = ConvertOriginFrameType(4)
-    constant originframetype        ORIGIN_FRAME_HERO_MANA_BAR           = ConvertOriginFrameType(5)
-    constant originframetype        ORIGIN_FRAME_HERO_BUTTON_INDICATOR   = ConvertOriginFrameType(6)
-    constant originframetype        ORIGIN_FRAME_ITEM_BUTTON             = ConvertOriginFrameType(7)
-    constant originframetype        ORIGIN_FRAME_MINIMAP                 = ConvertOriginFrameType(8)
-    constant originframetype        ORIGIN_FRAME_MINIMAP_BUTTON          = ConvertOriginFrameType(9)
-    constant originframetype        ORIGIN_FRAME_SYSTEM_BUTTON           = ConvertOriginFrameType(10)
-    constant originframetype        ORIGIN_FRAME_TOOLTIP                 = ConvertOriginFrameType(11)
-    constant originframetype        ORIGIN_FRAME_UBERTOOLTIP             = ConvertOriginFrameType(12)
-    constant originframetype        ORIGIN_FRAME_CHAT_MSG                = ConvertOriginFrameType(13)
-    constant originframetype        ORIGIN_FRAME_UNIT_MSG                = ConvertOriginFrameType(14)
-    constant originframetype        ORIGIN_FRAME_TOP_MSG                 = ConvertOriginFrameType(15)
-    constant originframetype        ORIGIN_FRAME_PORTRAIT                = ConvertOriginFrameType(16)
-    constant originframetype        ORIGIN_FRAME_WORLD_FRAME             = ConvertOriginFrameType(17)
+    constant originframetype        ORIGIN_FRAME_GAME_UI                    = ConvertOriginFrameType(0)
+    constant originframetype        ORIGIN_FRAME_COMMAND_BUTTON             = ConvertOriginFrameType(1)
+    constant originframetype        ORIGIN_FRAME_HERO_BAR                   = ConvertOriginFrameType(2)
+    constant originframetype        ORIGIN_FRAME_HERO_BUTTON                = ConvertOriginFrameType(3)
+    constant originframetype        ORIGIN_FRAME_HERO_HP_BAR                = ConvertOriginFrameType(4)
+    constant originframetype        ORIGIN_FRAME_HERO_MANA_BAR              = ConvertOriginFrameType(5)
+    constant originframetype        ORIGIN_FRAME_HERO_BUTTON_INDICATOR      = ConvertOriginFrameType(6)
+    constant originframetype        ORIGIN_FRAME_ITEM_BUTTON                = ConvertOriginFrameType(7)
+    constant originframetype        ORIGIN_FRAME_MINIMAP                    = ConvertOriginFrameType(8)
+    constant originframetype        ORIGIN_FRAME_MINIMAP_BUTTON             = ConvertOriginFrameType(9)
+    constant originframetype        ORIGIN_FRAME_SYSTEM_BUTTON              = ConvertOriginFrameType(10)
+    constant originframetype        ORIGIN_FRAME_TOOLTIP                    = ConvertOriginFrameType(11)
+    constant originframetype        ORIGIN_FRAME_UBERTOOLTIP                = ConvertOriginFrameType(12)
+    constant originframetype        ORIGIN_FRAME_CHAT_MSG                   = ConvertOriginFrameType(13)
+    constant originframetype        ORIGIN_FRAME_UNIT_MSG                   = ConvertOriginFrameType(14)
+    constant originframetype        ORIGIN_FRAME_TOP_MSG                    = ConvertOriginFrameType(15)
+    constant originframetype        ORIGIN_FRAME_PORTRAIT                   = ConvertOriginFrameType(16)
+    constant originframetype        ORIGIN_FRAME_WORLD_FRAME                = ConvertOriginFrameType(17)
+    constant originframetype        ORIGIN_FRAME_SIMPLE_UI_PARENT           = ConvertOriginFrameType(18)
+    constant originframetype        ORIGIN_FRAME_PORTRAIT_HP_TEXT           = ConvertOriginFrameType(19)
+    constant originframetype        ORIGIN_FRAME_PORTRAIT_MANA_TEXT         = ConvertOriginFrameType(20)
+    constant originframetype        ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR        = ConvertOriginFrameType(21)
+    constant originframetype        ORIGIN_FRAME_UNIT_PANEL_BUFF_BAR_LABEL  = ConvertOriginFrameType(22)
 
     constant framepointtype         FRAMEPOINT_TOPLEFT                   = ConvertFramePointType(0)
     constant framepointtype         FRAMEPOINT_TOP                       = ConvertFramePointType(1)
@@ -3644,6 +3649,7 @@ native IsCineFilterDisplayed            takes nothing returns boolean
 native SetCinematicScene                takes integer portraitUnitId, playercolor color, string speakerTitle, string text, real sceneDuration, real voiceoverDuration returns nothing
 native EndCinematicScene                takes nothing returns nothing
 native ForceCinematicSubtitles          takes boolean flag returns nothing
+native SetCinematicAudio                takes boolean cinematicAudio returns nothing
 
 native GetCameraMargin                  takes integer whichMargin returns real
 
@@ -3964,6 +3970,7 @@ native BlzSetUnitAbilityCooldown                   takes unit whichUnit, integer
 native BlzGetUnitAbilityCooldown                   takes unit whichUnit, integer abilId, integer level returns real
 native BlzGetUnitAbilityCooldownRemaining          takes unit whichUnit, integer abilId returns real
 native BlzEndUnitAbilityCooldown                   takes unit whichUnit, integer abilCode returns nothing
+native BlzStartUnitAbilityCooldown                 takes unit whichUnit, integer abilCode, real cooldown returns nothing
 native BlzGetUnitAbilityManaCost                   takes unit whichUnit, integer abilId, integer level returns integer
 native BlzSetUnitAbilityManaCost                   takes unit whichUnit, integer abilId, integer level, integer manaCost returns nothing
 native BlzGetLocalUnitZ                            takes unit whichUnit returns real
@@ -3976,6 +3983,7 @@ native BlzGetEventWeaponType  	                   takes nothing returns weaponty
 native BlzSetEventAttackType                       takes attacktype attackType returns boolean
 native BlzSetEventDamageType                       takes damagetype damageType returns boolean
 native BlzSetEventWeaponType                       takes weapontype weaponType returns boolean
+native BlzGetEventIsAttack                         takes nothing returns boolean
 native RequestExtraIntegerData                     takes integer dataType, player whichPlayer, string param1, string param2, boolean param3, integer param4, integer param5, integer param6 returns integer
 native RequestExtraBooleanData                     takes integer dataType, player whichPlayer, string param1, string param2, boolean param3, integer param4, integer param5, integer param6 returns boolean
 native RequestExtraStringData                      takes integer dataType, player whichPlayer, string param1, string param2, boolean param3, integer param4, integer param5, integer param6 returns string
@@ -4072,6 +4080,7 @@ native BlzDisplayChatMessage                       takes player whichPlayer, int
 native BlzPauseUnitEx                              takes unit whichUnit, boolean flag returns nothing
 // native BlzFourCC2S                                 takes integer value returns string
 // native BlzS2FourCC                                 takes string value returns integer
+native BlzSetUnitFacingEx                          takes unit whichUnit, real facingAngle returns nothing
 
 native CreateCommandButtonEffect                   takes integer abilityId, string order returns commandbuttoneffect
 native CreateUpgradeCommandButtonEffect            takes integer whichUprgade returns commandbuttoneffect
