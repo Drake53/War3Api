@@ -15,7 +15,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using War3Net.CodeAnalysis.Common;
 using War3Net.CodeAnalysis.Jass;
 
 namespace War3Api.Generator
@@ -25,7 +24,7 @@ namespace War3Api.Generator
         private static void Main(string[] args)
         {
             // const string LatestVersion = "1.31.1";
-            const string LatestVersion = "1.32.0.4-beta";
+            const string LatestVersion = "1.32";
 
             // War3Net.CodeAnalysis.CSharp.CompilationHelper.SerializeTo();
             if (args.Length > 0)
@@ -130,13 +129,12 @@ namespace War3Api.Generator
 #if NETCOREAPP3_0 // not tested, but this assembly was not required when this method was defined in a .net standard project
             yield return MetadataReference.CreateFromFile(Assembly.Load("System.Runtime, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a").Location);
 #endif
-            yield return MetadataReference.CreateFromFile(typeof(NativeLuaMemberAttribute).Assembly.Location);
         }
 
         private static UsingDirectiveSyntax GetCSharpDirective()
         {
             return SyntaxFactory.UsingDirective(
-                SyntaxFactory.ParseName("War3Net.CodeAnalysis.Common")) // TODO: not hardcoded name
+                SyntaxFactory.ParseName("System")) // TODO: remove or whatever
                 .WithLeadingTrivia(SyntaxFactory.Trivia(
                     SyntaxFactory.PragmaWarningDirectiveTrivia(
                         SyntaxFactory.Token(SyntaxKind.DisableKeyword),
