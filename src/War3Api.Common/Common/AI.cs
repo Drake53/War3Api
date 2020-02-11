@@ -16,6 +16,6 @@ namespace War3Api
     public static partial class Common
     {
         /// @CSharpLua.Template = "UnitAlive({0})"
-        public static extern int UnitAlive(unit id);
+        public static extern bool UnitAlive(unit id);
     }
 }
