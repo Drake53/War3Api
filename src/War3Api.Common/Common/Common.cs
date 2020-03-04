@@ -6596,6 +6596,8 @@ namespace War3Api
         public static extern void SetMusicVolume(int volume);
         /// @CSharpLua.Template = "SetMusicPlayPosition({0})"
         public static extern void SetMusicPlayPosition(int millisecs);
+        /// @CSharpLua.Template = "SetThematicMusicVolume({0})"
+        public static extern void SetThematicMusicVolume(int volume);
         /// @CSharpLua.Template = "SetThematicMusicPlayPosition({0})"
         public static extern void SetThematicMusicPlayPosition(int millisecs);
         /// @CSharpLua.Template = "SetSoundDuration({0}, {1})"

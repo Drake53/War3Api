@@ -1453,6 +1453,8 @@ namespace War3Api
         public static extern void ResumeMusicBJ();
         /// @CSharpLua.Template = "SetMusicVolumeBJ({0})"
         public static extern void SetMusicVolumeBJ(float volumePercent);
+        /// @CSharpLua.Template = "SetThematicMusicVolumeBJ({0})"
+        public static extern void SetThematicMusicVolumeBJ(float volumePercent);
         /// @CSharpLua.Template = "GetSoundDurationBJ({0})"
         public static extern float GetSoundDurationBJ(sound soundHandle);
         /// @CSharpLua.Template = "GetSoundFileDurationBJ({0})"
