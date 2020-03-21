@@ -24,7 +24,7 @@ namespace War3Api.Generator
         private static void Main(string[] args)
         {
             // const string LatestVersion = "1.31.1";
-            const string LatestVersion = "1.32.2";
+            const string LatestVersion = "1.32.3";
 
             // War3Net.CodeAnalysis.CSharp.CompilationHelper.SerializeTo();
             if (args.Length > 0)

@@ -2006,6 +2006,8 @@ namespace War3Api
         public static readonly playerunitevent EVENT_PLAYER_UNIT_SPELL_ENDCAST = ConvertPlayerUnitEvent(276);
         /// @CSharpLua.Template = "EVENT_PLAYER_UNIT_PAWN_ITEM"
         public static readonly playerunitevent EVENT_PLAYER_UNIT_PAWN_ITEM = ConvertPlayerUnitEvent(277);
+        /// @CSharpLua.Template = "EVENT_PLAYER_UNIT_STACK_ITEM"
+        public static readonly playerunitevent EVENT_PLAYER_UNIT_STACK_ITEM = ConvertPlayerUnitEvent(319);
         /// @CSharpLua.Template = "EVENT_UNIT_SELL"
         public static readonly unitevent EVENT_UNIT_SELL = ConvertUnitEvent(286);
         /// @CSharpLua.Template = "EVENT_UNIT_CHANGE_OWNER"
@@ -2024,6 +2026,8 @@ namespace War3Api
         public static readonly unitevent EVENT_UNIT_SPELL_ENDCAST = ConvertUnitEvent(293);
         /// @CSharpLua.Template = "EVENT_UNIT_PAWN_ITEM"
         public static readonly unitevent EVENT_UNIT_PAWN_ITEM = ConvertUnitEvent(294);
+        /// @CSharpLua.Template = "EVENT_UNIT_STACK_ITEM"
+        public static readonly unitevent EVENT_UNIT_STACK_ITEM = ConvertUnitEvent(318);
         /// @CSharpLua.Template = "LESS_THAN"
         public static readonly limitop LESS_THAN = ConvertLimitOp(0);
         /// @CSharpLua.Template = "LESS_THAN_OR_EQUAL"
@@ -5002,6 +5006,16 @@ namespace War3Api
         public static extern unit GetManipulatingUnit();
         /// @CSharpLua.Template = "GetManipulatedItem()"
         public static extern item GetManipulatedItem();
+        /// @CSharpLua.Template = "BlzGetAbsorbingItem()"
+        public static extern item BlzGetAbsorbingItem();
+        /// @CSharpLua.Template = "BlzGetManipulatedItemWasAbsorbed()"
+        public static extern bool BlzGetManipulatedItemWasAbsorbed();
+        /// @CSharpLua.Template = "BlzGetStackingItemSource()"
+        public static extern item BlzGetStackingItemSource();
+        /// @CSharpLua.Template = "BlzGetStackingItemTarget()"
+        public static extern item BlzGetStackingItemTarget();
+        /// @CSharpLua.Template = "BlzGetStackingItemTargetPreviousCharges()"
+        public static extern int BlzGetStackingItemTargetPreviousCharges();
         /// @CSharpLua.Template = "GetOrderedUnit()"
         public static extern unit GetOrderedUnit();
         /// @CSharpLua.Template = "GetIssuedOrderId()"
