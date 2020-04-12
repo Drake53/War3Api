@@ -17,5 +17,26 @@ namespace War3Api
     {
         /// @CSharpLua.Template = "FourCC({0})"
         public static extern int FourCC(string value);
+        
+        /// <summary>
+        /// Get a global variable matching the given key.
+        /// </summary>
+        /// <typeparam name="T">The type of the global variable.</typeparam>
+        /// <returns>
+        /// The value of global variable
+        /// </returns>
+        public static T GetGlobal<T>(string key)
+        {
+            // NOTE: The comments below are important. Please don't remove.
+            // The Lua generator will inject the commented code and comment
+            // out the C# return statement.
+
+            /*[[
+            return rawget(System.global, key)
+            --[[
+            ]]*/
+            return default(T);
+            //]]
+        }
     }
 }
