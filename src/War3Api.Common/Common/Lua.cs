@@ -25,18 +25,7 @@ namespace War3Api
         /// <returns>
         /// The value of global variable
         /// </returns>
-        public static T GetGlobal<T>(string key)
-        {
-            // NOTE: The comments below are important. Please don't remove.
-            // The Lua generator will inject the commented code and comment
-            // out the C# return statement.
-
-            /*[[
-            return rawget(System.global, key)
-            --[[
-            ]]*/
-            return default(T);
-            //]]
-        }
+        /// @CSharpLua.Template = "rawget(System.global, {0})"
+        public static extern T GetGlobal<T>(string key);
     }
 }
