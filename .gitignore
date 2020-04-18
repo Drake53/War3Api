@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /src/War3Api.Blizzard/Generated
 /src/War3Api.Common/Generated
+/src/War3Api.Object/Generated

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Copyright>Copyright (c) Drake53 and Contributors</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.7.9" />
+    <PackageReference Include="War3Net.Build" Version="1.3.0" />
+    <PackageReference Include="War3Net.IO.Slk" Version="0.1.0-preview1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="API\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

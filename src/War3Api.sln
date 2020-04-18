@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "War3Api.Common", "War3Api.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "War3Api.Blizzard", "War3Api.Blizzard\War3Api.Blizzard.csproj", "{C5613461-CC7F-400F-9624-379D6C32806C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "War3Api.Generator", "War3Api.Generator\War3Api.Generator.csproj", "{67A92125-C878-4A4D-A45A-957601C4AFD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "War3Api.Generator", "War3Api.Generator\War3Api.Generator.csproj", "{67A92125-C878-4A4D-A45A-957601C4AFD5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "War3Api.Generator.Object", "War3Api.Generator.Object\War3Api.Generator.Object.csproj", "{890340F9-C619-4A4A-BF4D-0BF9A99B22D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "War3Api.Object", "War3Api.Object\War3Api.Object.csproj", "{B39FF338-030B-4A12-B3BD-9793D090857E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{67A92125-C878-4A4D-A45A-957601C4AFD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67A92125-C878-4A4D-A45A-957601C4AFD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67A92125-C878-4A4D-A45A-957601C4AFD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890340F9-C619-4A4A-BF4D-0BF9A99B22D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890340F9-C619-4A4A-BF4D-0BF9A99B22D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890340F9-C619-4A4A-BF4D-0BF9A99B22D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890340F9-C619-4A4A-BF4D-0BF9A99B22D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B39FF338-030B-4A12-B3BD-9793D090857E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B39FF338-030B-4A12-B3BD-9793D090857E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B39FF338-030B-4A12-B3BD-9793D090857E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B39FF338-030B-4A12-B3BD-9793D090857E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

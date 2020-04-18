@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Drake53</Authors>
+
+    <Description>An API for Warcraft III's object editor data.</Description>
+    <PackageProjectUrl>https://github.com/Drake53/War3Api/tree/master/src/War3Api.Object</PackageProjectUrl>
+    <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+
+    <Version>1.31.1</Version>
+    <FileVersion>1.31.1</FileVersion>
+    <AssemblyVersion>1.31</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="War3Net.Build" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <None Include="Generated\**" />
+  </ItemGroup>
+
+</Project>
