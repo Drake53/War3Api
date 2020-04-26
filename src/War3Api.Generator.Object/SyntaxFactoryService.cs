@@ -282,5 +282,63 @@ namespace War3Api.Generator.Object
                 SyntaxFactory.Block(SyntaxFactory.List(statements)),
                 null);
         }
+
+        internal static MethodDeclarationSyntax ExtensionMethod(
+            string returnType,
+            string identifier,
+            IEnumerable<(string type, string identifier)> parameters,
+            IEnumerable<StatementSyntax> statements)
+        {
+            return SyntaxFactory.MethodDeclaration(
+                default,
+                new SyntaxTokenList(
+                    SyntaxFactory.Token(SyntaxKind.InternalKeyword),
+                    SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
+                SyntaxFactory.ParseTypeName(returnType),
+                null,
+                SyntaxFactory.Identifier(identifier),
+                null,
+                SyntaxFactory.ParameterList(
+                    SyntaxFactory.SeparatedList(
+                        parameters.Select((parameter, index) =>
+                            SyntaxFactory.Parameter(
+                                default,
+                                index == 0 ? new SyntaxTokenList(SyntaxFactory.Token(SyntaxKind.ThisKeyword)) : default,
+                                SyntaxFactory.ParseTypeName(parameter.type),
+                                SyntaxFactory.Identifier(parameter.identifier),
+                                null)))),
+                default,
+                SyntaxFactory.Block(SyntaxFactory.List(statements)),
+                null);
+        }
+
+        internal static MethodDeclarationSyntax ExtensionMethod(
+            string returnType,
+            string identifier,
+            IEnumerable<(string type, string identifier)> parameters,
+            string expressionStatement)
+        {
+            return SyntaxFactory.MethodDeclaration(
+                default,
+                new SyntaxTokenList(
+                    SyntaxFactory.Token(SyntaxKind.InternalKeyword),
+                    SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
+                SyntaxFactory.ParseTypeName(returnType),
+                null,
+                SyntaxFactory.Identifier(identifier),
+                null,
+                SyntaxFactory.ParameterList(
+                    SyntaxFactory.SeparatedList(
+                        parameters.Select((parameter, index) =>
+                            SyntaxFactory.Parameter(
+                                default,
+                                index == 0 ? new SyntaxTokenList(SyntaxFactory.Token(SyntaxKind.ThisKeyword)) : default,
+                                SyntaxFactory.ParseTypeName(parameter.type),
+                                SyntaxFactory.Identifier(parameter.identifier),
+                                null)))),
+                default,
+                SyntaxFactory.Block(SyntaxFactory.SingletonList((StatementSyntax)SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression(expressionStatement)))),
+                null);
+        }
     }
 }

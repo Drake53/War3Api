@@ -10,6 +10,7 @@ namespace War3Api.Generator.Object
     internal static class PathConstants
     {
         // Base
+        internal const string WorldEditGameStringsPath = @"_locales\enus.w3mod\ui\worldeditgamestrings.txt";
         internal const string WorldEditStringsPath = @"_locales\enus.w3mod\ui\worldeditstrings.txt";
         internal const string EnumDataFilePath = @"ui\uniteditordata.txt";
 
