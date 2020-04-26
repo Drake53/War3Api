@@ -12,6 +12,10 @@ namespace War3Api.Generator.Object
         // Base
         internal const string BaseClassName = "BaseObject";
 
+        internal const string CommentColumn = "comment";
+        internal const string CommentsColumn = "comments";
+        internal const string CommentOrCommentsColumn = "comment(s)";
+
         // Unit
         internal const string UnitClassName = "Unit";
         internal const string UnitTypeEnumName = "UnitType";
@@ -22,6 +26,7 @@ namespace War3Api.Generator.Object
         internal const string UnitBalanceDataKeyColumn = "unitBalanceID";
         internal const string UnitUiDataKeyColumn = "unitUIID";
         internal const string UnitWeaponDataKeyColumn = "unitWeaponID";
+        internal const string UnitDataNameColumn = "name";
 
         // Item
         internal const string ItemClassName = "Item";
@@ -36,6 +41,7 @@ namespace War3Api.Generator.Object
         internal const string DestructableTypeEnumParameterName = "baseDestructableType";
 
         internal const string DestructableDataKeyColumn = "DestructableID";
+        internal const string DestructableDataNameColumn = "Name";
 
         // Doodad
         internal const string DoodadClassName = "Doodad";
@@ -66,8 +72,11 @@ namespace War3Api.Generator.Object
         internal const string UpgradeDataKeyColumn = "upgradeid";
 
         // Metadata
+        /// <summary>The property's rawcode.</summary>
         internal const string MetaDataIdColumn = "ID";
+        /// <summary>The property's column name in the corresponding object data .slk file.</summary>
         internal const string MetaDataFieldColumn = "field";
+        /// <summary>If true (value is not 0), this property's value can be set individually for every level or variation of the object.</summary>
         internal const string MetaDataRepeatColumn = "repeat";
         internal const string MetaDataDisplayNameColumn = "displayName";
         internal const string MetaDataSortColumn = "sort";

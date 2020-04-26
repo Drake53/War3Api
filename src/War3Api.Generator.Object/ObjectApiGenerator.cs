@@ -619,5 +619,10 @@ namespace War3Api.Generator.Object
                                 : $"return value.Key.{nameof(Int32Extensions.ToRawcode)}()")),
                 });
         }
+
+        internal static bool ParseBool(this object obj)
+        {
+            return obj is int @int ? @int != 0 : (bool)obj;
+        }
     }
 }
