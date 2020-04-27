@@ -17,18 +17,21 @@ namespace War3Api.Object
         {
             _objectModification = new ObjectModification(oldId, 0);
             _db = db ?? ObjectDatabase.DefaultDatabase;
+            _db.AddObject(this);
         }
 
         internal BaseObject(int oldId, int newId, ObjectDatabase db = null)
         {
             _objectModification = new ObjectModification(oldId, newId);
             _db = db ?? ObjectDatabase.DefaultDatabase;
+            _db.AddObject(this);
         }
 
         internal BaseObject(int oldId, string newRawcode, ObjectDatabase db = null)
         {
             _objectModification = new ObjectModification(oldId, newRawcode);
             _db = db ?? ObjectDatabase.DefaultDatabase;
+            _db.AddObject(this);
         }
 
         public ObjectModification ObjectModification => _objectModification;

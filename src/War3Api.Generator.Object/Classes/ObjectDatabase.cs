@@ -105,6 +105,11 @@ namespace War3Api.Object
             };
         }
 
+        internal void AddObject(BaseObject baseObject)
+        {
+            _objects.Add(baseObject.Key, baseObject);
+        }
+
         private static IEnumerable<int> GetDefaultReservedKeys()
         {
             foreach (var unitType in Enum.GetValues(typeof(UnitType)))
