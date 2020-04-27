@@ -590,6 +590,12 @@ namespace War3Api.Generator.Object
                     new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
                     $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{genericType}>() : value.Split(',').Select(x => x.To{genericType.Dehumanize()}(baseObject)).ToArray()");
 
+                yield return SyntaxFactoryService.ExtensionMethod(
+                    dataTypeModel.Identifier,
+                    "ToRaw",
+                    new[] { (typeModel.Identifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
+                    "return (!maxValue.HasValue || list.Count <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
+
                 yield break;
             }
 

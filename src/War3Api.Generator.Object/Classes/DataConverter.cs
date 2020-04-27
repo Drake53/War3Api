@@ -46,20 +46,6 @@ namespace War3Api.Object
 
         public static char ToRaw(this char value, object minValue, object maxValue) => value;
 
-        public static string ToRaw<T>(this IList<T> list, int? minValue, int? maxValue)
-        {
-            // todo: replace ToString with something else?
-            foreach (var value in list)
-            {
-                if ((minValue.HasValue && value.ToString().Length < minValue.Value) || (maxValue.HasValue && value.ToString().Length > maxValue.Value))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(list));
-                }
-            }
-
-            return $"\"{string.Join(',', list)}\"";
-        }
-
         public static int ToInt(this int value, BaseObject baseObject) => value;
 
         public static float ToFloat(this float value, BaseObject baseObject) => value;
