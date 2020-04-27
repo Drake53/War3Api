@@ -21,7 +21,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);README.md</DefaultItemExcludes>
   </PropertyGroup>
   <PropertyGroup>
-    <CodeAnalysisRuleSet>../War3Api.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>../../War3Api.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
