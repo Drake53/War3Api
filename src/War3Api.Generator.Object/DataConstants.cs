@@ -17,6 +17,7 @@ namespace War3Api.Generator.Object
         internal const string CommentOrCommentsColumn = "comment(s)";
 
         // Unit
+        internal const string UnitNamespace = "Units";
         internal const string UnitClassName = "Unit";
         internal const string UnitTypeEnumName = "UnitType";
         internal const string UnitTypeEnumParameterName = "baseUnitType";
@@ -29,6 +30,7 @@ namespace War3Api.Generator.Object
         internal const string UnitDataNameColumn = "name";
 
         // Item
+        internal const string ItemNamespace = "Items";
         internal const string ItemClassName = "Item";
         internal const string ItemTypeEnumName = "ItemType";
         internal const string ItemTypeEnumParameterName = "baseItemType";
@@ -36,6 +38,7 @@ namespace War3Api.Generator.Object
         internal const string ItemDataKeyColumn = "itemID";
 
         // Destructable
+        internal const string DestructableNamespace = "Destructables";
         internal const string DestructableClassName = "Destructable";
         internal const string DestructableTypeEnumName = "DestructableType";
         internal const string DestructableTypeEnumParameterName = "baseDestructableType";
@@ -44,6 +47,7 @@ namespace War3Api.Generator.Object
         internal const string DestructableDataNameColumn = "Name";
 
         // Doodad
+        internal const string DoodadNamespace = "Doodads";
         internal const string DoodadClassName = "Doodad";
         internal const string DoodadTypeEnumName = "DoodadType";
         internal const string DoodadTypeEnumParameterName = "baseDoodadType";
@@ -51,6 +55,7 @@ namespace War3Api.Generator.Object
         internal const string DoodadDataKeyColumn = "doodID";
 
         // Ability
+        internal const string AbilityNamespace = "Abilities";
         internal const string AbilityClassName = "Ability";
         internal const string AbilityTypeEnumName = "AbilityType";
         internal const string AbilityTypeEnumParameterName = "baseAbilityType";
@@ -58,6 +63,7 @@ namespace War3Api.Generator.Object
         internal const string AbilityDataKeyColumn = "alias";
 
         // Buff
+        internal const string BuffNamespace = "Buffs";
         internal const string BuffClassName = "Buff";
         internal const string BuffTypeEnumName = "BuffType";
         internal const string BuffTypeEnumParameterName = "baseBuffType";
@@ -65,6 +71,7 @@ namespace War3Api.Generator.Object
         internal const string BuffDataKeyColumn = "alias";
 
         // Upgrade
+        internal const string UpgradeNamespace = "Upgrades";
         internal const string UpgradeClassName = "Upgrade";
         internal const string UpgradeTypeEnumName = "UpgradeType";
         internal const string UpgradeTypeEnumParameterName = "baseUpgradeType";
