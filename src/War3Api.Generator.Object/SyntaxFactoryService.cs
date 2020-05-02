@@ -107,11 +107,14 @@ namespace War3Api.Generator.Object
                             SyntaxFactory.EqualsValueClause(expression)))));
         }
 
-        internal static ConstructorDeclarationSyntax Constructor(string identifier, IEnumerable<(string type, string identifier)> parameters)
+        internal static ConstructorDeclarationSyntax Constructor(
+            SyntaxKind accessModifier,
+            string identifier,
+            IEnumerable<(string type, string identifier)> parameters)
         {
             return SyntaxFactory.ConstructorDeclaration(
                 default,
-                SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
+                SyntaxTokenList.Create(SyntaxFactory.Token(accessModifier)),
                 SyntaxFactory.Identifier(identifier),
                 SyntaxFactory.ParameterList(
                     SyntaxFactory.SeparatedList(
@@ -122,19 +125,45 @@ namespace War3Api.Generator.Object
                                 SyntaxFactory.ParseTypeName(parameter.type),
                                 SyntaxFactory.Identifier(parameter.identifier),
                                 null)))),
-                ConstructorInitializer(SyntaxKind.ThisConstructorInitializer, SyntaxKind.ThisKeyword, parameters),
+                ConstructorInitializer(true, parameters),
                 SyntaxFactory.Block(SyntaxFactory.List<StatementSyntax>()),
                 null);
         }
 
         internal static ConstructorDeclarationSyntax Constructor(
+            SyntaxKind accessModifier,
+            string identifier,
+            bool callsThisInitializer,
+            IEnumerable<string> initializerValues,
+            IEnumerable<(string type, string identifier)> parameters)
+        {
+            return SyntaxFactory.ConstructorDeclaration(
+                default,
+                SyntaxTokenList.Create(SyntaxFactory.Token(accessModifier)),
+                SyntaxFactory.Identifier(identifier),
+                SyntaxFactory.ParameterList(
+                    SyntaxFactory.SeparatedList(
+                        parameters.Select(parameter =>
+                            SyntaxFactory.Parameter(
+                                default,
+                                default,
+                                SyntaxFactory.ParseTypeName(parameter.type),
+                                SyntaxFactory.Identifier(parameter.identifier),
+                                null)))),
+                ConstructorInitializer(callsThisInitializer, initializerValues.Select(val => (val, false)).Concat(parameters.Select(param => (param.identifier, false)))),
+                SyntaxFactory.Block(SyntaxFactory.List<StatementSyntax>()),
+                null);
+        }
+
+        internal static ConstructorDeclarationSyntax Constructor(
+            SyntaxKind accessModifier,
             string identifier,
             IEnumerable<(string type, string identifier)> parameters,
             IEnumerable<(string field, ExpressionSyntax expression)> assignments)
         {
             return SyntaxFactory.ConstructorDeclaration(
                 default,
-                SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PrivateKeyword)),
+                SyntaxTokenList.Create(SyntaxFactory.Token(accessModifier)),
                 SyntaxFactory.Identifier(identifier),
                 SyntaxFactory.ParameterList(
                     SyntaxFactory.SeparatedList(
@@ -145,7 +174,7 @@ namespace War3Api.Generator.Object
                                 SyntaxFactory.ParseTypeName(parameter.type),
                                 SyntaxFactory.Identifier(parameter.identifier),
                                 null)))),
-                ConstructorInitializer(SyntaxKind.BaseConstructorInitializer, SyntaxKind.BaseKeyword, parameters),
+                ConstructorInitializer(false, parameters),
                 SyntaxFactory.Block(
                     SyntaxFactory.List<StatementSyntax>(
                         assignments.Select(assignment =>
@@ -156,7 +185,55 @@ namespace War3Api.Generator.Object
                 null);
         }
 
-        private static ConstructorInitializerSyntax ConstructorInitializer(SyntaxKind initializer, SyntaxKind keyword, IEnumerable<(string type, string identifier)> parameters)
+        internal static ConstructorDeclarationSyntax Constructor(
+            SyntaxKind accessModifier,
+            string identifier,
+            bool callsThisInitializer,
+            IEnumerable<string> initializerValues,
+            IEnumerable<(string type, string identifier)> parameters,
+            IEnumerable<(string field, ExpressionSyntax expression)> assignments)
+        {
+            return SyntaxFactory.ConstructorDeclaration(
+                default,
+                SyntaxTokenList.Create(SyntaxFactory.Token(accessModifier)),
+                SyntaxFactory.Identifier(identifier),
+                SyntaxFactory.ParameterList(
+                    SyntaxFactory.SeparatedList(
+                        parameters.Select(parameter =>
+                            SyntaxFactory.Parameter(
+                                default,
+                                default,
+                                SyntaxFactory.ParseTypeName(parameter.type),
+                                SyntaxFactory.Identifier(parameter.identifier),
+                                null)))),
+                ConstructorInitializer(callsThisInitializer, initializerValues.Select(val => (val, false)).Concat(parameters.Select(param => (param.identifier, false)))),
+                SyntaxFactory.Block(
+                    SyntaxFactory.List<StatementSyntax>(
+                        assignments.Select(assignment =>
+                            SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                                SyntaxKind.SimpleAssignmentExpression,
+                                SyntaxFactory.ParseExpression(assignment.field),
+                                assignment.expression))))),
+                null);
+        }
+
+        internal static ConstructorInitializerSyntax ConstructorInitializer(bool @this, IEnumerable<(string type, string identifier)> parameters)
+        {
+            return ConstructorInitializer(
+                @this ? SyntaxKind.ThisConstructorInitializer : SyntaxKind.BaseConstructorInitializer,
+                @this ? SyntaxKind.ThisKeyword : SyntaxKind.BaseKeyword,
+                parameters.Select(param => (param.identifier, param.type.EndsWith("type", StringComparison.OrdinalIgnoreCase))));
+        }
+
+        internal static ConstructorInitializerSyntax ConstructorInitializer(bool @this, IEnumerable<(string identifier, bool castToInt)> parameters)
+        {
+            return ConstructorInitializer(
+                @this ? SyntaxKind.ThisConstructorInitializer : SyntaxKind.BaseConstructorInitializer,
+                @this ? SyntaxKind.ThisKeyword : SyntaxKind.BaseKeyword,
+                parameters);
+        }
+
+        private static ConstructorInitializerSyntax ConstructorInitializer(SyntaxKind initializer, SyntaxKind keyword, IEnumerable<(string identifier, bool castToInt)> parameters)
         {
             return SyntaxFactory.ConstructorInitializer(
                 initializer,
@@ -166,11 +243,7 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.SeparatedList(
                         parameters.Select(parameter =>
                             SyntaxFactory.Argument(
-                                SyntaxFactory.ParseExpression(
-                                    parameter.type == SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText ||
-                                    parameter.type == SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText
-                                        ? parameter.identifier
-                                        : $"(int){parameter.identifier}"))))));
+                                SyntaxFactory.ParseExpression($"{(parameter.castToInt ? "(int)" : string.Empty)}{parameter.identifier}"))))));
         }
 
         internal static ObjectCreationExpressionSyntax ObjectCreation(string type, params ExpressionSyntax[] arguments)
