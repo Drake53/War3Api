@@ -14,6 +14,7 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Models;
@@ -25,7 +26,7 @@ namespace War3Api.Generator.Object
 {
     internal static class AbilityApiGenerator
     {
-        private const bool IsAbilityClassAbstract = false;
+        private const bool IsAbilityClassAbstract = true;
 
         internal static void Generate(string inputFolder)
         {
@@ -58,7 +59,6 @@ namespace War3Api.Generator.Object
 
             var properties = metaData
                 .Skip(1)
-                .Where(property => string.IsNullOrEmpty((string)property[useSpecificColumn]))
                 .Select(property => new PropertyModel()
                 {
                     Rawcode = (string)property[idColumn],
@@ -68,38 +68,66 @@ namespace War3Api.Generator.Object
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
+                    UseSpecific = (string)property[useSpecificColumn],
                     Column = data[property[fieldColumn]].Cast<int?>().SingleOrDefault(),
                 })
                 .ToDictionary(property => property.Rawcode);
 
-            if (!IsAbilityClassAbstract)
+            var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
+            foreach (var abilityType in data.Skip(1))
             {
-                var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
-                foreach (var abilityType in data.Skip(1))
+                if (string.IsNullOrEmpty((string)abilityType[abilityIdColumn]))
                 {
-                    if (string.IsNullOrEmpty((string)abilityType[abilityIdColumn]))
-                    {
-                        continue;
-                    }
-
-                    var abilityTypeEnumMemberModel = new EnumMemberModel();
-
-                    var name = ObjectApiGenerator.Localize((string)abilityType[commentColumn]);
-                    abilityTypeEnumMemberModel.Name = name.Dehumanize().TrimStart('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-                    abilityTypeEnumMemberModel.DisplayName = name;
-                    abilityTypeEnumMemberModel.Value = ((string)abilityType[abilityIdColumn]).FromRawcode();
-
-                    abilityTypeEnumModel.Members.Add(abilityTypeEnumMemberModel);
+                    continue;
                 }
 
-                ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
+                var abilityTypeEnumMemberModel = new EnumMemberModel();
+
+                var name = ObjectApiGenerator.Localize((string)abilityType[commentColumn]);
+                abilityTypeEnumMemberModel.Name = name.Dehumanize().TrimStart('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+                abilityTypeEnumMemberModel.DisplayName = name;
+                abilityTypeEnumMemberModel.Value = ((string)abilityType[abilityIdColumn]).FromRawcode();
+
+                abilityTypeEnumModel.Members.Add(abilityTypeEnumMemberModel);
+            }
+
+            var duplicateNames = abilityTypeEnumModel.Members.GroupBy(member => member.Name).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
+            foreach (var member in abilityTypeEnumModel.Members)
+            {
+                member.UniqueName = duplicateNames.Contains(member.Name) ? $"{member.Name}_{member.Value.ToRawcode()}" : member.Name;
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, DataConstants.AbilityTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, properties.Values.Where(property => string.IsNullOrEmpty(property.UseSpecific)), IsAbilityClassAbstract));
+
+            if (!IsAbilityClassAbstract)
+            {
+                ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
+
+                classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, DataConstants.AbilityTypeEnumParameterName));
+            }
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            if (IsAbilityClassAbstract)
+            {
+                foreach (var abilityType in abilityTypeEnumModel.Members)
+                {
+                    ObjectApiGenerator.GenerateMember(
+                        SyntaxFactoryService.Class(
+                            abilityType.UniqueName,
+                            false,
+                            DataConstants.AbilityClassName,
+                            ObjectApiGenerator.GetProperties(
+                                abilityType.UniqueName,
+                                properties.Values.Where(property => property.UseSpecific?.Contains(abilityType.Value.ToRawcode(), StringComparison.Ordinal) ?? false),
+                                false,
+                                false,
+                                SyntaxKind.PublicKeyword,
+                                abilityType.Value)),
+                        DataConstants.AbilityNamespace);
+                }
+            }
         }
     }
 }
