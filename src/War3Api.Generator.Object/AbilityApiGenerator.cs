@@ -57,6 +57,7 @@ namespace War3Api.Generator.Object
             var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
             var useSpecificColumn = metaData[DataConstants.MetaDataUseSpecificColumn].Single();
 
+            // Prroperties
             var properties = metaData
                 .Skip(1)
                 .Select(property => new PropertyModel()
@@ -73,6 +74,12 @@ namespace War3Api.Generator.Object
                 })
                 .ToDictionary(property => property.Rawcode);
 
+            foreach (var propertyModel in properties.Values)
+            {
+                propertyModel.DehumanizedName = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
+            }
+
+            // Ability types (enum)
             var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
             foreach (var abilityType in data.Skip(1))
             {
@@ -97,18 +104,23 @@ namespace War3Api.Generator.Object
                 member.UniqueName = duplicateNames.Contains(member.Name) ? $"{member.Name}_{member.Value.ToRawcode()}" : member.Name;
             }
 
+            // if (!IsAbilityClassAbstract)
+            {
+                ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
+            }
+
+            // Ability (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, properties.Values.Where(property => string.IsNullOrEmpty(property.UseSpecific)), IsAbilityClassAbstract));
 
             if (!IsAbilityClassAbstract)
             {
-                ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
-
                 classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, DataConstants.AbilityTypeEnumParameterName));
             }
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
 
+            // Abilities (subclasses)
             if (IsAbilityClassAbstract)
             {
                 foreach (var abilityType in abilityTypeEnumModel.Members)

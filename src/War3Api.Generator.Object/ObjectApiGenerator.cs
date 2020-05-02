@@ -153,6 +153,12 @@ namespace War3Api.Generator.Object
 
             var privateConstructorAssignments = new List<(string field, ExpressionSyntax expression)>();
 
+            var duplicatePropertyNames = (HashSet<string>)null;
+            if (properties.All(propertyModel => propertyModel.DehumanizedName != null))
+            {
+                duplicatePropertyNames = properties.GroupBy(propertyModel => propertyModel.DehumanizedName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
+            }
+
             foreach (var propertyModel in properties)
             {
                 var type = propertyModel.Type;
@@ -209,7 +215,11 @@ namespace War3Api.Generator.Object
 
                 var id = propertyModel.Rawcode.FromRawcode();
                 // var valueName = propertyModel.DisplayName.Split('(')[0].Dehumanize();
-                var valueName = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
+                var valueName = propertyModel.DehumanizedName ?? new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
+                if (duplicatePropertyNames != null && duplicatePropertyNames.Contains(propertyModel.DehumanizedName))
+                {
+                    valueName = $"{propertyModel.DehumanizedName}_{propertyModel.Rawcode}";
+                }
 
                 var propertyValueName = valueName;
                 if (valueName == className)

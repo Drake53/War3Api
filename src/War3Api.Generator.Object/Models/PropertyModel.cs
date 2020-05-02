@@ -19,6 +19,8 @@ namespace War3Api.Generator.Object.Models
 
         public string DisplayName { get; set; }
 
+        public string DehumanizedName { get; set; }
+
         public string Type { get; set; }
 
         public object MinVal { get; set; }
