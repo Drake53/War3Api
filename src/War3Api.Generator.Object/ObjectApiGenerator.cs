@@ -211,6 +211,12 @@ namespace War3Api.Generator.Object
                 // var valueName = propertyModel.DisplayName.Split('(')[0].Dehumanize();
                 var valueName = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
 
+                var propertyValueName = valueName;
+                if (valueName == className)
+                {
+                    propertyValueName = new string(valueName.Append('_').ToArray());
+                }
+
                 var underlyingType = typeModel.Type;
                 var dataTypeModel = _dataTypeModels[underlyingType];
 
@@ -219,7 +225,7 @@ namespace War3Api.Generator.Object
                     : string.Empty;
 
                 var fieldName = GetPrivateFieldName(nameof(ObjectModification));
-                var simpleIdentifier = typeModel.IsBasicType ? valueName : $"{valueName}Raw";
+                var simpleIdentifier = typeModel.IsBasicType ? propertyValueName : $"{valueName}Raw";
 
                 if (propertyModel.Repeat)
                 {
@@ -270,7 +276,7 @@ namespace War3Api.Generator.Object
 
                         yield return SyntaxFactoryService.Property(
                             propertyTypeName,
-                            valueName,
+                            propertyValueName,
                             SyntaxFactory.ParseExpression($"{fieldIdentifier}.Value"));
 
                         yield return SyntaxFactoryService.Method(
@@ -300,7 +306,7 @@ namespace War3Api.Generator.Object
 
                         yield return SyntaxFactoryService.Property(
                             propertyTypeName,
-                            valueName,
+                            propertyValueName,
                             SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{simpleIdentifier}.To{propertyTypeName.Dehumanize()}(this)")),
                             SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{simpleIdentifier} = value.ToRaw({ParseMinMaxValue(propertyModel.MinVal)}, {ParseMinMaxValue(propertyModel.MaxVal)})")));
                     }
