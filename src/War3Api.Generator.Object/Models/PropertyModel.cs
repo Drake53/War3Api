@@ -25,6 +25,8 @@ namespace War3Api.Generator.Object.Models
 
         public object MaxVal { get; set; }
 
+        public string UseSpecific { get; set; }
+
         public int? Column { get; set; }
     }
 }

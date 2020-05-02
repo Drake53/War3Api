@@ -15,6 +15,8 @@ namespace War3Api.Generator.Object.Models
 
         public string DisplayName { get; set; }
 
+        public string UniqueName { get; set; }
+
         public int GameVersion { get; set; }
 
         public int Value { get; set; }
