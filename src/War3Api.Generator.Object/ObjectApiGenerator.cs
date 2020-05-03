@@ -197,7 +197,13 @@ namespace War3Api.Generator.Object
                         }
 
                         // todo: lookup
-                        return 0.ToString();
+                        if (string.Equals(@string, "TTDesc", StringComparison.Ordinal) ||
+                            string.Equals(@string, "TTName", StringComparison.Ordinal))
+                        {
+                            return ModelService.GetKeywordText(SyntaxKind.NullKeyword);
+                        }
+
+                        throw new KeyNotFoundException($"Unknown constant: {@string}");
                     }
 
                     throw new ArgumentException();
@@ -677,41 +683,51 @@ namespace War3Api.Generator.Object
             {
                 case TypeModelCategory.Basic: break;
 
-                case TypeModelCategory.Enum:
-                    if (underlyingType == ObjectDataType.String)
-                    {
-                        var keepCasing =
-                            string.Equals(typeModel.Identifier, "ArmorType", StringComparison.Ordinal) ||
-                            string.Equals(typeModel.Identifier, "AttributeType", StringComparison.Ordinal) ||
-                            string.Equals(typeModel.Identifier, "CombatSound", StringComparison.Ordinal) ||
-                            string.Equals(typeModel.Identifier, "ShadowImage", StringComparison.Ordinal);
+                case TypeModelCategory.EnumString:
+                case TypeModelCategory.EnumLowercase:
+                    var keepCasing = typeModel.Category == TypeModelCategory.EnumString;
+                    var ignoreCase = ModelService.GetKeywordText(keepCasing ? SyntaxKind.FalseKeyword : SyntaxKind.TrueKeyword);
+                    var toLower = keepCasing ? string.Empty : ".ToLower()";
 
-                        var ignoreCase = ModelService.GetKeywordText(keepCasing ? SyntaxKind.FalseKeyword : SyntaxKind.TrueKeyword);
-                        var toLower = keepCasing ? string.Empty : ".ToLower()";
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        typeModel.Identifier,
+                        $"To{typeModel.Identifier}",
+                        new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
+                        new[]
+                        {
+                            // todo: use TryParse instead? since that one is generic
+                            SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return ({typeModel.Identifier})Enum.Parse(typeof({typeModel.Identifier}), value, {ignoreCase})")),
+                        });
 
-                        yield return SyntaxFactoryService.ExtensionMethod(
-                            typeModel.Identifier,
-                            $"To{typeModel.Identifier}",
-                            new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
-                            new[]
-                            {
-                                // todo: use TryParse instead? since that one is generic
-                                SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return ({typeModel.Identifier})Enum.Parse(typeof({typeModel.Identifier}), value, {ignoreCase})")),
-                            });
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        dataTypeModel.Identifier,
+                        "ToRaw",
+                        new[] { (typeModel.Identifier, "value"), ("int?", "minValue"), ("int?", "maxValue"), },
+                        new[]
+                        {
+                            SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return value.ToString(){toLower}")),
+                        });
 
-                        yield return SyntaxFactoryService.ExtensionMethod(
-                            dataTypeModel.Identifier,
-                            "ToRaw",
-                            new[] { (typeModel.Identifier, "value"), ("int?", "minValue"), ("int?", "maxValue"), },
-                            new[]
-                            {
-                                SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return value.ToString(){toLower}")),
-                            });
-                    }
-                    else
-                    {
-                        goto default;
-                    }
+                    break;
+
+                case TypeModelCategory.EnumChar:
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        typeModel.Identifier,
+                        $"To{typeModel.Identifier}",
+                        new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
+                        new[]
+                        {
+                            SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return ({typeModel.Identifier})char.Parse(value)")),
+                        });
+
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        dataTypeModel.Identifier,
+                        "ToRaw",
+                        new[] { (typeModel.Identifier, "value"), ("int?", "minValue"), ("int?", "maxValue"), },
+                        new[]
+                        {
+                            SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return ((char)value).ToString()")),
+                        });
 
                     break;
 
@@ -732,6 +748,7 @@ namespace War3Api.Generator.Object
 
                     break;
 
+                case TypeModelCategory.EnumInt:
                 default:
                     yield return SyntaxFactoryService.ExtensionMethod(
                         typeModel.Identifier,

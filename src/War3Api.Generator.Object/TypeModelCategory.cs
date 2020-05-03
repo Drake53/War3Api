@@ -10,7 +10,10 @@ namespace War3Api.Generator.Object
     internal enum TypeModelCategory
     {
         Basic,
-        Enum,
+        EnumInt,
+        EnumString,
+        EnumLowercase,
+        EnumChar,
         List,
         String,
         Other,

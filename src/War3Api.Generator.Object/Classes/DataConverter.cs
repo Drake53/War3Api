@@ -65,10 +65,5 @@ namespace War3Api.Object
         {
             return (Target)Enum.Parse(typeof(Target), value, false);
         }
-
-        public static Tileset ToTileset(this string value, BaseObject baseObject)
-        {
-            return (Tileset)Enum.Parse(typeof(Tileset), value, false);
-        }
     }
 }
