@@ -8,7 +8,7 @@ namespace War3Api.Object
 {
     public sealed class ObjectDatabase
     {
-        private static Lazy<ObjectDatabase> _defaultDatabase => new Lazy<ObjectDatabase>(() => new ObjectDatabase());
+        private static Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
 
         private readonly HashSet<int> _reservedKeys;
         private readonly Dictionary<int, BaseObject> _objects;
@@ -116,32 +116,32 @@ namespace War3Api.Object
             {
                 yield return (int)unitType;
             }
-            
+
             foreach (var itemType in Enum.GetValues(typeof(ItemType)))
             {
                 yield return (int)itemType;
             }
-            
+
             foreach (var destructableType in Enum.GetValues(typeof(DestructableType)))
             {
                 yield return (int)destructableType;
             }
-            
+
             foreach (var doodadType in Enum.GetValues(typeof(DoodadType)))
             {
                 yield return (int)doodadType;
             }
-            
+
             foreach (var abilityType in Enum.GetValues(typeof(AbilityType)))
             {
                 yield return (int)abilityType;
             }
-            
+
             foreach (var buffType in Enum.GetValues(typeof(BuffType)))
             {
                 yield return (int)buffType;
             }
-            
+
             foreach (var upgradeType in Enum.GetValues(typeof(UpgradeType)))
             {
                 yield return (int)upgradeType;
