@@ -235,19 +235,19 @@ namespace War3Api.Generator.Object
                     : string.Empty;
 
                 var fieldName = GetPrivateFieldName(nameof(ObjectModification));
-                var simpleIdentifier = typeModel.IsBasicType ? propertyValueName : $"{valueName}Raw";
+                var simpleIdentifier = typeModel.Category == TypeModelCategory.Basic ? propertyValueName : $"{valueName}Raw";
 
                 if (propertyModel.Repeat)
                 {
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
                     var fieldIdentifier = GetPrivateFieldName(valueName);
-                    var simpleFieldIdentifier = typeModel.IsBasicType ? fieldIdentifier : $"{fieldIdentifier}Raw";
+                    var simpleFieldIdentifier = typeModel.Category == TypeModelCategory.Basic ? fieldIdentifier : $"{fieldIdentifier}Raw";
 
                     var getterFuncName = $"Get{valueName}";
                     var setterFuncName = $"Set{valueName}";
-                    var simpleGetterFuncName = typeModel.IsBasicType ? getterFuncName : $"{getterFuncName}Raw";
-                    var simpleSetterFuncName = typeModel.IsBasicType ? setterFuncName : $"{setterFuncName}Raw";
+                    var simpleGetterFuncName = typeModel.Category == TypeModelCategory.Basic ? getterFuncName : $"{getterFuncName}Raw";
+                    var simpleSetterFuncName = typeModel.Category == TypeModelCategory.Basic ? setterFuncName : $"{setterFuncName}Raw";
 
                     privateConstructorAssignments.Add((simpleFieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{propertyType}>(() => new {propertyType}({simpleGetterFuncName}, {simpleSetterFuncName}))")));
 
@@ -273,7 +273,7 @@ namespace War3Api.Generator.Object
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
                         new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {nameof(ObjectDataModification)}({id}, {levelString}, value{optionalIsUnrealParameter});") });
 
-                    if (!typeModel.IsBasicType)
+                    if (typeModel.Category != TypeModelCategory.Basic)
                     {
                         var propertyTypeName = $"ObjectProperty<{typeModel.Identifier}>";
 
@@ -310,7 +310,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{fieldName}[{id}].{dataTypeModel.PropertyName}")),
                         SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {nameof(ObjectDataModification)}({id}, value{optionalIsUnrealParameter})")));
 
-                    if (!typeModel.IsBasicType)
+                    if (typeModel.Category != TypeModelCategory.Basic)
                     {
                         var propertyTypeName = typeModel.Identifier;
 
@@ -478,10 +478,17 @@ namespace War3Api.Generator.Object
 
             var duplicateNames = enumMembers.GroupBy(member => member.Name).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
 
-            const string ListKeyword = "List";
-            if (enumName.Contains(ListKeyword, StringComparison.Ordinal))
+            var overrideNames = new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                enumName = enumName.Remove(enumName.IndexOf(ListKeyword, StringComparison.Ordinal), ListKeyword.Length);
+                // TODO: merge prevent & require into single enum
+                { "PathingListRequire", "PathingRequire" },
+                { "PathingListPrevent", "PathingPrevent" },
+                { "UnitClass", "UnitClassification" },
+            };
+
+            if (overrideNames.TryGetValue(enumName, out var overrideName))
+            {
+                enumName = overrideName;
             }
 
             static string GetSummary(string displayName, int value)
@@ -655,7 +662,6 @@ namespace War3Api.Generator.Object
                 default,
                 new SyntaxList<MemberDeclarationSyntax>(
                     _typeModels
-                    .Where(typeModel => !typeModel.IsBasicType)
                     .Where(typeModel => !string.Equals(typeModel.Identifier, "string", StringComparison.OrdinalIgnoreCase))
                     .GroupBy(typeModel => typeModel.Identifier)
                     .Select(grouping => grouping.First())
@@ -667,50 +673,94 @@ namespace War3Api.Generator.Object
             var underlyingType = typeModel.Type;
             var dataTypeModel = _dataTypeModels[underlyingType];
 
-            if (typeModel.Identifier.StartsWith("IList", StringComparison.Ordinal))
+            switch (typeModel.Category)
             {
-                var genericType = typeModel.Identifier[6..^1];
+                case TypeModelCategory.Basic: break;
 
-                yield return SyntaxFactoryService.ExtensionMethod(
-                    typeModel.Identifier,
-                    $"ToIList{genericType.Dehumanize()}",
-                    new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
-                    $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{genericType}>() : value.Split(',').Select(x => x.To{genericType.Dehumanize()}(baseObject)).ToArray()");
+                case TypeModelCategory.Enum:
+                    if (underlyingType == ObjectDataType.String)
+                    {
+                        var keepCasing =
+                            string.Equals(typeModel.Identifier, "ArmorType", StringComparison.Ordinal) ||
+                            string.Equals(typeModel.Identifier, "AttributeType", StringComparison.Ordinal) ||
+                            string.Equals(typeModel.Identifier, "CombatSound", StringComparison.Ordinal) ||
+                            string.Equals(typeModel.Identifier, "ShadowImage", StringComparison.Ordinal);
 
-                yield return SyntaxFactoryService.ExtensionMethod(
-                    dataTypeModel.Identifier,
-                    "ToRaw",
-                    new[] { (typeModel.Identifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
-                    "return (!maxValue.HasValue || list.Count <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
+                        var ignoreCase = ModelService.GetKeywordText(keepCasing ? SyntaxKind.FalseKeyword : SyntaxKind.TrueKeyword);
+                        var toLower = keepCasing ? string.Empty : ".ToLower()";
 
-                yield break;
+                        yield return SyntaxFactoryService.ExtensionMethod(
+                            typeModel.Identifier,
+                            $"To{typeModel.Identifier}",
+                            new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
+                            new[]
+                            {
+                                // todo: use TryParse instead? since that one is generic
+                                SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return ({typeModel.Identifier})Enum.Parse(typeof({typeModel.Identifier}), value, {ignoreCase})")),
+                            });
+
+                        yield return SyntaxFactoryService.ExtensionMethod(
+                            dataTypeModel.Identifier,
+                            "ToRaw",
+                            new[] { (typeModel.Identifier, "value"), ("int?", "minValue"), ("int?", "maxValue"), },
+                            new[]
+                            {
+                                SyntaxFactory.ExpressionStatement(SyntaxFactory.ParseExpression($"return value.ToString(){toLower}")),
+                            });
+                    }
+                    else
+                    {
+                        goto default;
+                    }
+
+                    break;
+
+                case TypeModelCategory.List:
+                    var genericType = typeModel.Identifier[6..^1];
+
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        typeModel.Identifier,
+                        $"ToIList{genericType.Dehumanize()}",
+                        new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
+                        $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{genericType}>() : value.Split(',').Select(x => x.To{genericType.Dehumanize()}(baseObject)).ToArray()");
+
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        dataTypeModel.Identifier,
+                        "ToRaw",
+                        new[] { (typeModel.Identifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
+                        "return (!maxValue.HasValue || list.Count <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
+
+                    break;
+
+                default:
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        typeModel.Identifier,
+                        $"To{typeModel.Identifier}",
+                        new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
+                        new[]
+                        {
+                            SyntaxFactory.ExpressionStatement(
+                                SyntaxFactory.ParseExpression(
+                                    underlyingType == ObjectDataType.Int || underlyingType == ObjectDataType.Char
+                                        ? $"return ({typeModel.Identifier})value"
+                                        : $"return baseObject.Db.Get{typeModel.Identifier}(value.{nameof(War3Net.Common.Extensions.StringExtensions.FromRawcode)}())")),
+                        });
+
+                    yield return SyntaxFactoryService.ExtensionMethod(
+                        dataTypeModel.Identifier,
+                        "ToRaw",
+                        new[] { (typeModel.Identifier, "value"), ($"{dataTypeModel.Identifier}?", "minValue"), ($"{dataTypeModel.Identifier}?", "maxValue"), },
+                        new[]
+                        {
+                            SyntaxFactory.ExpressionStatement(
+                                SyntaxFactory.ParseExpression(
+                                    underlyingType == ObjectDataType.Int || underlyingType == ObjectDataType.Char
+                                        ? $"return ({dataTypeModel.Identifier})value"
+                                        : $"return value.Key.{nameof(Int32Extensions.ToRawcode)}()")),
+                        });
+
+                    break;
             }
-
-            yield return SyntaxFactoryService.ExtensionMethod(
-                typeModel.Identifier,
-                $"To{typeModel.Identifier}",
-                new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
-                new[]
-                {
-                    SyntaxFactory.ExpressionStatement(
-                        SyntaxFactory.ParseExpression(
-                            underlyingType == ObjectDataType.Int || underlyingType == ObjectDataType.Char
-                                ? $"return ({typeModel.Identifier})value"
-                                : $"return baseObject.Db.Get{typeModel.Identifier}(value.{nameof(War3Net.Common.Extensions.StringExtensions.FromRawcode)}())")),
-                });
-
-            yield return SyntaxFactoryService.ExtensionMethod(
-                dataTypeModel.Identifier,
-                "ToRaw",
-                new[] { (typeModel.Identifier, "value"), ($"{dataTypeModel.Identifier}?", "minValue"), ($"{dataTypeModel.Identifier}?", "maxValue"), },
-                new[]
-                {
-                    SyntaxFactory.ExpressionStatement(
-                        SyntaxFactory.ParseExpression(
-                            underlyingType == ObjectDataType.Int || underlyingType == ObjectDataType.Char
-                                ? $"return ({dataTypeModel.Identifier})value"
-                                : $"return value.Key.{nameof(Int32Extensions.ToRawcode)}()")),
-                });
         }
 
         internal static bool ParseBool(this object obj)

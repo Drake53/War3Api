@@ -12,5 +12,7 @@ namespace War3Api.Generator.Object
         Basic,
         Enum,
         List,
+        String,
+        Other,
     }
 }

@@ -61,17 +61,6 @@ namespace War3Api.Object
             return int.Parse(value);
         }
 
-        // todo: use TryParse instead? since that one is generic
-        public static PathingPrevent ToPathingPrevent(this string value, BaseObject baseObject)
-        {
-            return (PathingPrevent)Enum.Parse(typeof(PathingPrevent), value, false);
-        }
-
-        public static PathingRequire ToPathingRequire(this string value, BaseObject baseObject)
-        {
-            return (PathingRequire)Enum.Parse(typeof(PathingRequire), value, false);
-        }
-
         public static Target ToTarget(this string value, BaseObject baseObject)
         {
             return (Target)Enum.Parse(typeof(Target), value, false);

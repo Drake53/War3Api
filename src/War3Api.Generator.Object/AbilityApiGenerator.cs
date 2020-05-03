@@ -57,7 +57,7 @@ namespace War3Api.Generator.Object
             var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
             var useSpecificColumn = metaData[DataConstants.MetaDataUseSpecificColumn].Single();
 
-            // Prroperties
+            // Properties
             var properties = metaData
                 .Skip(1)
                 .Select(property => new PropertyModel()
