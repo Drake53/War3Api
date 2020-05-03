@@ -18,7 +18,10 @@ namespace War3Api.Generator.Object.Models
 
         public ObjectDataType Type { get; set; }
 
+        [Obsolete]
         public bool IsBasicType { get; set; }
+
+        public TypeModelCategory Category { get; set; }
 
         // Name in .cs
         public string Identifier { get; set; }
