@@ -5,7 +5,6 @@
 // </copyright>
 // ------------------------------------------------------------------------------
 
-using System;
 using System.Collections;
 
 using War3Net.Build.Object;
@@ -26,7 +25,5 @@ namespace War3Api.Generator.Object.Models
 
         // Name in .cs
         public string FullIdentifier => Category == TypeModelCategory.List ? $"{nameof(IList)}<{Identifier}>" : Identifier;
-
-        public Func<object, string> ExpressionFunction { get; set; }
     }
 }
