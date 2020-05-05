@@ -134,7 +134,6 @@ namespace War3Api.Generator.Object
                                 abilityType.UniqueName,
                                 properties.Values.Where(property => property.UseSpecific?.Contains(abilityType.Value.ToRawcode(), StringComparison.Ordinal) ?? false),
                                 false,
-                                false,
                                 SyntaxKind.PublicKeyword,
                                 abilityType.Value)),
                         DataConstants.AbilityNamespace);

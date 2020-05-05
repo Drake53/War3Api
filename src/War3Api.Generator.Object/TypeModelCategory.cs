@@ -11,6 +11,7 @@ namespace War3Api.Generator.Object
     {
         Basic,
         EnumInt,
+        EnumFlags,
         EnumString,
         EnumLowercase,
         EnumChar,

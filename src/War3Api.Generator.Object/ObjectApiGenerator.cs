@@ -142,10 +142,10 @@ namespace War3Api.Generator.Object
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
         {
-            return GetProperties(className, properties, isAbstractClass, className == "Doodad", isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
+            return GetProperties(className, properties, className == "Doodad", isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
         }
 
-        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool isAbstractClass, bool usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
+        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
         {
             var levelString = usesVariation ? "variation" : "level";
 
@@ -164,7 +164,7 @@ namespace War3Api.Generator.Object
                 var type = propertyModel.Type;
                 if (!typeDict.TryGetValue(type, out var typeModel))
                 {
-                    throw new InvalidDataException($"Unknown type '{type}' for {className} property '{propertyModel.Rawcode}'.");
+                    throw new InvalidDataException($"Unknown type '{type}' for {className} property {propertyModel.DehumanizedName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
                 }
 
                 static string ParseMinMaxValue(object value)
@@ -497,6 +497,20 @@ namespace War3Api.Generator.Object
                 enumName = overrideName;
             }
 
+            // Can not use EndsWith("Flags"), because FullFlags is not really a Flags enum.
+            var flagEnumNames = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "ChannelFlags",
+                "InteractionFlags",
+                "MorphFlags",
+                "PickFlags",
+                "SilenceFlags",
+                "StackFlags",
+                "VersionFlags",
+            };
+
+            var isFlagsEnum = flagEnumNames.Contains(enumName);
+
             static string GetSummary(string displayName, int value)
             {
                 if (displayName.StartsWith("WESTRING", StringComparison.OrdinalIgnoreCase))
@@ -508,7 +522,9 @@ namespace War3Api.Generator.Object
             }
 
             GenerateMember(SyntaxFactory.EnumDeclaration(
-                default,
+                isFlagsEnum
+                    ? SyntaxFactory.SingletonList(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Attribute(SyntaxFactory.ParseName(nameof(FlagsAttribute))))))
+                    : default,
                 SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
                 SyntaxFactory.Identifier(enumName),
                 null,
@@ -518,7 +534,7 @@ namespace War3Api.Generator.Object
                             default,
                             SyntaxFactory.Identifier(enumMember.UniqueName ?? (duplicateNames.Contains(enumMember.Name) ? $"{enumMember.Name}_{enumMember.Value.ToRawcode()}" : enumMember.Name)),
                             SyntaxFactory.EqualsValueClause(
-                                SyntaxFactory.ParseExpression(enumMember.ValueString)))
+                                SyntaxFactory.ParseExpression(isFlagsEnum ? $"1 << {enumMember.Value}" : enumMember.ValueString)))
                         .WithLeadingTrivia(
                             SyntaxFactory.Trivia(
                                 SyntaxFactory.DocumentationCommentTrivia(
@@ -749,6 +765,7 @@ namespace War3Api.Generator.Object
                     break;
 
                 case TypeModelCategory.EnumInt:
+                case TypeModelCategory.EnumFlags:
                 default:
                     yield return SyntaxFactoryService.ExtensionMethod(
                         typeModel.Identifier,
