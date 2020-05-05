@@ -11,13 +11,29 @@
         public TechEquivalent AsTechEquivalent => (TechEquivalent)Key;
     }
 
-    /*public enum Tileset
+    public enum Tileset
     {
         // None = '_',
         All = '*',
-
-        // has same members as War3Net.Build.Common.Tileset
-    }*/
+        Ashenvale = 'A',
+        Barrens = 'B',
+        BlackCitadel = 'K',
+        Cityscape = 'Y',
+        Dalaran = 'X',
+        DalaranRuins = 'J',
+        Dungeon = 'D',
+        Felwood = 'C',
+        IcecrownGlacier = 'I',
+        LordaeronFall = 'F',
+        LordaeronSummer = 'L',
+        LordaeronWinter = 'W',
+        Northrend = 'N',
+        Outland = 'O',
+        SunkenRuins = 'Z',
+        Underground = 'G',
+        Village = 'V',
+        VillageFall = 'Q',
+    }
 
     public enum DoodadCategory
     {

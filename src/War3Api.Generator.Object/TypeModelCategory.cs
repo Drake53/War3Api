@@ -15,8 +15,8 @@ namespace War3Api.Generator.Object
         EnumString,
         EnumLowercase,
         EnumChar,
-        List,
         String,
-        Other,
+        Object,
+        List,
     }
 }

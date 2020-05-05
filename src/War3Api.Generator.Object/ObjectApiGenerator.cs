@@ -99,7 +99,6 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Linq")),
-                    SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Build.Common")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Build.Object")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Common.Extensions")),
                 }),
@@ -233,6 +232,7 @@ namespace War3Api.Generator.Object
                     propertyValueName = new string(valueName.Append('_').ToArray());
                 }
 
+                var identifier = typeModel.FullIdentifier;
                 var underlyingType = typeModel.Type;
                 var dataTypeModel = _dataTypeModels[underlyingType];
 
@@ -281,7 +281,7 @@ namespace War3Api.Generator.Object
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
-                        var propertyTypeName = $"ObjectProperty<{typeModel.Identifier}>";
+                        var propertyTypeName = $"ObjectProperty<{identifier}>";
 
                         privateConstructorAssignments.Add((fieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{propertyTypeName}>(() => new {propertyTypeName}({getterFuncName}, {setterFuncName}))")));
 
@@ -296,15 +296,15 @@ namespace War3Api.Generator.Object
                             SyntaxFactory.ParseExpression($"{fieldIdentifier}.Value"));
 
                         yield return SyntaxFactoryService.Method(
-                            typeModel.Identifier,
+                            identifier,
                             getterFuncName,
                             new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString) },
-                            new[] { SyntaxFactory.ParseStatement($"return {simpleGetterFuncName}({levelString}).To{typeModel.Identifier.Dehumanize()}(this);") });
+                            new[] { SyntaxFactory.ParseStatement($"return {simpleGetterFuncName}({levelString}).To{identifier.Dehumanize()}(this);") });
 
                         yield return SyntaxFactoryService.Method(
                             SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
                             setterFuncName,
-                            new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (typeModel.Identifier, "value") },
+                            new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (identifier, "value") },
                             new[] { SyntaxFactory.ParseStatement($"{simpleSetterFuncName}({levelString}, value.ToRaw({ParseMinMaxValue(propertyModel.MinVal)}, {ParseMinMaxValue(propertyModel.MaxVal)}));") });
                     }
                 }
@@ -318,7 +318,7 @@ namespace War3Api.Generator.Object
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
-                        var propertyTypeName = typeModel.Identifier;
+                        var propertyTypeName = identifier;
 
                         yield return SyntaxFactoryService.Property(
                             propertyTypeName,
@@ -684,8 +684,9 @@ namespace War3Api.Generator.Object
                 default,
                 new SyntaxList<MemberDeclarationSyntax>(
                     _typeModels
-                    .Where(typeModel => !string.Equals(typeModel.Identifier, "string", StringComparison.OrdinalIgnoreCase))
-                    .GroupBy(typeModel => typeModel.Identifier)
+                    .Where(typeModel => typeModel.Category != TypeModelCategory.String && typeModel.Type != ObjectDataType.Unreal)
+                    // Use GroupBy to prevent generating duplicate methods for abilList/heroAbilList and buffList/effectList.
+                    .GroupBy(typeModel => typeModel.FullIdentifier)
                     .Select(grouping => grouping.First())
                     .SelectMany(GetConvertMethods))));
         }
@@ -697,7 +698,8 @@ namespace War3Api.Generator.Object
 
             switch (typeModel.Category)
             {
-                case TypeModelCategory.Basic: break;
+                case TypeModelCategory.Basic:
+                    break;
 
                 case TypeModelCategory.EnumString:
                 case TypeModelCategory.EnumLowercase:
@@ -748,18 +750,20 @@ namespace War3Api.Generator.Object
                     break;
 
                 case TypeModelCategory.List:
-                    var genericType = typeModel.Identifier[6..^1];
+                    var itemIdentifier = typeModel.Identifier;
+                    var listIdentifier = typeModel.FullIdentifier;
+                    var dehumanizedItem = itemIdentifier.Dehumanize();
 
                     yield return SyntaxFactoryService.ExtensionMethod(
-                        typeModel.Identifier,
-                        $"ToIList{genericType.Dehumanize()}",
+                        listIdentifier,
+                        $"ToIList{dehumanizedItem}",
                         new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
-                        $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{genericType}>() : value.Split(',').Select(x => x.To{genericType.Dehumanize()}(baseObject)).ToArray()");
+                        $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{itemIdentifier}>() : value.Split(',').Select(x => x.To{dehumanizedItem}(baseObject)).ToArray()");
 
                     yield return SyntaxFactoryService.ExtensionMethod(
                         dataTypeModel.Identifier,
                         "ToRaw",
-                        new[] { (typeModel.Identifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
+                        new[] { (listIdentifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
                         "return (!maxValue.HasValue || list.Count <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
 
                     break;
@@ -780,10 +784,11 @@ namespace War3Api.Generator.Object
                                         : $"return baseObject.Db.Get{typeModel.Identifier}(value.{nameof(War3Net.Common.Extensions.StringExtensions.FromRawcode)}())")),
                         });
 
+                    var minMaxValueType = underlyingType == ObjectDataType.String ? "int" : dataTypeModel.Identifier;
                     yield return SyntaxFactoryService.ExtensionMethod(
                         dataTypeModel.Identifier,
                         "ToRaw",
-                        new[] { (typeModel.Identifier, "value"), ($"{dataTypeModel.Identifier}?", "minValue"), ($"{dataTypeModel.Identifier}?", "maxValue"), },
+                        new[] { (typeModel.Identifier, "value"), ($"{minMaxValueType}?", "minValue"), ($"{minMaxValueType}?", "maxValue"), },
                         new[]
                         {
                             SyntaxFactory.ExpressionStatement(

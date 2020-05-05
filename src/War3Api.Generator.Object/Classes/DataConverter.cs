@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using War3Net.Build.Common; // TEMP for Tileset enum
 
 namespace War3Api.Object
 {
@@ -59,11 +56,6 @@ namespace War3Api.Object
         public static int ToInt(this string value, BaseObject baseObject)
         {
             return int.Parse(value);
-        }
-
-        public static Target ToTarget(this string value, BaseObject baseObject)
-        {
-            return (Target)Enum.Parse(typeof(Target), value, false);
         }
     }
 }
