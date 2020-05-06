@@ -51,6 +51,7 @@ namespace War3Api.Generator.Object
             var idColumn = metaData[DataConstants.MetaDataIdColumn].Single();
             var fieldColumn = metaData[DataConstants.MetaDataFieldColumn].Single();
             var repeatColumn = metaData[DataConstants.MetaDataRepeatColumn].Single();
+            var categoryColumn = metaData[DataConstants.MetaDataCategoryColumn].Single();
             var displayNameColumn = metaData[DataConstants.MetaDataDisplayNameColumn].Single();
             var typeColumn = metaData[DataConstants.MetaDataTypeColumn].Single();
             var minValColumn = metaData[DataConstants.MetaDataMinValColumn].Single();
@@ -65,6 +66,7 @@ namespace War3Api.Generator.Object
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
                     Repeat = property[repeatColumn].ParseBool(),
+                    Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
                     DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
@@ -76,7 +78,10 @@ namespace War3Api.Generator.Object
 
             foreach (var propertyModel in properties.Values)
             {
-                propertyModel.DehumanizedName = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
+                var category = propertyModel.Category.Replace("&", string.Empty, StringComparison.Ordinal).Dehumanize();
+                var name = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
+
+                propertyModel.DehumanizedName = category + name;
             }
 
             // Ability types (enum)

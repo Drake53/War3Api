@@ -45,7 +45,7 @@ namespace War3Api.Object.Tests
             // abilities.Add(new Ability(AbilityType.RepairHuman));
             abilities.Add(new Abilities.RepairHuman(db));
             var up = new Abilities.TankUpgrade(db);
-            up.NewUnitType[1] = peasant;
+            up.DataNewUnitType[1] = peasant;
 
             peasant.Normal = abilities;
             Assert.AreEqual(((int)AbilityType.RepairHuman).ToRawcode(), peasant.NormalRaw);
@@ -271,62 +271,62 @@ namespace War3Api.Object.Tests
             var abilityData = objectData.AbilityData;
 
             var darkRangerSilence = new Abilities.DarkRangerSilence(db);
-            darkRangerSilence.AttacksPrevented[1] = SilenceFlags.Melee | SilenceFlags.Ranged | SilenceFlags.Special | SilenceFlags.Spells;
+            darkRangerSilence.DataAttacksPrevented[1] = SilenceFlags.Melee | SilenceFlags.Ranged | SilenceFlags.Special | SilenceFlags.Spells;
 
             var demonHunterMetamorphosis = new Abilities.DemonHunterMetamorphosis(db);
-            demonHunterMetamorphosis.MorphingFlags[1] = MorphFlags.RequiresPayment;
+            demonHunterMetamorphosis.DataMorphingFlags[1] = MorphFlags.RequiresPayment;
 
             var farseerFarSight = new Abilities.FarseerFarSight(db);
-            farseerFarSight.DetectionType[1] = DetectionType.Invisible;
+            farseerFarSight.DataDetectionType[1] = DetectionType.Invisible;
 
             var seaWitchFrostArrows = new Abilities.SeaWitchFrostArrows(db);
-            seaWitchFrostArrows.StackFlags[1] = 0;
+            seaWitchFrostArrows.DataStackFlags[1] = 0;
 
             var illidanChannel = new Abilities.IllidanChannel(db);
-            illidanChannel.TargetType[1] = ChannelType.UnitOrPointTarget;
-            illidanChannel.Options[1] = ChannelFlags.UniversalSpell | ChannelFlags.UniqueCast;
+            illidanChannel.DataTargetType[1] = ChannelType.UnitOrPointTarget;
+            illidanChannel.DataOptions[1] = ChannelFlags.UniversalSpell | ChannelFlags.UniqueCast;
 
             var alliedBuilding = new Abilities.AlliedBuilding(db);
-            alliedBuilding.InteractionType[1] = InteractionFlags.AnyUnitWInventory | InteractionFlags.AnyNonBuilding;
+            alliedBuilding.DataInteractionType[1] = InteractionFlags.AnyUnitWInventory | InteractionFlags.AnyNonBuilding;
 
             var rejuvination = new Abilities.Rejuvination(db);
-            rejuvination.AllowWhenFull[1] = FullFlags.ManaOnly;
+            rejuvination.DataAllowWhenFull[1] = FullFlags.ManaOnly;
 
             var rootAncientProtector = new Abilities.RootAncientProtector(db);
-            rootAncientProtector.UprootedDefenseType[1] = DefenseTypeInt.Normal;
+            rootAncientProtector.DataUprootedDefenseType[1] = DefenseTypeInt.Normal;
 
             var preservation = new Abilities.Preservation(db);
-            preservation.BuildingTypesAllowed[1] = PickFlags.General;
+            preservation.DataBuildingTypesAllowed[1] = PickFlags.General;
 
             var expectAbility = new Dictionary<string, ObjectDataType>()
             {
                 // Dark ranger silence
-                { "Nsi1", castType[darkRangerSilence.AttacksPreventedRaw[1].GetType()] },
+                { "Nsi1", castType[darkRangerSilence.DataAttacksPreventedRaw[1].GetType()] },
 
                 // Demon hunter metamorphosis
-                { "Eme2", castType[demonHunterMetamorphosis.MorphingFlagsRaw[1].GetType()] },
+                { "Eme2", castType[demonHunterMetamorphosis.DataMorphingFlagsRaw[1].GetType()] },
 
                 // Farseer far sight
-                { "Ofs1", castType[farseerFarSight.DetectionTypeRaw[1].GetType()] },
+                { "Ofs1", castType[farseerFarSight.DataDetectionTypeRaw[1].GetType()] },
 
                 // Sea witch frost arrows
-                { "Hca4", castType[seaWitchFrostArrows.StackFlagsRaw[1].GetType()] },
+                { "Hca4", castType[seaWitchFrostArrows.DataStackFlagsRaw[1].GetType()] },
 
                 // Illidan channel
-                { "Ncl2", castType[illidanChannel.TargetTypeRaw[1].GetType()] },
-                { "Ncl3", castType[illidanChannel.OptionsRaw[1].GetType()] },
+                { "Ncl2", castType[illidanChannel.DataTargetTypeRaw[1].GetType()] },
+                { "Ncl3", castType[illidanChannel.DataOptionsRaw[1].GetType()] },
 
                 // Allied building
-                { "Neu2", castType[alliedBuilding.InteractionTypeRaw[1].GetType()] },
+                { "Neu2", castType[alliedBuilding.DataInteractionTypeRaw[1].GetType()] },
 
                 // Rejuvination
-                { "Rej3", castType[rejuvination.AllowWhenFullRaw[1].GetType()] },
+                { "Rej3", castType[rejuvination.DataAllowWhenFullRaw[1].GetType()] },
 
                 // Root ancient protector
-                { "Roo4", castType[rootAncientProtector.UprootedDefenseTypeRaw[1].GetType()] },
+                { "Roo4", castType[rootAncientProtector.DataUprootedDefenseTypeRaw[1].GetType()] },
 
                 // Preservation
-                { "Npr1", castType[preservation.BuildingTypesAllowedRaw[1].GetType()] },
+                { "Npr1", castType[preservation.DataBuildingTypesAllowedRaw[1].GetType()] },
             };
 
             foreach (var ability in abilityData.GetData())
@@ -555,23 +555,23 @@ namespace War3Api.Object.Tests
 
             // Empty lists test
             var aerialShackles = new Abilities.AerialShackles(db);
-            aerialShackles.Buffs[1] = Array.Empty<Buff>();
-            aerialShackles.LightningEffects = Array.Empty<LightningEffect>();
+            aerialShackles.StatsBuffs[1] = Array.Empty<Buff>();
+            aerialShackles.ArtLightningEffects = Array.Empty<LightningEffect>();
 
             var reveal = new Abilities.RevealArcaneTower(db);
-            reveal.Effects[1] = Array.Empty<Buff>();
+            reveal.StatsEffects[1] = Array.Empty<Buff>();
 
             // Non-empty lists test
             var stormHammers = new Abilities.StormHammers(db);
-            stormHammers.Buffs[1] = new[] { new Buff(BuffType.AcidBomb), new Buff(BuffType.AntiMagicShell) };
-            stormHammers.Effects[1] = new[] { new Buff(BuffType.Blizzard_XHbz), new Buff(BuffType.CloudOfFog_Xclf) };
-            stormHammers.LightningEffects = new[] { LightningEffect.AFOD, LightningEffect.SPLK };
+            stormHammers.StatsBuffs[1] = new[] { new Buff(BuffType.AcidBomb), new Buff(BuffType.AntiMagicShell) };
+            stormHammers.StatsEffects[1] = new[] { new Buff(BuffType.Blizzard_XHbz), new Buff(BuffType.CloudOfFog_Xclf) };
+            stormHammers.ArtLightningEffects = new[] { LightningEffect.AFOD, LightningEffect.SPLK };
 
             var expectAbility = new Dictionary<string, Type>()
             {
-                { "abuf", stormHammers.BuffsRaw[1].GetType() },
-                { "aeff", stormHammers.EffectsRaw[1].GetType() },
-                { "alig", stormHammers.LightningEffectsRaw.GetType() },
+                { "abuf", stormHammers.StatsBuffsRaw[1].GetType() },
+                { "aeff", stormHammers.StatsEffectsRaw[1].GetType() },
+                { "alig", stormHammers.ArtLightningEffectsRaw.GetType() },
             };
 
             foreach (var ability in abilityData.GetData())

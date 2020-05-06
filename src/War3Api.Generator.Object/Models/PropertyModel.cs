@@ -17,6 +17,8 @@ namespace War3Api.Generator.Object.Models
         // If true, property's value can be set for each level (or variation for doodads) individually.
         public bool Repeat { get; set; }
 
+        public string Category { get; set; }
+
         public string DisplayName { get; set; }
 
         public string DehumanizedName { get; set; }

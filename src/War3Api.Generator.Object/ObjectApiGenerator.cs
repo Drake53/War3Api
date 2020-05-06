@@ -29,6 +29,7 @@ namespace War3Api.Generator.Object
         internal const string NamespaceName = "War3Api.Object";
 
         private static IDictionary<string, string> _worldEditStrings;
+        private static IDictionary<string, IDictionary<string, string[]>> _worldEditData;
 
         private static IList<EnumModel> _enumModels;
         private static IList<TypeModel> _typeModels;
@@ -56,6 +57,7 @@ namespace War3Api.Generator.Object
             _outputFolder = outputFolder;
 
             _worldEditStrings = GenerateWorldEditStringLookup();
+            _worldEditData = GenerateWorldEditDataLookup();
             _enumModels = GenerateEnums().ToList();
             _typeModels = ModelService.GetTypeModels().ToList();
             _dataTypeModels = ModelService.GetDataTypeModels().ToDictionary(type => type.Type);
@@ -477,6 +479,77 @@ namespace War3Api.Generator.Object
             return worldEditStrings;
         }
 
+        internal static string LookupCategory(string category)
+        {
+            return (string)_worldEditData["ObjectEditorCategories"][category].Single();
+        }
+
+        private static IDictionary<string, IDictionary<string, string[]>> GenerateWorldEditDataLookup()
+        {
+            return GetWorldEditData().ToDictionary(pair => pair.Item1, pair => pair.Item2);
+        }
+
+        private static IEnumerable<(string, IDictionary<string, string[]>)> GetWorldEditData()
+        {
+            var worldEditData = new Dictionary<string, Dictionary<string, string[]>>(StringComparer.Ordinal);
+            using (var worldEditDataFile = File.OpenRead(Path.Combine(_inputFolder, PathConstants.WorldEditDataPath)))
+            {
+                using (var worldEditDataFileReader = new StreamReader(worldEditDataFile))
+                {
+                    string currentDataSetKey = null;
+                    Dictionary<string, string[]> currentDataSet = null;
+                    while (!worldEditDataFileReader.EndOfStream)
+                    {
+                        var line = worldEditDataFileReader.ReadLine();
+                        if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//", StringComparison.Ordinal))
+                        {
+                            continue;
+                        }
+
+                        if (line.StartsWith('[') && line.EndsWith(']'))
+                        {
+                            if (currentDataSet != null)
+                            {
+                                yield return (currentDataSetKey, currentDataSet);
+                            }
+
+                            currentDataSetKey = line[1..^1];
+                            currentDataSet = new Dictionary<string, string[]>();
+                        }
+                        else
+                        {
+                            var split = line.Split('=');
+                            if (split.Length != 2)
+                            {
+                                throw new InvalidDataException(line);
+                            }
+
+                            var keyString = split[0];
+                            var valueString = split[1];
+                            if (keyString.StartsWith("Num", StringComparison.Ordinal))
+                            {
+                                if (currentDataSet.Count == 0)
+                                {
+                                    continue;
+                                }
+
+                                if (int.Parse(valueString) != currentDataSet.Count)
+                                {
+                                    throw new InvalidDataException();
+                                }
+                            }
+                            else
+                            {
+                                currentDataSet.Add(keyString, valueString.Split(','));
+                            }
+                        }
+                    }
+
+                    yield return (currentDataSetKey, currentDataSet);
+                }
+            }
+        }
+
         internal static void GenerateEnumFile(EnumModel enumModel)
         {
             var enumName = enumModel.Name.Dehumanize();
@@ -661,7 +734,7 @@ namespace War3Api.Generator.Object
                             }
                             else
                             {
-                                throw new Exception(line);
+                                throw new InvalidDataException(line);
                             }
                         }
                     }

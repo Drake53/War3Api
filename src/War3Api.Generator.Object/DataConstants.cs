@@ -85,6 +85,7 @@ namespace War3Api.Generator.Object
         internal const string MetaDataFieldColumn = "field";
         /// <summary>If true (value is not 0), this property's value can be set individually for every level or variation of the object.</summary>
         internal const string MetaDataRepeatColumn = "repeat";
+        internal const string MetaDataCategoryColumn = "category";
         internal const string MetaDataDisplayNameColumn = "displayName";
         internal const string MetaDataSortColumn = "sort";
         internal const string MetaDataTypeColumn = "type";

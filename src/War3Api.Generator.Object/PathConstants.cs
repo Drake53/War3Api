@@ -13,6 +13,7 @@ namespace War3Api.Generator.Object
         internal const string WorldEditGameStringsPath = @"_locales\enus.w3mod\ui\worldeditgamestrings.txt";
         internal const string WorldEditStringsPath = @"_locales\enus.w3mod\ui\worldeditstrings.txt";
         internal const string EnumDataFilePath = @"ui\uniteditordata.txt";
+        internal const string WorldEditDataPath = @"ui\worldeditdata.txt";
 
         // Unit
         internal const string UnitDataPath = @"units\unitdata.slk";
