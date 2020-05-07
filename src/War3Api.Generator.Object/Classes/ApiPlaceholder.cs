@@ -35,23 +35,6 @@
         VillageFall = 'Q',
     }
 
-    public enum DoodadCategory
-    {
-        Props = 0,
-        Structures = 'S',
-        Water = 'W',
-        CliffTerrain = 'C',
-        Environment = 'E',
-        Cinematic = 'Z',
-    }
-
-    public enum DestructableCategory
-    {
-        TreesDestructibles = 'D',
-        PathingBlockers = 'P',
-        BridgesRamps = 'B',
-    }
-
     public enum TechEquivalent
     {
         // TODO

@@ -21,6 +21,8 @@ namespace War3Api.Generator.Object.Models
 
         public int Value { get; set; }
 
-        public string ValueString => Value.ToString();
+        public bool IsValueChar { get; set; }
+
+        public string ValueString => IsValueChar ? $"'{(char)Value}'" : Value.ToString();
     }
 }

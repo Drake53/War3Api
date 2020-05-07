@@ -31,7 +31,6 @@ namespace War3Api.Generator.Object
         private static IDictionary<string, string> _worldEditStrings;
         private static IDictionary<string, IDictionary<string, string[]>> _worldEditData;
 
-        private static IList<EnumModel> _enumModels;
         private static IList<TypeModel> _typeModels;
         private static IDictionary<ObjectDataType, DataTypeModel> _dataTypeModels;
 
@@ -58,13 +57,45 @@ namespace War3Api.Generator.Object
 
             _worldEditStrings = GenerateWorldEditStringLookup();
             _worldEditData = GenerateWorldEditDataLookup();
-            _enumModels = GenerateEnums().ToList();
             _typeModels = ModelService.GetTypeModels().ToList();
             _dataTypeModels = ModelService.GetDataTypeModels().ToDictionary(type => type.Type);
 
             GenerateDataConverter();
 
-            foreach (var enumModel in _enumModels)
+            var destructableCategory = new EnumModel("DestructableCategory");
+            foreach (var member in _worldEditData["DestructibleCategories"])
+            {
+                var memberModel = new EnumMemberModel();
+
+                var name = Localize(member.Value.First());
+                memberModel.Name = name.Dehumanize();
+                memberModel.DisplayName = name;
+                memberModel.Value = char.Parse(member.Key);
+                memberModel.IsValueChar = true;
+
+                destructableCategory.Members.Add(memberModel);
+            }
+
+            GenerateEnumFile(destructableCategory);
+
+            var doodadCategory = new EnumModel("DoodadCategory");
+            foreach (var member in _worldEditData["DoodadCategories"])
+            {
+                var memberModel = new EnumMemberModel();
+
+                var name = Localize(member.Value.First());
+                memberModel.Name = name.Dehumanize();
+                memberModel.DisplayName = name;
+                memberModel.Value = char.Parse(member.Key);
+                memberModel.IsValueChar = true;
+
+                doodadCategory.Members.Add(memberModel);
+            }
+
+            GenerateEnumFile(doodadCategory);
+
+            var enumModels = GenerateEnums().ToList();
+            foreach (var enumModel in enumModels)
             {
                 GenerateEnumFile(enumModel);
             }
