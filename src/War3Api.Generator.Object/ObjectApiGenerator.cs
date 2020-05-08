@@ -593,6 +593,7 @@ namespace War3Api.Generator.Object
                 // TODO: merge prevent & require into single enum
                 { "PathingListRequire", "PathingRequire" },
                 { "PathingListPrevent", "PathingPrevent" },
+                { "TargetList", "Target" },
                 { "UnitClass", "UnitClassification" },
             };
 
