@@ -485,7 +485,7 @@ namespace War3Api.Object.Tests
             bloodmage.RequiredAnimationNames = new[] { "upgrade", "second" };
             bloodmage.StructuresBuilt = new[] { keep, cannonTower, arcaneVault };
             bloodmage.ItemsSold = new[] { new Item(ItemType.ClawsOfAttack15), new Item(ItemType.CrownOfKings5) };
-            bloodmage.Requirements = new[] { new Tech() { Key = peasant.Key }, new Tech() { Key = new Upgrade(UpgradeType.HumanAnimalBreeding).Key }, new Tech() { Key = "TWN1".FromRawcode() } };
+            bloodmage.Requirements = new[] { new Tech(peasant), new Tech(new Upgrade(UpgradeType.HumanAnimalBreeding)), new Tech(TechEquivalent.AnyTier1Hall) };
             bloodmage.RequirementsLevels = new[] { 1, 2, 0 };
             bloodmage.Special = new[] { @"buildings\other\ElvenFarm\ElvenFarm.mdl", string.Empty };
             bloodmage.Normal = new Ability[] { new Abilities.Alarm(), new Abilities.Inventory() };

@@ -80,9 +80,7 @@ namespace War3Api.Object
 
         public Tech GetTech(int id)
         {
-            var tech = new Tech();
-            tech.Key = id;
-
+            var tech = new Tech(this, id);
             if (tech.AsUnit != null || tech.AsUpgrade != null || Enum.IsDefined(typeof(TechEquivalent), id))
             {
                 return tech;
