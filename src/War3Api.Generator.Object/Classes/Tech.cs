@@ -49,15 +49,13 @@ namespace War3Api.Object
                 throw new ArgumentNullException(nameof(db));
             }
 
-            if (Enum.IsDefined(typeof(TechEquivalent), key))
+            try
             {
-                throw new ArgumentException($"Tech '{key.ToRawcode()}' is a {nameof(TechEquivalent)}.", nameof(key));
+                db.ReserveTech(key);
             }
-
-            var baseObject = db.GetObject(key);
-            if (baseObject != null && !(baseObject is Unit || baseObject is Upgrade))
+            catch (ArgumentException)
             {
-                throw new ArgumentException($"Tech object must be of type {nameof(Unit)} or {nameof(Upgrade)}.", nameof(key));
+                throw;
             }
 
             _db = db;

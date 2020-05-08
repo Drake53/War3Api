@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 
 using War3Net.Build.Object;
+using War3Net.Common.Extensions;
 
 namespace War3Api.Object
 {
     public sealed class ObjectDatabase
     {
         private static Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
+        private static Lazy<HashSet<int>> _objectTypes = new Lazy<HashSet<int>>(() => GetObjectTypes().ToHashSet());
+        private static Lazy<HashSet<int>> _techTypes = new Lazy<HashSet<int>>(() => GetTechTypes().ToHashSet());
 
         private readonly HashSet<int> _reservedKeys;
+        private readonly HashSet<int> _reservedTechs;
         private readonly Dictionary<int, BaseObject> _objects;
 
         public ObjectDatabase()
@@ -36,51 +40,54 @@ namespace War3Api.Object
 
         public static ObjectDatabase DefaultDatabase => _defaultDatabase.Value;
 
-        /*public Unit this[int id]
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }*/
-
-        // todo: possibly create new if not found? (only possible if id matches a base object type)
         public Unit GetUnit(int id)
         {
-            return _objects.Where(pair => pair.Value is Unit unit && unit.Key == id).Select(pair => pair.Value as Unit).SingleOrDefault();
+            return GetObject(id) as Unit;
         }
 
         public Item GetItem(int id)
         {
-            return _objects.Where(pair => pair.Value is Item item && item.Key == id).Select(pair => pair.Value as Item).SingleOrDefault();
+            return GetObject(id) as Item;
         }
 
         public Destructable GetDestructable(int id)
         {
-            return _objects.Where(pair => pair.Value is Destructable destructable && destructable.Key == id).Select(pair => pair.Value as Destructable).SingleOrDefault();
+            return GetObject(id) as Destructable;
         }
 
         public Doodad GetDoodad(int id)
         {
-            return _objects.Where(pair => pair.Value is Doodad doodad && doodad.Key == id).Select(pair => pair.Value as Doodad).SingleOrDefault();
+            return GetObject(id) as Doodad;
         }
 
         public Ability GetAbility(int id)
         {
-            return _objects.Where(pair => pair.Value is Ability ability && ability.Key == id).Select(pair => pair.Value as Ability).SingleOrDefault();
+            return GetObject(id) as Ability;
         }
 
         public Buff GetBuff(int id)
         {
-            return _objects.Where(pair => pair.Value is Buff buff && buff.Key == id).Select(pair => pair.Value as Buff).SingleOrDefault();
+            return GetObject(id) as Buff;
         }
 
         public Upgrade GetUpgrade(int id)
         {
-            return _objects.Where(pair => pair.Value is Upgrade upgrade && upgrade.Key == id).Select(pair => pair.Value as Upgrade).SingleOrDefault();
+            return GetObject(id) as Upgrade;
         }
 
         public BaseObject GetObject(int id)
         {
-            return _objects.Where(pair => pair.Key == id).Select(pair => pair.Value).SingleOrDefault();
+            if (_objects.TryGetValue(id, out var baseObject))
+            {
+                return baseObject;
+            }
+
+            if (_objectTypes.Value.Contains(id))
+            {
+                // todo: create new?
+            }
+
+            return null;
         }
 
         public Tech GetTech(int id)
@@ -115,10 +122,68 @@ namespace War3Api.Object
 
         internal void AddObject(BaseObject baseObject)
         {
+            if (_objects.ContainsKey(baseObject.Key))
+            {
+                throw new ArgumentException($"An object with key '{baseObject.Key.ToRawcode()}' has already been added to this database.");
+            }
+
+            if (!_objectTypes.Value.Contains(baseObject.ObjectModification.OldId))
+            {
+                throw new ArgumentOutOfRangeException($"Base object key '{baseObject.ObjectModification.OldId.ToRawcode()}' is not valid.");
+            }
+
+            if (baseObject.ObjectModification.NewId != 0)
+            {
+                if (_reservedKeys.Contains(baseObject.Key))
+                {
+                    throw new ArgumentException($"Key '{baseObject.Key.ToRawcode()}' is reserved in this database.");
+                }
+
+                if (_reservedTechs.Contains(baseObject.Key))
+                {
+                    if (!(baseObject is Unit || baseObject is Upgrade))
+                    {
+                        throw new ArgumentException($"Key '{baseObject.Key.ToRawcode()}' is reserved for a {nameof(Tech)} object, which must be of type {nameof(Unit)} or {nameof(Upgrade)}.");
+                    }
+
+                    _reservedTechs.Remove(baseObject.Key);
+                }
+            }
+
             _objects.Add(baseObject.Key, baseObject);
         }
 
-        private static IEnumerable<int> GetDefaultReservedKeys()
+        internal void ReserveTech(int id)
+        {
+            if (_techTypes.Value.Contains(id))
+            {
+                return;
+            }
+
+            if (_objects.TryGetValue(id, out var baseObject))
+            {
+                if (baseObject is Unit || baseObject is Upgrade)
+                {
+                    return;
+                }
+
+                throw new ArgumentException($"Cannot reserve key '{id.ToRawcode()}' as a {nameof(Tech)} object, because an object with this key has already been added to this database.");
+            }
+
+            if (_objectTypes.Value.Contains(id))
+            {
+                throw new ArgumentException($"Cannot reserve key '{id.ToRawcode()}' as a {nameof(Tech)} object, because it is already reserved for an object that is neither of type {nameof(Unit)} nor {nameof(Upgrade)}.");
+            }
+
+            if (_reservedKeys.Contains(baseObject.Key))
+            {
+                throw new ArgumentException($"Cannot reserve key '{id.ToRawcode()}' as a {nameof(Tech)} object, because this key is reserved in this database.");
+            }
+
+            _reservedTechs.Add(id);
+        }
+
+        private static IEnumerable<int> GetObjectTypes()
         {
             foreach (var unitType in Enum.GetValues(typeof(UnitType)))
             {
@@ -154,7 +219,23 @@ namespace War3Api.Object
             {
                 yield return (int)upgradeType;
             }
+        }
 
+        private static IEnumerable<int> GetTechTypes()
+        {
+            foreach (var unitType in Enum.GetValues(typeof(UnitType)))
+            {
+                yield return (int)unitType;
+            }
+
+            foreach (var upgradeType in Enum.GetValues(typeof(UpgradeType)))
+            {
+                yield return (int)upgradeType;
+            }
+        }
+
+        private static IEnumerable<int> GetDefaultReservedKeys()
+        {
             foreach (var techEquivalent in Enum.GetValues(typeof(TechEquivalent)))
             {
                 yield return (int)techEquivalent;
