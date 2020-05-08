@@ -78,12 +78,22 @@ namespace War3Api.Object
             return _objects.Where(pair => pair.Value is Upgrade upgrade && upgrade.Key == id).Select(pair => pair.Value as Upgrade).SingleOrDefault();
         }
 
+        public BaseObject GetObject(int id)
+        {
+            return _objects.Where(pair => pair.Key == id).Select(pair => pair.Value).SingleOrDefault();
+        }
+
         public Tech GetTech(int id)
         {
-            var tech = new Tech(this, id);
-            if (tech.AsUnit != null || tech.AsUpgrade != null || Enum.IsDefined(typeof(TechEquivalent), id))
+            if (Enum.IsDefined(typeof(TechEquivalent), id))
             {
-                return tech;
+                return new Tech((TechEquivalent)id);
+            }
+
+            var baseObject = GetObject(id);
+            if (baseObject != null && (baseObject is Unit || baseObject is Upgrade))
+            {
+                return new Tech(this, id);
             }
 
             return null;
