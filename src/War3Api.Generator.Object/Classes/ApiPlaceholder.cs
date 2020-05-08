@@ -1,16 +1,5 @@
 ﻿namespace War3Api.Object
 {
-    public class Tech
-    {
-        public int Key { get; set; }
-
-        public Unit AsUnit => ObjectDatabase.DefaultDatabase.GetUnit(Key);
-
-        public Upgrade AsUpgrade => ObjectDatabase.DefaultDatabase.GetUpgrade(Key);
-
-        public TechEquivalent AsTechEquivalent => (TechEquivalent)Key;
-    }
-
     public enum Tileset
     {
         // None = '_',
@@ -37,6 +26,16 @@
 
     public enum TechEquivalent
     {
-        // TODO
+        AnyAltar = ('T' << 0) | ('A' << 8) | ('L' << 16) | ('T' << 24),
+        AnyHero = ('H' << 0) | ('E' << 8) | ('R' << 16) | ('O' << 24),
+        AnyTier1Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('1' << 24),
+        AnyTier2Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('2' << 24),
+        AnyTier3Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('3' << 24),
+        AnyTier4Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('4' << 24),
+        AnyTier5Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('5' << 24),
+        AnyTier6Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('6' << 24),
+        AnyTier7Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('7' << 24),
+        AnyTier8Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('8' << 24),
+        AnyTier9Hall = ('T' << 0) | ('W' << 8) | ('N' << 16) | ('9' << 24),
     }
 }
