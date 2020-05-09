@@ -85,7 +85,7 @@ namespace War3Api.Object
 
         public Tech GetTech(int id)
         {
-            return Enum.IsDefined(typeof(TechEquivalent), id) ? new Tech((TechEquivalent)id) : Tech(this, id);
+            return Enum.IsDefined(typeof(TechEquivalent), id) ? new Tech((TechEquivalent)id) : new Tech(this, id);
         }
 
         public Unit? TryGetUnit(int id)
