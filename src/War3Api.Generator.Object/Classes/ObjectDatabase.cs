@@ -9,9 +9,9 @@ namespace War3Api.Object
 {
     public sealed class ObjectDatabase
     {
-        private static Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
-        private static Lazy<HashSet<int>> _objectTypes = new Lazy<HashSet<int>>(() => GetObjectTypes().ToHashSet());
-        private static Lazy<HashSet<int>> _techTypes = new Lazy<HashSet<int>>(() => GetTechTypes().ToHashSet());
+        private static readonly Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
+        private static readonly Lazy<HashSet<int>> _objectTypes = new Lazy<HashSet<int>>(() => GetObjectTypes().ToHashSet());
+        private static readonly Lazy<HashSet<int>> _techTypes = new Lazy<HashSet<int>>(() => GetTechTypes().ToHashSet());
 
         private readonly HashSet<int> _reservedKeys;
         private readonly HashSet<int> _reservedTechs;
@@ -35,6 +35,7 @@ namespace War3Api.Object
         public ObjectDatabase(IEnumerable<int> reservedKeys, IEnumerable<BaseObject> objects)
         {
             _reservedKeys = reservedKeys.ToHashSet();
+            _reservedTechs = new HashSet<int>();
             _objects = objects.ToDictionary(obj => obj.Key);
         }
 
