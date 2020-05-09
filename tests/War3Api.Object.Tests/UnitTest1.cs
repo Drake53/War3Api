@@ -44,7 +44,7 @@ namespace War3Api.Object.Tests
             var abilities = new List<Ability>();
             // abilities.Add(new Ability(AbilityType.RepairHuman));
             abilities.Add(new Abilities.RepairHuman(db));
-            var up = new Abilities.TankUpgrade(db);
+            var up = new Abilities.TankUpgrade("A000", db);
             up.DataNewUnitType[1] = peasant;
 
             peasant.Normal = abilities;
