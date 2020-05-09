@@ -42,6 +42,11 @@ namespace War3Api.Object
             _key = (int)techEquivalent;
         }
 
+        public Tech(int key)
+            : this(ObjectDatabase.DefaultDatabase, key)
+        {
+        }
+
         public Tech(ObjectDatabase db, int key)
         {
             if (db is null)
