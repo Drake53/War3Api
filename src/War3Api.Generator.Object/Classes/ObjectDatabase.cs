@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,40 +45,85 @@ namespace War3Api.Object
 
         public Unit GetUnit(int id)
         {
-            return GetObject(id) as Unit;
+            return (Unit)GetObject(id);
         }
 
         public Item GetItem(int id)
         {
-            return GetObject(id) as Item;
+            return (Item)GetObject(id);
         }
 
         public Destructable GetDestructable(int id)
         {
-            return GetObject(id) as Destructable;
+            return (Destructable)GetObject(id);
         }
 
         public Doodad GetDoodad(int id)
         {
-            return GetObject(id) as Doodad;
+            return (Doodad)GetObject(id);
         }
 
         public Ability GetAbility(int id)
         {
-            return GetObject(id) as Ability;
+            return (Ability)GetObject(id);
         }
 
         public Buff GetBuff(int id)
         {
-            return GetObject(id) as Buff;
+            return (Buff)GetObject(id);
         }
 
         public Upgrade GetUpgrade(int id)
         {
-            return GetObject(id) as Upgrade;
+            return (Upgrade)GetObject(id);
         }
 
         public BaseObject GetObject(int id)
+        {
+            return _objects[id];
+        }
+
+        public Tech GetTech(int id)
+        {
+            return Enum.IsDefined(typeof(TechEquivalent), id) ? new Tech((TechEquivalent)id) : Tech(this, id);
+        }
+
+        public Unit? TryGetUnit(int id)
+        {
+            return TryGetObject(id) as Unit;
+        }
+
+        public Item? TryGetItem(int id)
+        {
+            return TryGetObject(id) as Item;
+        }
+
+        public Destructable? TryGetDestructable(int id)
+        {
+            return TryGetObject(id) as Destructable;
+        }
+
+        public Doodad? TryGetDoodad(int id)
+        {
+            return TryGetObject(id) as Doodad;
+        }
+
+        public Ability? TryGetAbility(int id)
+        {
+            return TryGetObject(id) as Ability;
+        }
+
+        public Buff? TryGetBuff(int id)
+        {
+            return TryGetObject(id) as Buff;
+        }
+
+        public Upgrade? TryGetUpgrade(int id)
+        {
+            return TryGetObject(id) as Upgrade;
+        }
+
+        public BaseObject? TryGetObject(int id)
         {
             if (_objects.TryGetValue(id, out var baseObject))
             {
@@ -91,14 +138,14 @@ namespace War3Api.Object
             return null;
         }
 
-        public Tech GetTech(int id)
+        public Tech? TryGetTech(int id)
         {
             if (Enum.IsDefined(typeof(TechEquivalent), id))
             {
                 return new Tech((TechEquivalent)id);
             }
 
-            var baseObject = GetObject(id);
+            var baseObject = TryGetObject(id);
             if (baseObject != null && (baseObject is Unit || baseObject is Upgrade))
             {
                 return new Tech(this, id);
