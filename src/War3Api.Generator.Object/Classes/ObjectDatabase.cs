@@ -109,16 +109,22 @@ namespace War3Api.Object
 
         public MapObjectData GetAllData()
         {
-            return new MapObjectData()
-            {
-                UnitData = new MapUnitObjectData(_objects.Where(pair => pair.Value is Unit).Select(pair => pair.Value.ObjectModification).ToArray()),
-                ItemData = new MapItemObjectData(_objects.Where(pair => pair.Value is Item).Select(pair => pair.Value.ObjectModification).ToArray()),
-                DestructableData = new MapDestructableObjectData(_objects.Where(pair => pair.Value is Destructable).Select(pair => pair.Value.ObjectModification).ToArray()),
-                DoodadData = new MapDoodadObjectData(_objects.Where(pair => pair.Value is Doodad).Select(pair => pair.Value.ObjectModification).ToArray()),
-                AbilityData = new MapAbilityObjectData(_objects.Where(pair => pair.Value is Ability).Select(pair => pair.Value.ObjectModification).ToArray()),
-                BuffData = new MapBuffObjectData(_objects.Where(pair => pair.Value is Buff).Select(pair => pair.Value.ObjectModification).ToArray()),
-                UpgradeData = new MapUpgradeObjectData(_objects.Where(pair => pair.Value is Upgrade).Select(pair => pair.Value.ObjectModification).ToArray()),
-            };
+            var units = _objects.Where(pair => pair.Value is Unit);
+            var items = _objects.Where(pair => pair.Value is Item);
+            var destructables = _objects.Where(pair => pair.Value is Destructable);
+            var doodads = _objects.Where(pair => pair.Value is Doodad);
+            var abilities = _objects.Where(pair => pair.Value is Ability);
+            var buffs = _objects.Where(pair => pair.Value is Buff);
+            var upgrades = _objects.Where(pair => pair.Value is Upgrade);
+
+            return new MapObjectData(
+                units.Any() ? new MapUnitObjectData(units.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                items.Any() ? new MapItemObjectData(items.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                destructables.Any() ? new MapDestructableObjectData(destructables.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                doodads.Any() ? new MapDoodadObjectData(doodads.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                abilities.Any() ? new MapAbilityObjectData(abilities.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                buffs.Any() ? new MapBuffObjectData(buffs.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
+                upgrades.Any() ? new MapUpgradeObjectData(upgrades.Select(pair => pair.Value.ObjectModification).ToArray()) : null);
         }
 
         internal void AddObject(BaseObject baseObject)
