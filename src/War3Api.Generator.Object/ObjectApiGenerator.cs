@@ -177,13 +177,22 @@ namespace War3Api.Generator.Object
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
         {
-            return GetProperties(className, properties, className == "Doodad", isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
+            var mapToUsesVariationBool = new Dictionary<string, bool?>
+            {
+                { "Unit", null },
+                { "Item", null },
+                { "Destructable", null },
+                { "Doodad", true },
+                { "Ability", false },
+                { "Buff", null },
+                { "Upgrade", false },
+            };
+
+            return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
         }
 
-        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
+        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool? usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
         {
-            var levelString = usesVariation ? "variation" : "level";
-
             var typeDict = _typeModels.ToDictionary(type => type.Name);
 
             var privateConstructorAssignments = new List<(string field, ExpressionSyntax expression)>();
@@ -281,6 +290,8 @@ namespace War3Api.Generator.Object
 
                 if (propertyModel.Repeat)
                 {
+                    var levelString = usesVariation.Value ? "variation" : "level";
+
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
                     var fieldIdentifier = GetPrivateFieldName(valueName);
@@ -350,7 +361,7 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleIdentifier,
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{fieldName}[{id}].{dataTypeModel.PropertyName}")),
-                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {nameof(ObjectDataModification)}({id}, value{optionalIsUnrealParameter})")));
+                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {nameof(ObjectDataModification)}({id}, {(usesVariation.HasValue ? "0, " : string.Empty)}value{optionalIsUnrealParameter})")));
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
