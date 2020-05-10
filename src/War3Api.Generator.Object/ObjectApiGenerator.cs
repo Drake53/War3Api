@@ -18,6 +18,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Models;
+
 using War3Net.Build.Object;
 using War3Net.CodeAnalysis.CSharp;
 using War3Net.Common.Extensions;
@@ -28,7 +29,7 @@ namespace War3Api.Generator.Object
     internal static class ObjectApiGenerator
     {
         internal const string NamespaceName = "War3Api.Object";
-        internal const string ListTypeName = nameof(IList);
+        internal const string ListTypeName = nameof(IEnumerable);
 
         private static IDictionary<string, string> _worldEditStrings;
         private static IDictionary<string, IDictionary<string, string[]>> _worldEditData;
@@ -871,7 +872,7 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         "ToRaw",
                         new[] { (listIdentifier, "list"), ("int?", "minValue"), ("int?", "maxValue"), },
-                        "return (!maxValue.HasValue || list.Count <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
+                        "return (!maxValue.HasValue || list.Count() <= maxValue.Value) ? $\"{string.Join(',', list.Select(value => value.ToRaw(null, null)))}\" : throw new ArgumentOutOfRangeException(nameof(list))");
 
                     break;
 
