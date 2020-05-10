@@ -35,11 +35,11 @@ namespace War3Api.Object.Tests
             var peasant = new Unit(UnitType.Peasant, db);
             // Assert.AreEqual(1, ObjectDatabase.DefaultDatabase.ObjectCount);
 
-            peasant.AcquisitionRange = 123;
-            Assert.AreEqual(123, peasant.AcquisitionRange);
+            peasant.CombatAcquisitionRange = 123;
+            Assert.AreEqual(123, peasant.CombatAcquisitionRange);
 
-            peasant.ArmorType = ArmorType.Metal;
-            Assert.AreEqual(ArmorType.Metal.ToString(), peasant.ArmorTypeRaw);
+            peasant.CombatArmorType = ArmorType.Metal;
+            Assert.AreEqual(ArmorType.Metal.ToString(), peasant.CombatArmorTypeRaw);
 
             var abilities = new List<Ability>();
             // abilities.Add(new Ability(AbilityType.RepairHuman));
@@ -47,8 +47,8 @@ namespace War3Api.Object.Tests
             var up = new Abilities.TankUpgrade("A000", db);
             up.DataNewUnitType[1] = peasant;
 
-            peasant.Normal = abilities;
-            Assert.AreEqual(((int)AbilityType.RepairHuman).ToRawcode(), peasant.NormalRaw);
+            peasant.AbilitiesNormal = abilities;
+            Assert.AreEqual(((int)AbilityType.RepairHuman).ToRawcode(), peasant.AbilitiesNormalRaw);
         }
 
         [TestMethod]
@@ -71,54 +71,54 @@ namespace War3Api.Object.Tests
             var unitData = objectData.UnitData;
 
             var peasant = new Unit(UnitType.Peasant, db);
-            peasant.ShadowImageUnit = ShadowImage.ShadowFlyer;
-            peasant.ArmorType = ArmorType.Stone;
-            peasant.Attack1AttackType = AttackType.Hero;
-            peasant.AttacksEnabled = AttackBits.Attack2Only;
-            peasant.AIPlacementType = AiBuffer.Resource;
-            peasant.TeamColor = TeamColor.Player1Red;
+            peasant.ArtShadowImageUnit = ShadowImage.ShadowFlyer;
+            peasant.CombatArmorType = ArmorType.Stone;
+            peasant.CombatAttack1AttackType = AttackType.Hero;
+            peasant.CombatAttacksEnabled = AttackBits.Attack2Only;
+            peasant.PathingAIPlacementType = AiBuffer.Resource;
+            peasant.ArtTeamColor = TeamColor.Player1Red;
 
             var paladin = new Unit(UnitType.Paladin, db);
-            paladin.Attack2WeaponSound = CombatSound.MetalLightChop;
-            paladin.DeathType = DeathType.CanRaiseDoesDecay;
-            paladin.DefenseType = DefenseType.Normal;
-            paladin.Type = MoveType.Amph;
-            paladin.PrimaryAttribute = AttributeType.AGI;
+            paladin.CombatAttack2WeaponSound = CombatSound.MetalLightChop;
+            paladin.CombatDeathType = DeathType.CanRaiseDoesDecay;
+            paladin.CombatDefenseType = DefenseType.Normal;
+            paladin.MovementType = MoveType.Amph;
+            paladin.StatsPrimaryAttribute = AttributeType.AGI;
 
             var altar = new Unit(UnitType.Altarofkings, db);
-            altar.ModelFileExtraVersions = VersionFlags.ReignOfChaos | VersionFlags.TheFrozenThrone;
-            altar.Attack1WeaponType = WeaponType.Mline;
-            altar.PlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Blighted };
-            altar.PlacementRequires = Array.Empty<PathingPrevent>();
-            altar.HitPointsRegenerationType = RegenType.Night;
-            altar.Race = UnitRace.Other;
-            altar.UnitClassification = new[] { UnitClassification.Ancient, UnitClassification.Mechanical, UnitClassification.Peon };
+            altar.ArtModelFileExtraVersions = VersionFlags.ReignOfChaos | VersionFlags.TheFrozenThrone;
+            altar.CombatAttack1WeaponType = WeaponType.Mline;
+            altar.PathingPlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Blighted };
+            altar.PathingPlacementRequires = Array.Empty<PathingPrevent>();
+            altar.StatsHitPointsRegenerationType = RegenType.Night;
+            altar.StatsRace = UnitRace.Other;
+            altar.StatsUnitClassification = new[] { UnitClassification.Ancient, UnitClassification.Mechanical, UnitClassification.Peon };
 
             var expectUnit = new Dictionary<string, ObjectDataType>()
             {
                 // Peasant
-                { "ushu", castType[peasant.ShadowImageUnitRaw.GetType()] },
-                { "uarm", castType[peasant.ArmorTypeRaw.GetType()] },
-                { "ua1t", castType[peasant.Attack1AttackTypeRaw.GetType()] },
-                { "uaen", castType[peasant.AttacksEnabledRaw.GetType()] },
-                { "uabt", castType[peasant.AIPlacementTypeRaw.GetType()] },
-                { "utco", castType[peasant.TeamColorRaw.GetType()] },
+                { "ushu", castType[peasant.ArtShadowImageUnitRaw.GetType()] },
+                { "uarm", castType[peasant.CombatArmorTypeRaw.GetType()] },
+                { "ua1t", castType[peasant.CombatAttack1AttackTypeRaw.GetType()] },
+                { "uaen", castType[peasant.CombatAttacksEnabledRaw.GetType()] },
+                { "uabt", castType[peasant.PathingAIPlacementTypeRaw.GetType()] },
+                { "utco", castType[peasant.ArtTeamColorRaw.GetType()] },
 
                 // Paladin
-                { "ucs2", castType[paladin.Attack2WeaponSoundRaw.GetType()] },
-                { "udea", castType[paladin.DeathTypeRaw.GetType()] },
-                { "udty", castType[paladin.DefenseTypeRaw.GetType()] },
-                { "umvt", castType[paladin.TypeRaw.GetType()] },
-                { "upra", castType[paladin.PrimaryAttributeRaw.GetType()] },
+                { "ucs2", castType[paladin.CombatAttack2WeaponSoundRaw.GetType()] },
+                { "udea", castType[paladin.CombatDeathTypeRaw.GetType()] },
+                { "udty", castType[paladin.CombatDefenseTypeRaw.GetType()] },
+                { "umvt", castType[paladin.MovementTypeRaw.GetType()] },
+                { "upra", castType[paladin.StatsPrimaryAttributeRaw.GetType()] },
 
                 // Altar
-                { "uver", castType[altar.ModelFileExtraVersionsRaw.GetType()] },
-                { "ua1w", castType[altar.Attack1WeaponTypeRaw.GetType()] },
-                { "upar", castType[altar.PlacementPreventedByRaw.GetType()] },
-                { "upap", castType[altar.PlacementRequiresRaw.GetType()] },
-                { "uhrt", castType[altar.HitPointsRegenerationTypeRaw.GetType()] },
-                { "urac", castType[altar.RaceRaw.GetType()] },
-                { "utyp", castType[altar.UnitClassificationRaw.GetType()] },
+                { "uver", castType[altar.ArtModelFileExtraVersionsRaw.GetType()] },
+                { "ua1w", castType[altar.CombatAttack1WeaponTypeRaw.GetType()] },
+                { "upar", castType[altar.PathingPlacementPreventedByRaw.GetType()] },
+                { "upap", castType[altar.PathingPlacementRequiresRaw.GetType()] },
+                { "uhrt", castType[altar.StatsHitPointsRegenerationTypeRaw.GetType()] },
+                { "urac", castType[altar.StatsRaceRaw.GetType()] },
+                { "utyp", castType[altar.StatsUnitClassificationRaw.GetType()] },
             };
 
             foreach (var unit in unitData.GetData())
@@ -152,12 +152,12 @@ namespace War3Api.Object.Tests
             var itemData = objectData.ItemData;
 
             var gauntlets = new Item(ItemType.GauntletsOfOgreStrength3, db);
-            gauntlets.Classification = ItemClass.Miscellaneous;
+            gauntlets.StatsClassification = ItemClass.Miscellaneous;
 
             var expectItem = new Dictionary<string, ObjectDataType>()
             {
                 // Gauntlets
-                { "icla", castType[gauntlets.ClassificationRaw.GetType()] },
+                { "icla", castType[gauntlets.StatsClassificationRaw.GetType()] },
             };
 
             foreach (var item in itemData.GetData())
@@ -191,14 +191,14 @@ namespace War3Api.Object.Tests
             var destructableData = objectData.DestructableData;
 
             var stoneDoor = new Destructable(DestructableType.RollingStoneDoor_ZTd6, db);
-            stoneDoor.Category = DestructableCategory.BridgesRamps;
-            stoneDoor.Tilesets = new[] { Tileset.LordaeronFall, Tileset.LordaeronSummer,Tileset.SunkenRuins };
+            stoneDoor.EditorCategory = DestructableCategory.BridgesRamps;
+            stoneDoor.EditorTilesets = new[] { Tileset.LordaeronFall, Tileset.LordaeronSummer,Tileset.SunkenRuins };
 
             var expectDestructable = new Dictionary<string, ObjectDataType>()
             {
                 // Stone door
-                { "bcat", castType[stoneDoor.CategoryRaw.GetType()] },
-                { "btil", castType[stoneDoor.TilesetsRaw.GetType()] },
+                { "bcat", castType[stoneDoor.EditorCategoryRaw.GetType()] },
+                { "btil", castType[stoneDoor.EditorTilesetsRaw.GetType()] },
             };
 
             foreach (var destructable in destructableData.GetData())
@@ -232,12 +232,12 @@ namespace War3Api.Object.Tests
             var doodadData = objectData.DoodadData;
 
             var trough = new Doodad(DoodadType.Trough, db);
-            trough.Category = DoodadCategory.Cinematic;
+            trough.EditorCategory = DoodadCategory.Cinematic;
 
             var expectDoodad = new Dictionary<string, ObjectDataType>()
             {
                 // Trough
-                { "dcat", castType[trough.CategoryRaw.GetType()] },
+                { "dcat", castType[trough.EditorCategoryRaw.GetType()] },
             };
 
             foreach (var doodad in doodadData.GetData())
@@ -360,14 +360,14 @@ namespace War3Api.Object.Tests
             var buffData = objectData.BuffData;
 
             var avatar = new Buff(BuffType.Avatar, db);
-            avatar.Lightning = LightningEffect.DRAB;
-            avatar.RequiredSpellDetail = SpellDetail.Medium;
+            avatar.ArtLightning = LightningEffect.DRAB;
+            avatar.ArtRequiredSpellDetail = SpellDetail.Medium;
 
             var expectBuff = new Dictionary<string, ObjectDataType>()
             {
                 // Avatar
-                { "flig", castType[avatar.LightningRaw.GetType()] },
-                { "fspd", castType[avatar.RequiredSpellDetailRaw.GetType()] },
+                { "flig", castType[avatar.ArtLightningRaw.GetType()] },
+                { "fspd", castType[avatar.ArtRequiredSpellDetailRaw.GetType()] },
             };
 
             foreach (var buff in buffData.GetData())
@@ -401,14 +401,14 @@ namespace War3Api.Object.Tests
             var upgradeData = objectData.UpgradeData;
 
             var humanAnimalBreeding = new Upgrade(UpgradeType.HumanAnimalBreeding, db);
-            humanAnimalBreeding.Class = UpgradeClass.Caster;
-            humanAnimalBreeding.Effect2 = UpgradeEffect.Radl;
+            humanAnimalBreeding.StatsClass = UpgradeClass.Caster;
+            humanAnimalBreeding.DataEffect2 = UpgradeEffect.Radl;
 
             var expectUpgrade = new Dictionary<string, ObjectDataType>()
             {
                 // Human animal breeding
-                { "gcls", castType[humanAnimalBreeding.ClassRaw.GetType()] },
-                { "gef2", castType[humanAnimalBreeding.Effect2Raw.GetType()] },
+                { "gcls", castType[humanAnimalBreeding.StatsClassRaw.GetType()] },
+                { "gef2", castType[humanAnimalBreeding.DataEffect2Raw.GetType()] },
             };
 
             foreach (var upgrade in upgradeData.GetData())
@@ -456,71 +456,71 @@ namespace War3Api.Object.Tests
 
             // Empty lists test
             var peasant = new Unit(UnitType.Peasant, db);
-            peasant.StructuresBuilt = Array.Empty<Unit>();
+            peasant.TechtreeStructuresBuilt = Array.Empty<Unit>();
 
             var keep = new Unit(UnitType.Keep, db);
-            keep.RequiredAnimationNames = Array.Empty<string>();
-            keep.PlacementRequires = Array.Empty<PathingPrevent>();
-            keep.ResearchesAvailable = Array.Empty<Upgrade>();
-            keep.UnitClassification = Array.Empty<UnitClassification>();
+            keep.ArtRequiredAnimationNames = Array.Empty<string>();
+            keep.PathingPlacementRequires = Array.Empty<PathingPrevent>();
+            keep.TechtreeResearchesAvailable = Array.Empty<Upgrade>();
+            keep.StatsUnitClassification = Array.Empty<UnitClassification>();
 
             var cannonTower = new Unit(UnitType.Cannontower, db);
-            cannonTower.Requirements = Array.Empty<Tech>();
+            cannonTower.TechtreeRequirements = Array.Empty<Tech>();
 
             var arcaneVault = new Unit(UnitType.Arcanevault, db);
-            arcaneVault.ItemsMade = Array.Empty<Item>();
+            arcaneVault.TechtreeItemsMade = Array.Empty<Item>();
 
             var paladin = new Unit(UnitType.Paladin, db);
-            paladin.Special = Array.Empty<string>();
-            paladin.Normal = Array.Empty<Ability>();
-            paladin.Hero = Array.Empty<Ability>();
-            paladin.Tilesets = Array.Empty<Tileset>();
-            paladin.TargetedAs = Array.Empty<Target>();
+            paladin.ArtSpecial = Array.Empty<string>();
+            paladin.AbilitiesNormal = Array.Empty<Ability>();
+            paladin.AbilitiesHero = Array.Empty<Ability>();
+            paladin.EditorTilesets = Array.Empty<Tileset>();
+            paladin.CombatTargetedAs = Array.Empty<Target>();
 
             var ziggurat = new Unit(UnitType.Ziggurat, db);
-            ziggurat.PlacementPreventedBy = Array.Empty<PathingRequire>();
+            ziggurat.PathingPlacementPreventedBy = Array.Empty<PathingRequire>();
 
             // Non-empty lists test
             var bloodmage = new Unit(UnitType.Bloodmage, db);
-            bloodmage.RequiredAnimationNames = new[] { "upgrade", "second" };
-            bloodmage.StructuresBuilt = new[] { keep, cannonTower, arcaneVault };
-            bloodmage.ItemsSold = new[] { new Item(ItemType.ClawsOfAttack15), new Item(ItemType.CrownOfKings5) };
-            bloodmage.Requirements = new[] { new Tech(peasant), new Tech(new Upgrade(UpgradeType.HumanAnimalBreeding)), new Tech(TechEquivalent.AnyTier1Hall) };
-            bloodmage.RequirementsLevels = new[] { 1, 2, 0 };
-            bloodmage.Special = new[] { @"buildings\other\ElvenFarm\ElvenFarm.mdl", string.Empty };
-            bloodmage.Normal = new Ability[] { new Abilities.Alarm(), new Abilities.Inventory() };
-            bloodmage.Hero = new Ability[] { new Abilities.BloodMageFlameStrike(), new Abilities.BloodMageBanish() };
-            bloodmage.Tilesets = new[] { Tileset.Ashenvale, Tileset.All };
-            bloodmage.UnitClassification = new[] { UnitClassification.Ancient, UnitClassification.Giant };
-            bloodmage.TargetedAs = new[] { Target.Alive, Target.Hero };
+            bloodmage.ArtRequiredAnimationNames = new[] { "upgrade", "second" };
+            bloodmage.TechtreeStructuresBuilt = new[] { keep, cannonTower, arcaneVault };
+            bloodmage.TechtreeItemsSold = new[] { new Item(ItemType.ClawsOfAttack15), new Item(ItemType.CrownOfKings5) };
+            bloodmage.TechtreeRequirements = new[] { new Tech(peasant), new Tech(new Upgrade(UpgradeType.HumanAnimalBreeding)), new Tech(TechEquivalent.AnyTier1Hall) };
+            bloodmage.TechtreeRequirementsLevels = new[] { 1, 2, 0 };
+            bloodmage.ArtSpecial = new[] { @"buildings\other\ElvenFarm\ElvenFarm.mdl", string.Empty };
+            bloodmage.AbilitiesNormal = new Ability[] { new Abilities.Alarm(), new Abilities.Inventory() };
+            bloodmage.AbilitiesHero = new Ability[] { new Abilities.BloodMageFlameStrike(), new Abilities.BloodMageBanish() };
+            bloodmage.EditorTilesets = new[] { Tileset.Ashenvale, Tileset.All };
+            bloodmage.StatsUnitClassification = new[] { UnitClassification.Ancient, UnitClassification.Giant };
+            bloodmage.CombatTargetedAs = new[] { Target.Alive, Target.Hero };
 
             var workshop = new Unit(UnitType.Workshop, db);
-            workshop.ResearchesAvailable = new[] { new Upgrade(UpgradeType.HumanFlare), new Upgrade(UpgradeType.HumanFragShards) };
-            workshop.PlacementRequires = new[] { PathingPrevent.Unfloat, PathingPrevent.Blighted };
-            workshop.PlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Unwalkable };
+            workshop.TechtreeResearchesAvailable = new[] { new Upgrade(UpgradeType.HumanFlare), new Upgrade(UpgradeType.HumanFragShards) };
+            workshop.PathingPlacementRequires = new[] { PathingPrevent.Unfloat, PathingPrevent.Blighted };
+            workshop.PathingPlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Unwalkable };
 
             var expectUnit = new Dictionary<string, Type>()
             {
                 // Bloodmage
-                { "uani", bloodmage.RequiredAnimationNames.GetType() },
-                { "ubui", bloodmage.StructuresBuiltRaw.GetType() },
-                { "usei", bloodmage.ItemsSoldRaw.GetType() },
-                { "ureq", bloodmage.RequirementsRaw.GetType() },
-                { "urqa", bloodmage.RequirementsLevelsRaw.GetType() },
-                { "uspa", bloodmage.SpecialRaw.GetType() },
-                { "uabi", bloodmage.NormalRaw.GetType() },
-                { "uhab", bloodmage.HeroRaw.GetType() },
-                { "util", bloodmage.TilesetsRaw.GetType() },
-                { "utyp", bloodmage.UnitClassificationRaw.GetType() },
-                { "utar", bloodmage.TargetedAsRaw.GetType() },
+                { "uani", bloodmage.ArtRequiredAnimationNamesRaw.GetType() },
+                { "ubui", bloodmage.TechtreeStructuresBuiltRaw.GetType() },
+                { "usei", bloodmage.TechtreeItemsSoldRaw.GetType() },
+                { "ureq", bloodmage.TechtreeRequirementsRaw.GetType() },
+                { "urqa", bloodmage.TechtreeRequirementsLevelsRaw.GetType() },
+                { "uspa", bloodmage.ArtSpecialRaw.GetType() },
+                { "uabi", bloodmage.AbilitiesNormalRaw.GetType() },
+                { "uhab", bloodmage.AbilitiesHeroRaw.GetType() },
+                { "util", bloodmage.EditorTilesetsRaw.GetType() },
+                { "utyp", bloodmage.StatsUnitClassificationRaw.GetType() },
+                { "utar", bloodmage.CombatTargetedAsRaw.GetType() },
 
                 // Workshop
-                { "ures", workshop.ResearchesAvailableRaw.GetType() },
-                { "upap", workshop.PlacementRequiresRaw.GetType() },
-                { "upar", workshop.PlacementPreventedByRaw.GetType() },
+                { "ures", workshop.TechtreeResearchesAvailableRaw.GetType() },
+                { "upap", workshop.PathingPlacementRequiresRaw.GetType() },
+                { "upar", workshop.PathingPlacementPreventedByRaw.GetType() },
 
                 // Arcane vault
-                { "umki", arcaneVault.ItemsMadeRaw.GetType() },
+                { "umki", arcaneVault.TechtreeItemsMadeRaw.GetType() },
             };
 
             foreach (var unit in unitData.GetData())
