@@ -229,7 +229,7 @@ namespace War3Api.Object
                 throw new ArgumentException($"Cannot reserve key '{id.ToRawcode()}' as a {nameof(Tech)} object, because it is already reserved for an object that is neither of type {nameof(Unit)} nor {nameof(Upgrade)}.");
             }
 
-            if (_reservedKeys.Contains(baseObject.Key))
+            if (_reservedKeys.Contains(id))
             {
                 throw new ArgumentException($"Cannot reserve key '{id.ToRawcode()}' as a {nameof(Tech)} object, because this key is reserved in this database.");
             }
