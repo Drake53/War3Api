@@ -6,6 +6,7 @@
 // ------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace War3Api.Generator.Object
     internal static class ObjectApiGenerator
     {
         internal const string NamespaceName = "War3Api.Object";
+        internal const string ListTypeName = nameof(IList);
 
         private static IDictionary<string, string> _worldEditStrings;
         private static IDictionary<string, IDictionary<string, string[]>> _worldEditData;
@@ -861,7 +863,7 @@ namespace War3Api.Generator.Object
 
                     yield return SyntaxFactoryService.ExtensionMethod(
                         listIdentifier,
-                        $"ToIList{dehumanizedItem}",
+                        $"To{ListTypeName}{dehumanizedItem}",
                         new[] { (dataTypeModel.Identifier, "value"), ("BaseObject", "baseObject"), },
                         $"return string.IsNullOrEmpty(value) || string.Equals(value, \"_\", StringComparison.Ordinal) ? Array.Empty<{itemIdentifier}>() : value.Split(',').Select(x => x.To{dehumanizedItem}(baseObject)).ToArray()");
 
