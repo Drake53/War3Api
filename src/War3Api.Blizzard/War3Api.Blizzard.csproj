@@ -17,7 +17,7 @@
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
 
-    <Version>1.32.3</Version>
+    <Version>1.32.3.1</Version>
     <FileVersion>1.32.3</FileVersion>
     <AssemblyVersion>1.32</AssemblyVersion>
   </PropertyGroup>
@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="War3Api.Common" Version="[1.32.3,1.33)" />
+    <PackageReference Include="War3Api.Common" Version="[1.32.3.1,1.33)" />
   </ItemGroup>
 
 </Project>

@@ -15,6 +15,7 @@ using static War3Api.Common;
 
 namespace War3Api
 {
+    /// @CSharpLua.Ignore
     public static class Blizzard
     {
         /// @CSharpLua.Template = "bj_PI"

@@ -18,8 +18,10 @@ namespace War3Api
     /// <summary>
     /// Contains all Warcraft III native functions.
     /// </summary>
+    /// @CSharpLua.Ignore
     public static partial class Common
     {
+        /// @CSharpLua.Ignore
         public class agent
         {
             internal agent()
@@ -27,6 +29,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class @event : agent
         {
             internal @event()
@@ -34,6 +37,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class player : agent
         {
             internal player()
@@ -41,6 +45,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class widget : agent
         {
             internal widget()
@@ -48,6 +53,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unit : widget
         {
             internal unit()
@@ -55,6 +61,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class destructable : widget
         {
             internal destructable()
@@ -62,6 +69,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class item : widget
         {
             internal item()
@@ -69,6 +77,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class ability : agent
         {
             internal ability()
@@ -76,6 +85,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class buff : ability
         {
             internal buff()
@@ -83,6 +93,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class force : agent
         {
             internal force()
@@ -90,6 +101,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class group : agent
         {
             internal group()
@@ -97,6 +109,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class trigger : agent
         {
             internal trigger()
@@ -104,6 +117,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class triggercondition : agent
         {
             internal triggercondition()
@@ -111,6 +125,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class triggeraction
         {
             internal triggeraction()
@@ -118,6 +133,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class timer : agent
         {
             internal timer()
@@ -125,6 +141,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class location : agent
         {
             internal location()
@@ -132,6 +149,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class region : agent
         {
             internal region()
@@ -139,6 +157,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class rect : agent
         {
             internal rect()
@@ -146,6 +165,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class boolexpr : agent
         {
             internal boolexpr()
@@ -153,6 +173,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class sound : agent
         {
             internal sound()
@@ -160,6 +181,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class conditionfunc : boolexpr
         {
             internal conditionfunc()
@@ -167,6 +189,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class filterfunc : boolexpr
         {
             internal filterfunc()
@@ -174,6 +197,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitpool
         {
             internal unitpool()
@@ -181,6 +205,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itempool
         {
             internal itempool()
@@ -188,6 +213,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class race
         {
             internal race()
@@ -195,6 +221,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class alliancetype
         {
             internal alliancetype()
@@ -202,6 +229,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class racepreference
         {
             internal racepreference()
@@ -209,6 +237,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gamestate
         {
             internal gamestate()
@@ -216,6 +245,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class igamestate : gamestate
         {
             internal igamestate()
@@ -223,6 +253,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class fgamestate : gamestate
         {
             internal fgamestate()
@@ -230,6 +261,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playerstate
         {
             internal playerstate()
@@ -237,6 +269,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playerscore
         {
             internal playerscore()
@@ -244,6 +277,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playergameresult
         {
             internal playergameresult()
@@ -251,6 +285,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitstate
         {
             internal unitstate()
@@ -258,6 +293,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class aidifficulty
         {
             internal aidifficulty()
@@ -265,6 +301,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class eventid
         {
             internal eventid()
@@ -272,6 +309,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gameevent : eventid
         {
             internal gameevent()
@@ -279,6 +317,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playerevent : eventid
         {
             internal playerevent()
@@ -286,6 +325,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playerunitevent : eventid
         {
             internal playerunitevent()
@@ -293,6 +333,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitevent : eventid
         {
             internal unitevent()
@@ -300,6 +341,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class limitop : eventid
         {
             internal limitop()
@@ -307,6 +349,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class widgetevent : eventid
         {
             internal widgetevent()
@@ -314,6 +357,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class dialogevent : eventid
         {
             internal dialogevent()
@@ -321,6 +365,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unittype
         {
             internal unittype()
@@ -328,6 +373,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gamespeed
         {
             internal gamespeed()
@@ -335,6 +381,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gamedifficulty
         {
             internal gamedifficulty()
@@ -342,6 +389,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gametype
         {
             internal gametype()
@@ -349,6 +397,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mapflag
         {
             internal mapflag()
@@ -356,6 +405,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mapvisibility
         {
             internal mapvisibility()
@@ -363,6 +413,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mapsetting
         {
             internal mapsetting()
@@ -370,6 +421,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mapdensity
         {
             internal mapdensity()
@@ -377,6 +429,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mapcontrol
         {
             internal mapcontrol()
@@ -384,6 +437,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class minimapicon
         {
             internal minimapicon()
@@ -391,6 +445,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playerslotstate
         {
             internal playerslotstate()
@@ -398,6 +453,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class volumegroup
         {
             internal volumegroup()
@@ -405,6 +461,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class camerafield
         {
             internal camerafield()
@@ -412,6 +469,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class camerasetup
         {
             internal camerasetup()
@@ -419,6 +477,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class playercolor
         {
             internal playercolor()
@@ -426,6 +485,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class placement
         {
             internal placement()
@@ -433,6 +493,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class startlocprio
         {
             internal startlocprio()
@@ -440,6 +501,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class raritycontrol
         {
             internal raritycontrol()
@@ -447,6 +509,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class blendmode
         {
             internal blendmode()
@@ -454,6 +517,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class texmapflags
         {
             internal texmapflags()
@@ -461,6 +525,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class effect : agent
         {
             internal effect()
@@ -468,6 +533,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class effecttype
         {
             internal effecttype()
@@ -475,6 +541,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class weathereffect
         {
             internal weathereffect()
@@ -482,6 +549,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class terraindeformation
         {
             internal terraindeformation()
@@ -489,6 +557,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class fogstate
         {
             internal fogstate()
@@ -496,6 +565,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class fogmodifier : agent
         {
             internal fogmodifier()
@@ -503,6 +573,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class dialog : agent
         {
             internal dialog()
@@ -510,6 +581,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class button : agent
         {
             internal button()
@@ -517,6 +589,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class quest : agent
         {
             internal quest()
@@ -524,6 +597,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class questitem : agent
         {
             internal questitem()
@@ -531,6 +605,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class defeatcondition : agent
         {
             internal defeatcondition()
@@ -538,6 +613,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class timerdialog : agent
         {
             internal timerdialog()
@@ -545,6 +621,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class leaderboard : agent
         {
             internal leaderboard()
@@ -552,6 +629,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class multiboard : agent
         {
             internal multiboard()
@@ -559,6 +637,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class multiboarditem : agent
         {
             internal multiboarditem()
@@ -566,6 +645,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class trackable : agent
         {
             internal trackable()
@@ -573,6 +653,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class gamecache : agent
         {
             internal gamecache()
@@ -580,6 +661,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class version
         {
             internal version()
@@ -587,6 +669,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itemtype
         {
             internal itemtype()
@@ -594,6 +677,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class texttag
         {
             internal texttag()
@@ -601,6 +685,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class attacktype
         {
             internal attacktype()
@@ -608,6 +693,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class damagetype
         {
             internal damagetype()
@@ -615,6 +701,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class weapontype
         {
             internal weapontype()
@@ -622,6 +709,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class soundtype
         {
             internal soundtype()
@@ -629,6 +717,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class lightning
         {
             internal lightning()
@@ -636,6 +725,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class pathingtype
         {
             internal pathingtype()
@@ -643,6 +733,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class mousebuttontype
         {
             internal mousebuttontype()
@@ -650,6 +741,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class animtype
         {
             internal animtype()
@@ -657,6 +749,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class subanimtype
         {
             internal subanimtype()
@@ -664,6 +757,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class image
         {
             internal image()
@@ -671,6 +765,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class ubersplat
         {
             internal ubersplat()
@@ -678,6 +773,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class hashtable : agent
         {
             internal hashtable()
@@ -685,6 +781,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class framehandle
         {
             internal framehandle()
@@ -692,6 +789,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class originframetype
         {
             internal originframetype()
@@ -699,6 +797,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class framepointtype
         {
             internal framepointtype()
@@ -706,6 +805,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class textaligntype
         {
             internal textaligntype()
@@ -713,6 +813,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class frameeventtype
         {
             internal frameeventtype()
@@ -720,6 +821,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class oskeytype
         {
             internal oskeytype()
@@ -727,6 +829,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityintegerfield
         {
             internal abilityintegerfield()
@@ -734,6 +837,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityrealfield
         {
             internal abilityrealfield()
@@ -741,6 +845,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitybooleanfield
         {
             internal abilitybooleanfield()
@@ -748,6 +853,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitystringfield
         {
             internal abilitystringfield()
@@ -755,6 +861,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityintegerlevelfield
         {
             internal abilityintegerlevelfield()
@@ -762,6 +869,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityreallevelfield
         {
             internal abilityreallevelfield()
@@ -769,6 +877,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitybooleanlevelfield
         {
             internal abilitybooleanlevelfield()
@@ -776,6 +885,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitystringlevelfield
         {
             internal abilitystringlevelfield()
@@ -783,6 +893,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityintegerlevelarrayfield
         {
             internal abilityintegerlevelarrayfield()
@@ -790,6 +901,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilityreallevelarrayfield
         {
             internal abilityreallevelarrayfield()
@@ -797,6 +909,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitybooleanlevelarrayfield
         {
             internal abilitybooleanlevelarrayfield()
@@ -804,6 +917,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class abilitystringlevelarrayfield
         {
             internal abilitystringlevelarrayfield()
@@ -811,6 +925,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitintegerfield
         {
             internal unitintegerfield()
@@ -818,6 +933,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitrealfield
         {
             internal unitrealfield()
@@ -825,6 +941,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitbooleanfield
         {
             internal unitbooleanfield()
@@ -832,6 +949,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitstringfield
         {
             internal unitstringfield()
@@ -839,6 +957,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitweaponintegerfield
         {
             internal unitweaponintegerfield()
@@ -846,6 +965,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitweaponrealfield
         {
             internal unitweaponrealfield()
@@ -853,6 +973,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitweaponbooleanfield
         {
             internal unitweaponbooleanfield()
@@ -860,6 +981,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitweaponstringfield
         {
             internal unitweaponstringfield()
@@ -867,6 +989,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itemintegerfield
         {
             internal itemintegerfield()
@@ -874,6 +997,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itemrealfield
         {
             internal itemrealfield()
@@ -881,6 +1005,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itembooleanfield
         {
             internal itembooleanfield()
@@ -888,6 +1013,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class itemstringfield
         {
             internal itemstringfield()
@@ -895,6 +1021,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class movetype
         {
             internal movetype()
@@ -902,6 +1029,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class targetflag
         {
             internal targetflag()
@@ -909,6 +1037,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class armortype
         {
             internal armortype()
@@ -916,6 +1045,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class heroattribute
         {
             internal heroattribute()
@@ -923,6 +1053,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class defensetype
         {
             internal defensetype()
@@ -930,6 +1061,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class regentype
         {
             internal regentype()
@@ -937,6 +1069,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class unitcategory
         {
             internal unitcategory()
@@ -944,6 +1077,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class pathingflag
         {
             internal pathingflag()
@@ -951,6 +1085,7 @@ namespace War3Api
             }
         }
 
+        /// @CSharpLua.Ignore
         public class commandbuttoneffect
         {
             internal commandbuttoneffect()
