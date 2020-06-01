@@ -12,7 +12,6 @@ using System.Linq;
 using System.Reflection;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Net.CodeAnalysis.Jass;
@@ -61,15 +60,13 @@ namespace War3Api.Generator
 
                 string apiNamespaceName = $@"War3Api.Generated.v{version.Replace('.', '_').Replace('-', '_')}";
 
-                var cSharpDirective = GetCSharpDirective();
-
                 if (!JassTranspiler.CompileCSharpFromJass(
                     Path.Combine("API", version, "common.j"),
                     null,
                     apiNamespaceName,
                     CommonClassName,
                     metadataReferences,
-                    new[] { cSharpDirective },
+                    Array.Empty<UsingDirectiveSyntax>(),
                     out var commonReference,
                     out var commonDirective,
                     out var commonEmitResult,
@@ -97,7 +94,7 @@ namespace War3Api.Generator
                         apiNamespaceName,
                         BlizzardClassName,
                         metadataReferences,
-                        new[] { cSharpDirective, commonDirective },
+                        new[] { commonDirective },
                         out _,
                         out _,
                         out var blizzardEmitResult,
@@ -129,22 +126,6 @@ namespace War3Api.Generator
 #if NETCOREAPP3_0 // not tested, but this assembly was not required when this method was defined in a .net standard project
             yield return MetadataReference.CreateFromFile(Assembly.Load("System.Runtime, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a").Location);
 #endif
-        }
-
-        private static UsingDirectiveSyntax GetCSharpDirective()
-        {
-            return SyntaxFactory.UsingDirective(
-                SyntaxFactory.ParseName("System")) // TODO: remove or whatever
-                .WithLeadingTrivia(SyntaxFactory.Trivia(
-                    SyntaxFactory.PragmaWarningDirectiveTrivia(
-                        SyntaxFactory.Token(SyntaxKind.DisableKeyword),
-                        default(SeparatedSyntaxList<ExpressionSyntax>).AddRange(new[]
-                        {
-                            SyntaxFactory.ParseExpression("IDE0052"),
-                            SyntaxFactory.ParseExpression("IDE1006"),
-                            SyntaxFactory.ParseExpression("CS0626"),
-                        }),
-                        true)));
         }
     }
 }
