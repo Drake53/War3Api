@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.0;netstandard2.0</TargetFrameworks>
@@ -17,9 +17,9 @@
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
 
-    <Version>1.32.9</Version>
-    <FileVersion>1.32.9</FileVersion>
-    <AssemblyVersion>1.32</AssemblyVersion>
+    <Version>1.31.1.5</Version>
+    <FileVersion>1.31.1</FileVersion>
+    <AssemblyVersion>1.31</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
