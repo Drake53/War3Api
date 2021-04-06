@@ -20,7 +20,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Build.Object;
-using War3Net.CodeAnalysis.CSharp;
 using War3Net.Common.Extensions;
 using War3Net.IO.Slk;
 
@@ -142,7 +141,9 @@ namespace War3Api.Generator.Object
                 new SyntaxList<MemberDeclarationSyntax>(@namespace));
 
             using var fileStream = File.Create(Path.Combine(outPath, $"{member.Identifier.ValueText}.cs"));
-            CompilationHelper.SerializeTo(compilationUnit, fileStream);
+            using var writer = new StreamWriter(fileStream);
+
+            compilationUnit.NormalizeWhitespace().WriteTo(writer);
         }
 
         internal static IEnumerable<ConstructorDeclarationSyntax> GetConstructors(SyntaxKind accessModifier, string className, IEnumerable<string> initializerValues, IEnumerable<(string field, ExpressionSyntax expression)> assignments)
@@ -186,13 +187,37 @@ namespace War3Api.Generator.Object
                 { "Ability", false },
                 { "Buff", null },
                 { "Upgrade", false },
-            };
+            }; 
 
             return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
         }
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool? usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
         {
+            static string GetPrivateFieldName(string name)
+            {
+                if (name.Contains('('))
+                {
+                    throw new Exception();
+                }
+
+                return new string(name.Select((@char, i) => i == 0 ? @char.ToString().ToLower()[0] : @char).Prepend('_').ToArray());
+            }
+
+            var fieldName = GetPrivateFieldName("Modifications");
+            var dictTypeName = usesVariation.HasValue ? usesVariation.Value ? DataConstants.VariationDictClassName : DataConstants.LevelDictClassName : DataConstants.SimpleDictClassName;
+            var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
+
+            yield return SyntaxFactoryService.Field(
+                dictTypeName,
+                fieldName,
+                true);
+
+            yield return SyntaxFactoryService.Property(
+                dictTypeName,
+                "Modifications",
+                SyntaxFactory.ParseExpression(fieldName));
+
             var typeDict = _typeModels.ToDictionary(type => type.Name);
 
             var privateConstructorAssignments = new List<(string field, ExpressionSyntax expression)>();
@@ -253,16 +278,6 @@ namespace War3Api.Generator.Object
                     throw new ArgumentException();
                 }
 
-                static string GetPrivateFieldName(string name)
-                {
-                    if (name.Contains('('))
-                    {
-                        throw new Exception();
-                    }
-
-                    return new string(name.Select((@char, i) => i == 0 ? @char.ToString().ToLower()[0] : @char).Prepend('_').ToArray());
-                }
-
                 var id = propertyModel.Rawcode.FromRawcode();
                 // var valueName = propertyModel.DisplayName.Split('(')[0].Dehumanize();
                 var valueName = propertyModel.DehumanizedName ?? new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
@@ -281,11 +296,6 @@ namespace War3Api.Generator.Object
                 var underlyingType = typeModel.Type;
                 var dataTypeModel = _dataTypeModels[underlyingType];
 
-                var optionalIsUnrealParameter = underlyingType == ObjectDataType.Real || underlyingType == ObjectDataType.Unreal
-                    ? $", {(underlyingType == ObjectDataType.Unreal).ToString().ToLower()}"
-                    : string.Empty;
-
-                var fieldName = GetPrivateFieldName(nameof(ObjectModification));
                 var simpleIdentifier = typeModel.Category == TypeModelCategory.Basic ? propertyValueName : $"{valueName}Raw";
 
                 if (propertyModel.Repeat)
@@ -324,7 +334,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
                         simpleSetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
-                        new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {nameof(ObjectDataModification)}({id}, {levelString}, value{optionalIsUnrealParameter});") });
+                        new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString} }};") });
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
@@ -361,7 +371,7 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleIdentifier,
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{fieldName}[{id}].{dataTypeModel.PropertyName}")),
-                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {nameof(ObjectDataModification)}({id}, {(usesVariation.HasValue ? "0, " : string.Empty)}value{optionalIsUnrealParameter})")));
+                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)} }}")));
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {

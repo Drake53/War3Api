@@ -154,24 +154,54 @@ namespace War3Api.Object
             return null;
         }
 
-        public MapObjectData GetAllData()
+        public ObjectData GetAllData(ObjectDataFormatVersion formatVersion = ObjectDataFormatVersion.Normal)
         {
-            var units = _objects.Where(pair => pair.Value is Unit);
-            var items = _objects.Where(pair => pair.Value is Item);
-            var destructables = _objects.Where(pair => pair.Value is Destructable);
-            var doodads = _objects.Where(pair => pair.Value is Doodad);
-            var abilities = _objects.Where(pair => pair.Value is Ability);
-            var buffs = _objects.Where(pair => pair.Value is Buff);
-            var upgrades = _objects.Where(pair => pair.Value is Upgrade);
+            var units = _objects.CastWhere<int, BaseObject, Unit>().Select(unit => new SimpleObjectModification { OldId = unit.OldId, NewId = unit.NewId, Modifications = unit.Modifications.ToList() });
+            var items = _objects.CastWhere<int, BaseObject, Item>().Select(item => new SimpleObjectModification { OldId = item.OldId, NewId = item.NewId, Modifications = item.Modifications.ToList() });
+            var destructables = _objects.CastWhere<int, BaseObject, Destructable>().Select(destructable => new SimpleObjectModification { OldId = destructable.OldId, NewId = destructable.NewId, Modifications = destructable.Modifications.ToList() });
+            var doodads = _objects.CastWhere<int, BaseObject, Doodad>().Select(doodad => new VariationObjectModification { OldId = doodad.OldId, NewId = doodad.NewId, Modifications = doodad.Modifications.ToList() });
+            var abilities = _objects.CastWhere<int, BaseObject, Ability>().Select(ability => new LevelObjectModification { OldId = ability.OldId, NewId = ability.NewId, Modifications = ability.Modifications.ToList() });
+            var buffs = _objects.CastWhere<int, BaseObject, Buff>().Select(buff => new SimpleObjectModification { OldId = buff.OldId, NewId = buff.NewId, Modifications = buff.Modifications.ToList() });
+            var upgrades = _objects.CastWhere<int, BaseObject, Upgrade>().Select(upgrade => new LevelObjectModification { OldId = upgrade.OldId, NewId = upgrade.NewId, Modifications = upgrade.Modifications.ToList() });
 
-            return new MapObjectData(
-                units.Any() ? new MapUnitObjectData(units.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                items.Any() ? new MapItemObjectData(items.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                destructables.Any() ? new MapDestructableObjectData(destructables.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                doodads.Any() ? new MapDoodadObjectData(doodads.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                abilities.Any() ? new MapAbilityObjectData(abilities.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                buffs.Any() ? new MapBuffObjectData(buffs.Select(pair => pair.Value.ObjectModification).ToArray()) : null,
-                upgrades.Any() ? new MapUpgradeObjectData(upgrades.Select(pair => pair.Value.ObjectModification).ToArray()) : null);
+            return new ObjectData(formatVersion)
+            {
+                UnitData = units.Any() ? new MapUnitObjectData(formatVersion)
+                {
+                    BaseUnits = units.Where(unit => unit.NewId == 0).ToList(),
+                    NewUnits = units.Where(unit => unit.NewId != 0).ToList(),
+                } : null,
+                ItemData = items.Any() ? new MapItemObjectData(formatVersion)
+                {
+                    BaseItems = items.Where(item => item.NewId == 0).ToList(),
+                    NewItems = items.Where(item => item.NewId != 0).ToList(),
+                } : null,
+                DestructableData = destructables.Any() ? new MapDestructableObjectData(formatVersion)
+                {
+                    BaseDestructables = destructables.Where(destructable => destructable.NewId == 0).ToList(),
+                    NewDestructables = destructables.Where(destructable => destructable.NewId != 0).ToList(),
+                } : null,
+                DoodadData = doodads.Any() ? new MapDoodadObjectData(formatVersion)
+                {
+                    BaseDoodads = doodads.Where(doodad => doodad.NewId == 0).ToList(),
+                    NewDoodads = doodads.Where(doodad => doodad.NewId != 0).ToList(),
+                } : null,
+                AbilityData = abilities.Any() ? new MapAbilityObjectData(formatVersion)
+                {
+                    BaseAbilities = abilities.Where(ability => ability.NewId == 0).ToList(),
+                    NewAbilities = abilities.Where(ability => ability.NewId != 0).ToList(),
+                } : null,
+                BuffData = buffs.Any() ? new MapBuffObjectData(formatVersion)
+                {
+                    BaseBuffs = buffs.Where(buff => buff.NewId == 0).ToList(),
+                    NewBuffs = buffs.Where(buff => buff.NewId != 0).ToList(),
+                } : null,
+                UpgradeData = upgrades.Any() ? new MapUpgradeObjectData(formatVersion)
+                {
+                    BaseUpgrades = upgrades.Where(upgrade => upgrade.NewId == 0).ToList(),
+                    NewUpgrades = upgrades.Where(upgrade => upgrade.NewId != 0).ToList(),
+                } : null,
+            };
         }
 
         internal void AddObject(BaseObject baseObject)
@@ -181,12 +211,12 @@ namespace War3Api.Object
                 throw new ArgumentException($"An object with key '{baseObject.Key.ToRawcode()}' has already been added to this database.");
             }
 
-            if (!_objectTypes.Value.Contains(baseObject.ObjectModification.OldId))
+            if (!_objectTypes.Value.Contains(baseObject.OldId))
             {
-                throw new ArgumentOutOfRangeException($"Base object key '{baseObject.ObjectModification.OldId.ToRawcode()}' is not valid.");
+                throw new ArgumentOutOfRangeException($"Base object key '{baseObject.OldId.ToRawcode()}' is not valid.");
             }
 
-            if (baseObject.ObjectModification.NewId != 0)
+            if (baseObject.NewId != 0)
             {
                 if (_reservedKeys.Contains(baseObject.Key))
                 {

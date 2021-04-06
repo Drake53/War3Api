@@ -1,43 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using War3Net.Build.Object;
+﻿using War3Net.Common.Extensions;
 
 namespace War3Api.Object
 {
     // todo: generate through code (since it's similar to Unit/Ability/etc)
     public abstract class BaseObject
     {
-        protected readonly ObjectModification _objectModification;
-
         private readonly ObjectDatabase _db;
 
         internal BaseObject(int oldId, ObjectDatabase db = null)
         {
-            _objectModification = new ObjectModification(oldId, 0);
+            OldId = oldId;
+            NewId = 0;
+
             _db = db ?? ObjectDatabase.DefaultDatabase;
             _db.AddObject(this);
         }
 
         internal BaseObject(int oldId, int newId, ObjectDatabase db = null)
         {
-            _objectModification = new ObjectModification(oldId, newId);
+            OldId = oldId;
+            NewId = newId;
+
             _db = db ?? ObjectDatabase.DefaultDatabase;
             _db.AddObject(this);
         }
 
         internal BaseObject(int oldId, string newRawcode, ObjectDatabase db = null)
         {
-            _objectModification = new ObjectModification(oldId, newRawcode);
+            OldId = oldId;
+            NewId = newRawcode.FromRawcode();
+
             _db = db ?? ObjectDatabase.DefaultDatabase;
             _db.AddObject(this);
         }
 
-        public ObjectModification ObjectModification => _objectModification;
+        public int OldId { get; set; }
+
+        public int NewId { get; set; }
 
         public ObjectDatabase Db => _db;
 
-        public int Key => _objectModification.NewId == 0 ? _objectModification.OldId : _objectModification.NewId;
+        public int Key => NewId != 0 ? NewId : OldId;
     }
 }

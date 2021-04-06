@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -37,13 +37,13 @@
     <PackageTags>csharp api warcraft3 warcraft-iii</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
 
-    <Version>1.31.1-rc5</Version>
+    <Version>1.31.1-rc6</Version>
     <FileVersion>1.31.1</FileVersion>
     <AssemblyVersion>1.31</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="War3Net.Build.Core" Version="1.4.0" />
+    <PackageReference Include="War3Net.Build.Core" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>

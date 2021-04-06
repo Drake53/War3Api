@@ -12,6 +12,10 @@ namespace War3Api.Generator.Object
         // Base
         internal const string BaseClassName = "BaseObject";
 
+        internal const string LevelDictClassName = "LevelObjectDataModifications";
+        internal const string SimpleDictClassName = "SimpleObjectDataModifications";
+        internal const string VariationDictClassName = "VariationObjectDataModifications";
+
         internal const string CommentColumn = "comment";
         internal const string CommentsColumn = "comments";
         internal const string CommentOrCommentsColumn = "comment(s)";
