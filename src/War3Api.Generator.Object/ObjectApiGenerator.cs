@@ -211,7 +211,7 @@ namespace War3Api.Generator.Object
             yield return SyntaxFactoryService.Field(
                 dictTypeName,
                 fieldName,
-                true);
+                SyntaxFactory.ParseExpression($"new {dictTypeName}()"));
 
             yield return SyntaxFactoryService.Property(
                 dictTypeName,
