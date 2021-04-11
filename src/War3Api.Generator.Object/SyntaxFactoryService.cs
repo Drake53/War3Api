@@ -91,12 +91,12 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.VariableDeclarator(identifier))));
         }
 
-        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax expression)
+        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax expression, SyntaxKind accessModifier = SyntaxKind.PrivateKeyword)
         {
             return SyntaxFactory.FieldDeclaration(
                 default,
                 SyntaxFactory.TokenList(
-                    SyntaxFactory.Token(SyntaxKind.PrivateKeyword),
+                    SyntaxFactory.Token(accessModifier),
                     SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword)),
                 SyntaxFactory.VariableDeclaration(
                     SyntaxFactory.ParseTypeName(type),

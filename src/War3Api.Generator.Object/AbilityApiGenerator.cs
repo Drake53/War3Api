@@ -14,7 +14,6 @@ using System.Linq;
 
 using Humanizer;
 
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Models;
@@ -139,7 +138,7 @@ namespace War3Api.Generator.Object
                                 abilityType.UniqueName,
                                 properties.Values.Where(property => property.UseSpecific?.Contains(abilityType.Value.ToRawcode(), StringComparison.Ordinal) ?? false),
                                 false,
-                                SyntaxKind.PublicKeyword,
+                                false,
                                 abilityType.Value)),
                         DataConstants.AbilityNamespace);
                 }

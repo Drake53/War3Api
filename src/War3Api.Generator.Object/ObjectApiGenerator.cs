@@ -189,10 +189,10 @@ namespace War3Api.Generator.Object
                 { "Upgrade", false },
             }; 
 
-            return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword, null);
+            return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass, null);
         }
 
-        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool? usesVariation, SyntaxKind ctorAccessModifier, int? typeId)
+        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool? usesVariation, bool isAbstractClass, int? typeId)
         {
             static string GetPrivateFieldName(string name)
             {
@@ -205,18 +205,23 @@ namespace War3Api.Generator.Object
             }
 
             var fieldName = GetPrivateFieldName("Modifications");
-            var dictTypeName = usesVariation.HasValue ? usesVariation.Value ? DataConstants.VariationDictClassName : DataConstants.LevelDictClassName : DataConstants.SimpleDictClassName;
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
-            yield return SyntaxFactoryService.Field(
-                dictTypeName,
-                fieldName,
-                SyntaxFactory.ParseExpression($"new {dictTypeName}()"));
+            if (!typeId.HasValue)
+            {
+                var dictTypeName = usesVariation.HasValue ? usesVariation.Value ? DataConstants.VariationDictClassName : DataConstants.LevelDictClassName : DataConstants.SimpleDictClassName;
 
-            yield return SyntaxFactoryService.Property(
-                dictTypeName,
-                "Modifications",
-                SyntaxFactory.ParseExpression(fieldName));
+                yield return SyntaxFactoryService.Field(
+                    dictTypeName,
+                    fieldName,
+                    SyntaxFactory.ParseExpression($"new {dictTypeName}()"),
+                    isAbstractClass ? SyntaxKind.ProtectedKeyword : SyntaxKind.PrivateKeyword);
+
+                yield return SyntaxFactoryService.Property(
+                    dictTypeName,
+                    "Modifications",
+                    SyntaxFactory.ParseExpression(fieldName));
+            }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);
 
@@ -416,6 +421,8 @@ namespace War3Api.Generator.Object
 
             if (!typeId.HasValue)
             {
+                var ctorAccessModifier = isAbstractClass ? SyntaxKind.InternalKeyword : SyntaxKind.PrivateKeyword;
+
                 yield return SyntaxFactoryService.Constructor(
                     ctorAccessModifier,
                     className,
@@ -454,7 +461,7 @@ namespace War3Api.Generator.Object
             }
             else
             {
-                foreach (var ctor in GetConstructors(ctorAccessModifier, className, new[] { typeId.Value.ToString() }, privateConstructorAssignments))
+                foreach (var ctor in GetConstructors(SyntaxKind.PublicKeyword, className, new[] { typeId.Value.ToString() }, privateConstructorAssignments))
                 {
                     yield return ctor;
                 }
