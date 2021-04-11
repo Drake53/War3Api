@@ -17,8 +17,10 @@ namespace War3Api.Object
 
         public VariationObjectDataModification this[int key, int variation]
         {
-            get => _modifications[key | (variation << 32)];
-            set => _modifications[key | (variation << 32)] = value;
+#pragma warning disable CS0675
+            get => _modifications[key | ((long)variation << 32)];
+            set => _modifications[key | ((long)variation << 32)] = value;
+#pragma warning restore CS0675
         }
 
         public IEnumerator<VariationObjectDataModification> GetEnumerator()

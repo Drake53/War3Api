@@ -17,8 +17,10 @@ namespace War3Api.Object
 
         public LevelObjectDataModification this[int key, int level]
         {
-            get => _modifications[key | (level << 32)];
-            set => _modifications[key | (level << 32)] = value;
+#pragma warning disable CS0675
+            get => _modifications[key | ((long)level << 32)];
+            set => _modifications[key | ((long)level << 32)] = value;
+#pragma warning restore CS0675
         }
 
         public IEnumerator<LevelObjectDataModification> GetEnumerator()
