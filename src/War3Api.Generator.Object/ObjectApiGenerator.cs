@@ -205,6 +205,7 @@ namespace War3Api.Generator.Object
             }
 
             var fieldName = GetPrivateFieldName("Modifications");
+            var objectTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
             if (!typeId.HasValue)
@@ -221,6 +222,21 @@ namespace War3Api.Generator.Object
                     dictTypeName,
                     "Modifications",
                     SyntaxFactory.ParseExpression(fieldName));
+
+                var classVariableName = char.ToLowerInvariant(className[0]) + className[1..];
+                yield return SyntaxFactory.ConversionOperatorDeclaration(
+                    default,
+                    SyntaxFactory.TokenList(
+                        SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                        SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
+                    SyntaxFactory.Token(SyntaxKind.ExplicitKeyword),
+                    SyntaxFactory.Token(SyntaxKind.OperatorKeyword),
+                    SyntaxFactory.ParseTypeName(objectTypeName),
+                    SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(className), SyntaxFactory.Identifier(classVariableName), null))),
+                    null,
+                    SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
+                        $"new {objectTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.Modifications.ToList() }}")),
+                    SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);

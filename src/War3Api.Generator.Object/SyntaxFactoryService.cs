@@ -24,13 +24,15 @@ namespace War3Api.Generator.Object
             {
                 modifierValue += modifier.Kind() switch
                 {
-                    SyntaxKind.PrivateKeyword => 0,
-                    SyntaxKind.ProtectedKeyword => 1,
-                    SyntaxKind.InternalKeyword => 2,
-                    SyntaxKind.PublicKeyword => 3,
-                    SyntaxKind.ReadOnlyKeyword => 4,
-                    SyntaxKind.StaticKeyword => 8,
-                    SyntaxKind.ConstKeyword => 16,
+                    SyntaxKind.PrivateKeyword => 1 << 0,
+                    SyntaxKind.ProtectedKeyword => 1 << 1,
+                    SyntaxKind.InternalKeyword => 1 << 2,
+                    SyntaxKind.PublicKeyword => 1 << 3,
+                    SyntaxKind.ReadOnlyKeyword => 1 << 4,
+                    SyntaxKind.StaticKeyword => 1 << 5,
+                    SyntaxKind.ConstKeyword => 1 << 6,
+                    SyntaxKind.ImplicitKeyword => 1 << 7,
+                    SyntaxKind.ExplicitKeyword => 1 << 8,
                 };
             }
 
@@ -39,22 +41,32 @@ namespace War3Api.Generator.Object
                 return modifierValue;
             }
 
+            if (member is ConversionOperatorDeclarationSyntax)
+            {
+                return modifierValue + (1 << 9);
+            }
+
+            if (member is OperatorDeclarationSyntax)
+            {
+                return modifierValue + (1 << 10);
+            }
+
             if (member is PropertyDeclarationSyntax)
             {
-                return modifierValue + 32;
+                return modifierValue + (1 << 11);
             }
 
             if (member is ConstructorDeclarationSyntax)
             {
-                return modifierValue + 64;
+                return modifierValue + (1 << 12);
             }
 
             if (member is FieldDeclarationSyntax)
             {
-                return modifierValue + 128;
+                return modifierValue + (1 << 13);
             }
 
-            throw new NotSupportedException();
+            throw new NotSupportedException(member.GetType().FullName);
         }
 
         internal static ClassDeclarationSyntax Class(string identifier, bool isAbstract, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
