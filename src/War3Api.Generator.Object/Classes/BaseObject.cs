@@ -34,9 +34,9 @@ namespace War3Api.Object
             _db.AddObject(this);
         }
 
-        public int OldId { get; set; }
+        public int OldId { get; }
 
-        public int NewId { get; set; }
+        public int NewId { get; }
 
         public ObjectDatabase Db => _db;
 
