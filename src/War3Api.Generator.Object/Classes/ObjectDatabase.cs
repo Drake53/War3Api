@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 using War3Net.Build.Object;
@@ -138,6 +139,41 @@ namespace War3Api.Object
             return null;
         }
 
+        public IEnumerable<Unit> GetUnits()
+        {
+            return _objects.CastWhere<int, BaseObject, Unit>();
+        }
+
+        public IEnumerable<Item> GetItems()
+        {
+            return _objects.CastWhere<int, BaseObject, Item>();
+        }
+
+        public IEnumerable<Destructable> GetDestructables()
+        {
+            return _objects.CastWhere<int, BaseObject, Destructable>();
+        }
+
+        public IEnumerable<Doodad> GetDoodads()
+        {
+            return _objects.CastWhere<int, BaseObject, Doodad>();
+        }
+
+        public IEnumerable<Ability> GetAbilities()
+        {
+            return _objects.CastWhere<int, BaseObject, Ability>();
+        }
+
+        public IEnumerable<Buff> GetBuffs()
+        {
+            return _objects.CastWhere<int, BaseObject, Buff>();
+        }
+
+        public IEnumerable<Upgrade> GetUpgrades()
+        {
+            return _objects.CastWhere<int, BaseObject, Upgrade>();
+        }
+
         public Tech? TryGetTech(int id)
         {
             if (Enum.IsDefined(typeof(TechEquivalent), id))
@@ -156,13 +192,13 @@ namespace War3Api.Object
 
         public ObjectData GetAllData(ObjectDataFormatVersion formatVersion = ObjectDataFormatVersion.Normal)
         {
-            var units = _objects.CastWhere<int, BaseObject, Unit>().Select(unit => new SimpleObjectModification { OldId = unit.OldId, NewId = unit.NewId, Modifications = unit.Modifications.ToList() });
-            var items = _objects.CastWhere<int, BaseObject, Item>().Select(item => new SimpleObjectModification { OldId = item.OldId, NewId = item.NewId, Modifications = item.Modifications.ToList() });
-            var destructables = _objects.CastWhere<int, BaseObject, Destructable>().Select(destructable => new SimpleObjectModification { OldId = destructable.OldId, NewId = destructable.NewId, Modifications = destructable.Modifications.ToList() });
-            var doodads = _objects.CastWhere<int, BaseObject, Doodad>().Select(doodad => new VariationObjectModification { OldId = doodad.OldId, NewId = doodad.NewId, Modifications = doodad.Modifications.ToList() });
-            var abilities = _objects.CastWhere<int, BaseObject, Ability>().Select(ability => new LevelObjectModification { OldId = ability.OldId, NewId = ability.NewId, Modifications = ability.Modifications.ToList() });
-            var buffs = _objects.CastWhere<int, BaseObject, Buff>().Select(buff => new SimpleObjectModification { OldId = buff.OldId, NewId = buff.NewId, Modifications = buff.Modifications.ToList() });
-            var upgrades = _objects.CastWhere<int, BaseObject, Upgrade>().Select(upgrade => new LevelObjectModification { OldId = upgrade.OldId, NewId = upgrade.NewId, Modifications = upgrade.Modifications.ToList() });
+            var units = GetUnits().Select(unit => (SimpleObjectModification)unit);
+            var items = GetItems().Select(item => (SimpleObjectModification)item);
+            var destructables = GetDestructables().Select(destructable => (SimpleObjectModification)destructable);
+            var doodads = GetDoodads().Select(doodad => (VariationObjectModification)doodad);
+            var abilities = GetAbilities().Select(ability => (LevelObjectModification)ability);
+            var buffs = GetBuffs().Select(buff => (SimpleObjectModification)buff);
+            var upgrades = GetUpgrades().Select(upgrade => (LevelObjectModification)upgrade);
 
             return new ObjectData(formatVersion)
             {
@@ -211,9 +247,39 @@ namespace War3Api.Object
                 throw new ArgumentException($"An object with key '{baseObject.Key.ToRawcode()}' has already been added to this database.");
             }
 
-            if (!_objectTypes.Value.Contains(baseObject.OldId))
+            if (baseObject is Unit && !Enum.IsDefined(typeof(UnitType), baseObject.OldId))
             {
-                throw new ArgumentOutOfRangeException($"Base object key '{baseObject.OldId.ToRawcode()}' is not valid.");
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(UnitType));
+            }
+
+            if (baseObject is Item && !Enum.IsDefined(typeof(ItemType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(ItemType));
+            }
+
+            if (baseObject is Destructable && !Enum.IsDefined(typeof(DestructableType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(DestructableType));
+            }
+
+            if (baseObject is Doodad && !Enum.IsDefined(typeof(DoodadType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(DoodadType));
+            }
+
+            if (baseObject is Ability && !Enum.IsDefined(typeof(AbilityType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(AbilityType));
+            }
+
+            if (baseObject is Buff && !Enum.IsDefined(typeof(BuffType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(BuffType));
+            }
+
+            if (baseObject is Upgrade && !Enum.IsDefined(typeof(UpgradeType), baseObject.OldId))
+            {
+                throw new InvalidEnumArgumentException(nameof(baseObject.OldId), baseObject.OldId, typeof(UpgradeType));
             }
 
             if (baseObject.NewId != 0)
