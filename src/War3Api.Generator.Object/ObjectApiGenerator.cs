@@ -539,15 +539,7 @@ namespace War3Api.Generator.Object
                                 var splitPosition = line.IndexOf('=', StringComparison.Ordinal);
                                 var key = line.Substring(0, splitPosition);
                                 var value = line.Substring(splitPosition + 1);
-                                if (!worldEditStrings.TryAdd(key, value))
-                                {
-                                    if (worldEditStrings[key] == value)
-                                    {
-                                        continue;
-                                    }
-
-                                    throw new Exception($"Key {key} already added:\r\nWas '{worldEditStrings[key]}'\r\nTried to add '{value}'");
-                                }
+                                worldEditStrings.TryAdd(key, value);
                             }
                         }
                     }
