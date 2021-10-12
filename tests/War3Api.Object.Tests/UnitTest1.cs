@@ -12,6 +12,7 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using War3Net.Build.Extensions;
 using War3Net.Build.Object;
 using War3Net.Common.Extensions;
 
@@ -57,7 +58,11 @@ namespace War3Api.Object.Tests
             var db = new ObjectDatabase(Array.Empty<int>());
 
             const string TestFilePath = @"..\..\..\TestData\TestEnums.w3o";
-            var objectData = MapObjectData.Parse(File.OpenRead(TestFilePath));
+
+            using var fileStream = File.OpenRead(TestFilePath);
+            using var binaryReader = new BinaryReader(fileStream);
+
+            var objectData = binaryReader.ReadObjectData(false);
 
             var errorLines = new List<string>();
 
@@ -121,10 +126,10 @@ namespace War3Api.Object.Tests
                 { "utyp", castType[altar.StatsUnitClassificationRaw.GetType()] },
             };
 
-            foreach (var unit in unitData.GetData())
+            foreach (var unit in objectData.GetAllUnits())
             {
-                var actualUnit = db.GetUnit(unit.OldId).ObjectModification;
-                foreach (var mod in unit)
+                var actualUnit = db.GetUnit(unit.OldId);
+                foreach (var mod in unit.Modifications)
                 {
                     if (expectUnit.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -133,7 +138,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualUnit[mod.Id];
+                        var actualMod = actualUnit.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -160,10 +165,10 @@ namespace War3Api.Object.Tests
                 { "icla", castType[gauntlets.StatsClassificationRaw.GetType()] },
             };
 
-            foreach (var item in itemData.GetData())
+            foreach (var item in objectData.GetAllItems())
             {
-                var actualItem = db.GetItem(item.OldId).ObjectModification;
-                foreach (var mod in item)
+                var actualItem = db.GetItem(item.OldId);
+                foreach (var mod in item.Modifications)
                 {
                     if (expectItem.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -172,7 +177,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualItem[mod.Id];
+                        var actualMod = actualItem.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -201,10 +206,10 @@ namespace War3Api.Object.Tests
                 { "btil", castType[stoneDoor.EditorTilesetsRaw.GetType()] },
             };
 
-            foreach (var destructable in destructableData.GetData())
+            foreach (var destructable in objectData.GetAllDestructables())
             {
-                var actualDestructable = db.GetDestructable(destructable.OldId).ObjectModification;
-                foreach (var mod in destructable)
+                var actualDestructable = db.GetDestructable(destructable.OldId);
+                foreach (var mod in destructable.Modifications)
                 {
                     if (expectDestructable.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -213,7 +218,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualDestructable[mod.Id];
+                        var actualMod = actualDestructable.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -240,10 +245,10 @@ namespace War3Api.Object.Tests
                 { "dcat", castType[trough.EditorCategoryRaw.GetType()] },
             };
 
-            foreach (var doodad in doodadData.GetData())
+            foreach (var doodad in objectData.GetAllDoodads())
             {
-                var actualDoodad = db.GetDoodad(doodad.OldId).ObjectModification;
-                foreach (var mod in doodad)
+                var actualDoodad = db.GetDoodad(doodad.OldId);
+                foreach (var mod in doodad.Modifications)
                 {
                     if (expectDoodad.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -252,7 +257,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualDoodad[mod.Id];
+                        var actualMod = actualDoodad.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -329,10 +334,10 @@ namespace War3Api.Object.Tests
                 { "Npr1", castType[preservation.DataBuildingTypesAllowedRaw[1].GetType()] },
             };
 
-            foreach (var ability in abilityData.GetData())
+            foreach (var ability in objectData.GetAllAbilities())
             {
-                var actualAbility = db.GetAbility(ability.OldId)?.ObjectModification ?? throw new NullReferenceException(ability.OldId.ToRawcode());
-                foreach (var mod in ability)
+                var actualAbility = db.GetAbility(ability.OldId) ?? throw new NullReferenceException(ability.OldId.ToRawcode());
+                foreach (var mod in ability.Modifications)
                 {
                     if (expectAbility.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -341,7 +346,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = mod.Level.HasValue ? actualAbility[mod.Id, mod.Level.Value] : actualAbility[mod.Id];
+                        var actualMod = mod.Level > 0 ? actualAbility.Modifications[mod.Id, mod.Level] : actualAbility.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -370,10 +375,10 @@ namespace War3Api.Object.Tests
                 { "fspd", castType[avatar.ArtRequiredSpellDetailRaw.GetType()] },
             };
 
-            foreach (var buff in buffData.GetData())
+            foreach (var buff in objectData.GetAllBuffs())
             {
-                var actualBuff = db.GetBuff(buff.OldId).ObjectModification;
-                foreach (var mod in buff)
+                var actualBuff = db.GetBuff(buff.OldId);
+                foreach (var mod in buff.Modifications)
                 {
                     if (expectBuff.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -382,7 +387,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualBuff[mod.Id];
+                        var actualMod = actualBuff.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -411,10 +416,10 @@ namespace War3Api.Object.Tests
                 { "gef2", castType[humanAnimalBreeding.DataEffect2Raw.GetType()] },
             };
 
-            foreach (var upgrade in upgradeData.GetData())
+            foreach (var upgrade in objectData.GetAllUpgrades())
             {
-                var actualUpgrade = db.GetUpgrade(upgrade.OldId).ObjectModification;
-                foreach (var mod in upgrade)
+                var actualUpgrade = db.GetUpgrade(upgrade.OldId);
+                foreach (var mod in upgrade.Modifications)
                 {
                     if (expectUpgrade.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -423,7 +428,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualUpgrade[mod.Id];
+                        var actualMod = actualUpgrade.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -447,7 +452,11 @@ namespace War3Api.Object.Tests
             var db = new ObjectDatabase(Array.Empty<int>());
 
             const string TestFilePath = @"..\..\..\TestData\TestLists.w3o";
-            var objectData = MapObjectData.Parse(File.OpenRead(TestFilePath));
+
+            using var fileStream = File.OpenRead(TestFilePath);
+            using var binaryReader = new BinaryReader(fileStream);
+
+            var objectData = binaryReader.ReadObjectData(false);
 
             var errorLines = new List<string>();
 
@@ -523,10 +532,10 @@ namespace War3Api.Object.Tests
                 { "umki", arcaneVault.TechtreeItemsMadeRaw.GetType() },
             };
 
-            foreach (var unit in unitData.GetData())
+            foreach (var unit in objectData.GetAllUnits())
             {
-                var actualUnit = db.GetUnit(unit.OldId).ObjectModification;
-                foreach (var mod in unit)
+                var actualUnit = db.GetUnit(unit.OldId);
+                foreach (var mod in unit.Modifications)
                 {
                     if (expectUnit.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -535,7 +544,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = actualUnit[mod.Id];
+                        var actualMod = actualUnit.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
@@ -574,10 +583,10 @@ namespace War3Api.Object.Tests
                 { "alig", stormHammers.ArtLightningEffectsRaw.GetType() },
             };
 
-            foreach (var ability in abilityData.GetData())
+            foreach (var ability in objectData.GetAllAbilities())
             {
-                var actualAbility = db.GetAbility(ability.OldId)?.ObjectModification ?? throw new NullReferenceException(ability.OldId.ToRawcode());
-                foreach (var mod in ability)
+                var actualAbility = db.GetAbility(ability.OldId) ?? throw new NullReferenceException(ability.OldId.ToRawcode());
+                foreach (var mod in ability.Modifications)
                 {
                     if (expectAbility.TryGetValue(mod.Id.ToRawcode(), out var type))
                     {
@@ -586,7 +595,7 @@ namespace War3Api.Object.Tests
                             errorLines.Add($"'{mod.Id.ToRawcode()}' TYPE: Expected {mod.Type}, actual {type}.");
                         }
 
-                        var actualMod = mod.Level.HasValue ? actualAbility[mod.Id, mod.Level.Value] : actualAbility[mod.Id];
+                        var actualMod = mod.Level > 0 ? actualAbility.Modifications[mod.Id, mod.Level] : actualAbility.Modifications[mod.Id];
                         var value = actualMod.Value;
                         if (!object.Equals(mod.Value, value))
                         {
