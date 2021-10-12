@@ -100,6 +100,8 @@ namespace War3Api.Generator.Object
             yield return GenerateTypeListModel("buffList", "Buff"); // TODO: validate buffs are all buff (rawcode starts with B, with some exceptions where it starts with A)
             yield return GenerateTypeListModel("effectList", "Buff"); // TODO: validate buffs are all effect (rawcode starts with X)
             yield return GenerateTypeListModel("heroAbilityList", "Ability"); // TODO: validate abilities are all hero abil
+            yield return GenerateTypeListModel("abilitySkinList", "Ability");
+            yield return GenerateTypeListModel("unitSkinList", "Unit");
             yield return GenerateTypeListModel("intList", GetKeywordText(SyntaxKind.IntKeyword));
             yield return GenerateTypeListModel("itemList", "Item");
             yield return GenerateTypeListModel("lightningList", "LightningEffect");
