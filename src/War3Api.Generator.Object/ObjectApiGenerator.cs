@@ -541,12 +541,12 @@ namespace War3Api.Generator.Object
                                 var value = line.Substring(splitPosition + 1);
                                 if (!worldEditStrings.TryAdd(key, value))
                                 {
-                                    if (worldEditStrings[key] == value)
+                                    /*if (string.Equals(worldEditStrings[key], value, StringComparison.Ordinal))
                                     {
                                         continue;
                                     }
 
-                                    throw new Exception($"Key {key} already added:\r\nWas '{worldEditStrings[key]}'\r\nTried to add '{value}'");
+                                    throw new Exception($"Key {key} already added:\r\nWas '{worldEditStrings[key]}'\r\nTried to add '{value}'");*/
                                 }
                             }
                         }

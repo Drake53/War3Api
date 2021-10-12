@@ -97,6 +97,7 @@ namespace War3Api.Generator.Object
 
             // Lists
             yield return GenerateTypeListModel("abilityList", "Ability"); // TODO: validate abilities are all unit/item abil
+            yield return GenerateTypeListModel("abilitySkinList", "Ability");
             yield return GenerateTypeListModel("buffList", "Buff"); // TODO: validate buffs are all buff (rawcode starts with B, with some exceptions where it starts with A)
             yield return GenerateTypeListModel("effectList", "Buff"); // TODO: validate buffs are all effect (rawcode starts with X)
             yield return GenerateTypeListModel("heroAbilityList", "Ability"); // TODO: validate abilities are all hero abil
@@ -112,6 +113,7 @@ namespace War3Api.Generator.Object
             yield return GenerateTypeListModel("tilesetList", "Tileset");
             yield return GenerateTypeListModel("unitClass", "UnitClassification");
             yield return GenerateTypeListModel("unitList", "Unit");
+            yield return GenerateTypeListModel("unitSkinList", "Unit");
             yield return GenerateTypeListModel("upgradeList", "Upgrade");
         }
 
