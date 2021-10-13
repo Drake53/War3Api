@@ -355,7 +355,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
                         simpleSetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
-                        new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString} }};") });
+                        new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
@@ -392,7 +392,7 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleIdentifier,
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{fieldName}[{id}].{dataTypeModel.PropertyName}")),
-                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)} }}")));
+                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {

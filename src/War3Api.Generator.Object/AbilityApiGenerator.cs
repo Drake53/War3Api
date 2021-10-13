@@ -50,6 +50,7 @@ namespace War3Api.Generator.Object
             var idColumn = metaData[DataConstants.MetaDataIdColumn].Single();
             var fieldColumn = metaData[DataConstants.MetaDataFieldColumn].Single();
             var repeatColumn = metaData[DataConstants.MetaDataRepeatColumn].Single();
+            var dataColumn = metaData[DataConstants.MetaDataDataColumn].Single();
             var categoryColumn = metaData[DataConstants.MetaDataCategoryColumn].Single();
             var displayNameColumn = metaData[DataConstants.MetaDataDisplayNameColumn].Single();
             var typeColumn = metaData[DataConstants.MetaDataTypeColumn].Single();
@@ -65,6 +66,7 @@ namespace War3Api.Generator.Object
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
                     Repeat = property[repeatColumn].ParseBool(),
+                    Data = (int)property[dataColumn],
                     Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
                     DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
                     Type = (string)property[typeColumn],
