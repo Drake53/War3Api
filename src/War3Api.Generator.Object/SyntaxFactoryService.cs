@@ -103,13 +103,17 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.VariableDeclarator(identifier))));
         }
 
-        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax expression, SyntaxKind accessModifier = SyntaxKind.PrivateKeyword)
+        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax expression, SyntaxKind accessModifier = SyntaxKind.PrivateKeyword, bool isReadOnly = true)
         {
+            var tokenList = isReadOnly
+                ? SyntaxFactory.TokenList(
+                    SyntaxFactory.Token(accessModifier),
+                    SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword))
+                : SyntaxTokenList.Create(SyntaxFactory.Token(accessModifier));
+
             return SyntaxFactory.FieldDeclaration(
                 default,
-                SyntaxFactory.TokenList(
-                    SyntaxFactory.Token(accessModifier),
-                    SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword)),
+                SyntaxFactory.TokenList(tokenList),
                 SyntaxFactory.VariableDeclaration(
                     SyntaxFactory.ParseTypeName(type),
                     default(SeparatedSyntaxList<VariableDeclaratorSyntax>).Add(

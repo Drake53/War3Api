@@ -5,40 +5,35 @@ namespace War3Api.Object
     // todo: generate through code (since it's similar to Unit/Ability/etc)
     public abstract class BaseObject
     {
-        private readonly ObjectDatabase _db;
+        private ObjectDatabase _db;
 
-        internal BaseObject(int oldId, ObjectDatabase db = null)
+        internal BaseObject(int oldId)
         {
             OldId = oldId;
             NewId = 0;
-
-            _db = db ?? ObjectDatabase.DefaultDatabase;
-            _db.AddObject(this);
         }
 
-        internal BaseObject(int oldId, int newId, ObjectDatabase db = null)
+        internal BaseObject(int oldId, int newId)
         {
             OldId = oldId;
             NewId = newId;
-
-            _db = db ?? ObjectDatabase.DefaultDatabase;
-            _db.AddObject(this);
         }
 
-        internal BaseObject(int oldId, string newRawcode, ObjectDatabase db = null)
+        internal BaseObject(int oldId, string newRawcode)
         {
             OldId = oldId;
             NewId = newRawcode.FromRawcode();
-
-            _db = db ?? ObjectDatabase.DefaultDatabase;
-            _db.AddObject(this);
         }
 
         public int OldId { get; }
 
         public int NewId { get; }
 
-        public ObjectDatabase Db => _db;
+        public ObjectDatabase Db
+        {
+            get => _db;
+            internal set => _db = value;
+        }
 
         public int Key => NewId != 0 ? NewId : OldId;
     }

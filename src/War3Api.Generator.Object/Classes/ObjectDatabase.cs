@@ -12,7 +12,6 @@ namespace War3Api.Object
 {
     public sealed class ObjectDatabase
     {
-        private static readonly Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
         private static readonly Lazy<HashSet<int>> _objectTypes = new Lazy<HashSet<int>>(() => GetObjectTypes().ToHashSet());
         private static readonly Lazy<HashSet<int>> _techTypes = new Lazy<HashSet<int>>(() => GetTechTypes().ToHashSet());
 
@@ -41,8 +40,6 @@ namespace War3Api.Object
             _reservedTechs = new HashSet<int>();
             _objects = objects.ToDictionary(obj => obj.Key);
         }
-
-        public static ObjectDatabase DefaultDatabase => _defaultDatabase.Value;
 
         public Unit GetUnit(int id)
         {
@@ -240,7 +237,12 @@ namespace War3Api.Object
             };
         }
 
-        internal void AddObject(BaseObject baseObject)
+        /// <summary>
+        /// Add a Unit, Ability, Destructable, Doodad, etc to this object database.
+        /// </summary>
+        /// <param name="baseObject"></param>
+        /// <exception cref="InvalidOperationException">Thrown if baseObject is a member of another ObjectDatabase.</exception>
+        public void AddObject(BaseObject baseObject)
         {
             if (_objects.ContainsKey(baseObject.Key))
             {
@@ -300,7 +302,12 @@ namespace War3Api.Object
                 }
             }
 
+            if (baseObject.Db != null)
+            {
+                throw new InvalidOperationException($"{baseObject.Key.ToRawcode()} is already in a database.");
+            }
             _objects.Add(baseObject.Key, baseObject);
+            baseObject.Db = this;
         }
 
         internal void ReserveTech(int id)
