@@ -230,20 +230,23 @@ namespace War3Api.Generator.Object
                         $"new {objectTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.Modifications.ToList() }}")),
                     SyntaxFactory.Token(SyntaxKind.SemicolonToken));
                 //Explicit conversion from SimpleObjectModification to the BaseObject-derived class.
-                var objectVariableName = char.ToLowerInvariant(objectTypeName[0]) + objectTypeName[1..];
-                yield return SyntaxFactory.ConversionOperatorDeclaration(
-                    default,
-                    SyntaxFactory.TokenList(
-                        SyntaxFactory.Token(SyntaxKind.PublicKeyword),
-                        SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
-                    SyntaxFactory.Token(SyntaxKind.ExplicitKeyword),
-                    SyntaxFactory.Token(SyntaxKind.OperatorKeyword),
-                    SyntaxFactory.ParseTypeName(className),
-                    SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(objectTypeName), SyntaxFactory.Identifier(objectVariableName), null))),
-                    null,
-                    SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
-                        $"new {className}({objectVariableName}.OldId, {objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToSimpleObjectDataModifications() }}")),
-                    SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                if (!isAbstractClass)
+                {
+                    var objectVariableName = char.ToLowerInvariant(objectTypeName[0]) + objectTypeName[1..];
+                    yield return SyntaxFactory.ConversionOperatorDeclaration(
+                        default,
+                        SyntaxFactory.TokenList(
+                            SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                            SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
+                        SyntaxFactory.Token(SyntaxKind.ExplicitKeyword),
+                        SyntaxFactory.Token(SyntaxKind.OperatorKeyword),
+                        SyntaxFactory.ParseTypeName(className),
+                        SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(objectTypeName), SyntaxFactory.Identifier(objectVariableName), null))),
+                        null,
+                        SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
+                            $"new {className}({objectVariableName}.OldId, {objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToSimpleObjectDataModifications() }}")),
+                        SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+                }
             }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);
