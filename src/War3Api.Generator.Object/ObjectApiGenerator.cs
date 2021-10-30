@@ -175,7 +175,7 @@ namespace War3Api.Generator.Object
                 { "Ability", false },
                 { "Buff", null },
                 { "Upgrade", false },
-            }; 
+            };
 
             return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass, null);
         }
@@ -247,6 +247,24 @@ namespace War3Api.Generator.Object
                             $"new {className}({objectVariableName}.OldId, {objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToObjectDataModifications() }}")),
                         SyntaxFactory.Token(SyntaxKind.SemicolonToken));
                 }
+            }
+            else
+            {
+                //Explit conversion from SimpleObjectModification to a class that pre-specifies a value, such as a concrete implementation of Ability.
+                var objectVariableName = char.ToLowerInvariant(objectTypeName[0]) + objectTypeName[1..];
+                yield return SyntaxFactory.ConversionOperatorDeclaration(
+                    default,
+                    SyntaxFactory.TokenList(
+                        SyntaxFactory.Token(SyntaxKind.PublicKeyword),
+                        SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
+                    SyntaxFactory.Token(SyntaxKind.ExplicitKeyword),
+                    SyntaxFactory.Token(SyntaxKind.OperatorKeyword),
+                    SyntaxFactory.ParseTypeName(className),
+                    SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(objectTypeName), SyntaxFactory.Identifier(objectVariableName), null))),
+                    null,
+                    SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
+                        $"new {className}({objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToObjectDataModifications() }}")),
+                    SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);
