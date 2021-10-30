@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,25 +19,15 @@ namespace War3Api.Object
         private readonly Dictionary<int, BaseObject> _objects;
 
         public ObjectDatabase()
-            : this(GetDefaultReservedKeys(), Array.Empty<BaseObject>())
+            : this(GetDefaultReservedKeys())
         {
         }
-
+        
         public ObjectDatabase(IEnumerable<int> reservedKeys)
-            : this(reservedKeys, Array.Empty<BaseObject>())
-        {
-        }
-
-        public ObjectDatabase(IEnumerable<BaseObject> objects)
-            : this(GetDefaultReservedKeys(), objects)
-        {
-        }
-
-        public ObjectDatabase(IEnumerable<int> reservedKeys, IEnumerable<BaseObject> objects)
         {
             _reservedKeys = reservedKeys.ToHashSet();
-            _reservedTechs = new HashSet<int>();
-            _objects = objects.ToDictionary(obj => obj.Key);
+            _reservedTechs = new();
+            _objects = new();
         }
 
         public static ObjectDatabase DefaultDatabase => _defaultDatabase.Value;
@@ -188,6 +176,119 @@ namespace War3Api.Object
             }
 
             return null;
+        }
+
+        public void AddObjects(ObjectData objectData)
+        {
+            if (objectData is null)
+            {
+                throw new ArgumentNullException(nameof(objectData));
+            }
+
+            if (objectData.UnitData is not null)
+            {
+                foreach (var baseUnit in objectData.UnitData.BaseUnits)
+                {
+                    var unit = new Unit((UnitType)baseUnit.OldId, this);
+                    unit.AddModifications(baseUnit.Modifications);
+                }
+
+                foreach (var newUnit in objectData.UnitData.NewUnits)
+                {
+                    var unit = new Unit((UnitType)newUnit.OldId, newUnit.NewId, this);
+                    unit.AddModifications(newUnit.Modifications);
+                }
+            }
+
+            if (objectData.ItemData is not null)
+            {
+                foreach (var baseItem in objectData.ItemData.BaseItems)
+                {
+                    var item = new Item((ItemType)baseItem.OldId, this);
+                    item.AddModifications(baseItem.Modifications);
+                }
+
+                foreach (var newItem in objectData.ItemData.NewItems)
+                {
+                    var item = new Item((ItemType)newItem.OldId, newItem.NewId, this);
+                    item.AddModifications(newItem.Modifications);
+                }
+            }
+
+            if (objectData.DestructableData is not null)
+            {
+                foreach (var baseDestructable in objectData.DestructableData.BaseDestructables)
+                {
+                    var destructable = new Destructable((DestructableType)baseDestructable.OldId, this);
+                    destructable.AddModifications(baseDestructable.Modifications);
+                }
+
+                foreach (var newDestructable in objectData.DestructableData.NewDestructables)
+                {
+                    var destructable = new Destructable((DestructableType)newDestructable.OldId, newDestructable.NewId, this);
+                    destructable.AddModifications(newDestructable.Modifications);
+                }
+            }
+
+            if (objectData.DoodadData is not null)
+            {
+                foreach (var baseDoodad in objectData.DoodadData.BaseDoodads)
+                {
+                    var doodad = new Doodad((DoodadType)baseDoodad.OldId, this);
+                    doodad.AddModifications(baseDoodad.Modifications);
+                }
+
+                foreach (var newDoodad in objectData.DoodadData.NewDoodads)
+                {
+                    var doodad = new Doodad((DoodadType)newDoodad.OldId, newDoodad.NewId, this);
+                    doodad.AddModifications(newDoodad.Modifications);
+                }
+            }
+
+            if (objectData.AbilityData is not null)
+            {
+                foreach (var baseAbility in objectData.AbilityData.BaseAbilities)
+                {
+                    var ability = AbilityFactory.Create((AbilityType)baseAbility.OldId, this);
+                    ability.AddModifications(baseAbility.Modifications);
+                }
+
+                foreach (var newAbility in objectData.AbilityData.NewAbilities)
+                {
+                    var ability = AbilityFactory.Create((AbilityType)newAbility.OldId, newAbility.NewId, this);
+                    ability.AddModifications(newAbility.Modifications);
+                }
+            }
+
+            if (objectData.BuffData is not null)
+            {
+                foreach (var baseBuff in objectData.BuffData.BaseBuffs)
+                {
+                    var buff = new Buff((BuffType)baseBuff.OldId, this);
+                    buff.AddModifications(baseBuff.Modifications);
+                }
+
+                foreach (var newBuff in objectData.BuffData.NewBuffs)
+                {
+                    var buff = new Buff((BuffType)newBuff.OldId, newBuff.NewId, this);
+                    buff.AddModifications(newBuff.Modifications);
+                }
+            }
+
+            if (objectData.UpgradeData is not null)
+            {
+                foreach (var baseUpgrade in objectData.UpgradeData.BaseUpgrades)
+                {
+                    var upgrade = new Upgrade((UpgradeType)baseUpgrade.OldId, this);
+                    upgrade.AddModifications(baseUpgrade.Modifications);
+                }
+
+                foreach (var newUpgrade in objectData.UpgradeData.NewUpgrades)
+                {
+                    var upgrade = new Upgrade((UpgradeType)newUpgrade.OldId, newUpgrade.NewId, this);
+                    upgrade.AddModifications(newUpgrade.Modifications);
+                }
+            }
         }
 
         public ObjectData GetAllData(ObjectDataFormatVersion formatVersion = ObjectDataFormatVersion.Normal)

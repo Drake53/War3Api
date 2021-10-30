@@ -198,7 +198,9 @@ namespace War3Api.Generator.Object
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool? usesVariation, bool isAbstractClass, int? typeId)
         {
-            var fieldName = "Modifications".ToCamelCase(true, true);
+            const string ModificationsPropertyName = "Modifications";
+
+            var modificationsFieldName = ModificationsPropertyName.ToCamelCase(true, true);
             var objectModificationTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
@@ -208,14 +210,14 @@ namespace War3Api.Generator.Object
 
                 yield return SyntaxFactoryService.Field(
                     dictTypeName,
-                    fieldName,
+                    modificationsFieldName,
                     SyntaxFactory.ParseExpression($"new {dictTypeName}()"),
                     isAbstractClass ? SyntaxKind.ProtectedKeyword : SyntaxKind.PrivateKeyword);
 
                 yield return SyntaxFactoryService.Property(
                     dictTypeName,
-                    "Modifications",
-                    SyntaxFactory.ParseExpression(fieldName));
+                    ModificationsPropertyName,
+                    SyntaxFactory.ParseExpression(modificationsFieldName));
 
                 var classVariableName = className.ToCamelCase(true);
                 yield return SyntaxFactory.ConversionOperatorDeclaration(
@@ -234,8 +236,26 @@ namespace War3Api.Generator.Object
                         null))),
                     null,
                     SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
-                        $"new {objectModificationTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.Modifications.ToList() }}")),
+                        $"new {objectModificationTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.{ModificationsPropertyName}.ToList() }}")),
                     SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+
+                yield return SyntaxFactoryService.Method(
+                    SyntaxKind.PublicKeyword,
+                    false,
+                    "void",
+                    "AddModifications",
+                    new[]
+                    {
+                        ($"List<{dataTypeName}>", "modifications"),
+                    },
+                    new[]
+                    {
+                        SyntaxFactory.ForEachStatement(
+                            SyntaxFactory.ParseTypeName("var"),
+                            "modification",
+                            SyntaxFactory.ParseExpression("modifications"),
+                            SyntaxFactory.ParseStatement($"{modificationsFieldName}[modification.Id] = modification;")),
+                    });
             }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);
@@ -348,13 +368,13 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleGetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString) },
-                        new[] { SyntaxFactory.ParseStatement($"return {fieldName}[{id}, {levelString}].{dataTypeModel.PropertyName};") });
+                        new[] { SyntaxFactory.ParseStatement($"return {modificationsFieldName}[{id}, {levelString}].{dataTypeModel.PropertyName};") });
 
                     yield return SyntaxFactoryService.Method(
                         SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
                         simpleSetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
-                        new[] { SyntaxFactory.ParseStatement($"{fieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
+                        new[] { SyntaxFactory.ParseStatement($"{modificationsFieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
@@ -390,8 +410,8 @@ namespace War3Api.Generator.Object
                     yield return SyntaxFactoryService.Property(
                         dataTypeModel.Identifier,
                         simpleIdentifier,
-                        SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{fieldName}[{id}].{dataTypeModel.PropertyName}")),
-                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{fieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
+                        SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}].{dataTypeModel.PropertyName}")),
+                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
