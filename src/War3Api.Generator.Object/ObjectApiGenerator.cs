@@ -135,6 +135,7 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Linq")),
+                    SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Api.Object.Abilities")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Build.Object")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Common.Extensions")),
                 }),
@@ -197,12 +198,7 @@ namespace War3Api.Generator.Object
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool? usesVariation, bool isAbstractClass, int? typeId)
         {
-            static string GetPrivateFieldName(string name)
-            {
-                return name.ToCamelCase(false, true);
-            }
-
-            var fieldName = GetPrivateFieldName("Modifications");
+            var fieldName = "Modifications".ToCamelCase(true, true);
             var objectModificationTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
@@ -328,7 +324,7 @@ namespace War3Api.Generator.Object
 
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
-                    var fieldIdentifier = GetPrivateFieldName(valueName);
+                    var fieldIdentifier = valueName.ToCamelCase(false, true);
                     var simpleFieldIdentifier = typeModel.Category == TypeModelCategory.Basic ? fieldIdentifier : $"{fieldIdentifier}Raw";
 
                     var getterFuncName = $"Get{valueName}";

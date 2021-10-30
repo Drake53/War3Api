@@ -71,17 +71,25 @@ namespace War3Api.Generator.Object
 
         internal static ClassDeclarationSyntax Class(string identifier, bool isAbstract, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
         {
+            return Class(identifier, isAbstract ? SyntaxKind.AbstractKeyword : SyntaxKind.SealedKeyword, baseType, members);
+        }
+
+        internal static ClassDeclarationSyntax Class(string identifier, SyntaxKind keyword, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
+        {
+            BaseListSyntax baseList = null;
+            if (!string.IsNullOrWhiteSpace(baseType))
+            {
+                baseList = SyntaxFactory.BaseList(SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(baseType))));
+            }
+
             return SyntaxFactory.ClassDeclaration(
                 default,
                 new SyntaxTokenList(
                     SyntaxFactory.Token(SyntaxKind.PublicKeyword),
-                    SyntaxFactory.Token(isAbstract ? SyntaxKind.AbstractKeyword : SyntaxKind.SealedKeyword)),
+                    SyntaxFactory.Token(keyword)),
                 SyntaxFactory.Identifier(identifier),
                 null,
-                SyntaxFactory.BaseList(
-                    string.IsNullOrWhiteSpace(baseType)
-                        ? SyntaxFactory.SeparatedList<BaseTypeSyntax>()
-                        : SyntaxFactory.SingletonSeparatedList<BaseTypeSyntax>(SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(baseType)))),
+                baseList,
                 default,
                 new SyntaxList<MemberDeclarationSyntax>(members.OrderByDescending(member => GetOrder(member))));
         }
@@ -346,10 +354,30 @@ namespace War3Api.Generator.Object
             IEnumerable<(string type, string identifier)> parameters,
             IEnumerable<StatementSyntax> statements)
         {
+            return Method(SyntaxKind.PrivateKeyword, false, returnType, identifier, parameters, statements);
+        }
+
+        internal static MethodDeclarationSyntax Method(
+            SyntaxKind accessModifierKeyword,
+            bool isStatic,
+            string returnType,
+            string identifier,
+            IEnumerable<(string type, string identifier)> parameters,
+            IEnumerable<StatementSyntax> statements)
+        {
+            var tokenList = new List<SyntaxToken>
+            {
+                SyntaxFactory.Token(accessModifierKeyword),
+            };
+
+            if (isStatic)
+            {
+                tokenList.Add(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            }
+
             return SyntaxFactory.MethodDeclaration(
                 default,
-                SyntaxFactory.TokenList(
-                    SyntaxFactory.Token(SyntaxKind.PrivateKeyword)),
+                SyntaxFactory.TokenList(tokenList),
                 SyntaxFactory.ParseTypeName(returnType),
                 null,
                 SyntaxFactory.Identifier(identifier),

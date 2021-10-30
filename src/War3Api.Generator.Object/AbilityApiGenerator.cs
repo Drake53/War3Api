@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -145,7 +147,86 @@ namespace War3Api.Generator.Object
                                 abilityType.Value)),
                         DataConstants.AbilityNamespace);
                 }
+
+                var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
+                ObjectApiGenerator.GenerateMember(
+                    SyntaxFactoryService.Class(
+                        $"{DataConstants.AbilityClassName}Factory",
+                        SyntaxKind.StaticKeyword,
+                        null,
+                        new[]
+                        {
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                }),
+
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                    ("int", "newId"),
+                                }),
+
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                    ("string", "newRawcode"),
+                                }),
+
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                    ("ObjectDatabase", "db"),
+                                }),
+
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                    ("int", "newId"),
+                                    ("ObjectDatabase", "db"),
+                                }),
+
+                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                                new[]
+                                {
+                                    (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
+                                    ("string", "newRawcode"),
+                                    ("ObjectDatabase", "db"),
+                                }),
+                        }));
             }
+        }
+
+        private static MethodDeclarationSyntax FactoryCreateMethod(IEnumerable<EnumMemberModel> members, IEnumerable<(string type, string identifier)> parameters)
+        {
+            var switchExpressionArms = members
+                .Select(abilityType => SyntaxFactory.SwitchExpressionArm(
+                    SyntaxFactory.ConstantPattern(SyntaxFactory.ParseExpression($"{DataConstants.AbilityTypeEnumName}.{abilityType.UniqueName}")),
+                    SyntaxFactory.ParseExpression($"new {abilityType.UniqueName}({string.Join(", ", parameters.Skip(1).Select(parameter => parameter.identifier))})")))
+                .ToList();
+
+            var abilityTypeIdentifier = parameters.First().identifier;
+            switchExpressionArms.Add(SyntaxFactory.SwitchExpressionArm(
+                SyntaxFactory.DiscardPattern(),
+                SyntaxFactory.ParseExpression($"throw new System.ComponentModel.InvalidEnumArgumentException(nameof({abilityTypeIdentifier}), (int){abilityTypeIdentifier}, typeof({DataConstants.AbilityTypeEnumName}))")));
+
+            return SyntaxFactoryService.Method(
+                SyntaxKind.PublicKeyword,
+                true,
+                DataConstants.AbilityClassName,
+                "Create",
+                parameters,
+                new[]
+                {
+                    SyntaxFactory.ReturnStatement(SyntaxFactory.SwitchExpression(
+                        SyntaxFactory.ParseExpression(abilityTypeIdentifier),
+                        SyntaxFactory.SeparatedList(switchExpressionArms))),
+                });
         }
     }
 }
