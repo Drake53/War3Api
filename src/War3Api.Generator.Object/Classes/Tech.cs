@@ -6,7 +6,7 @@ namespace War3Api.Object
 {
     public class Tech
     {
-        private readonly ObjectDatabase _db;
+        private ObjectDatabase _db;
         private readonly int _key;
 
         public Tech(Unit unit)
@@ -42,11 +42,6 @@ namespace War3Api.Object
             _key = (int)techEquivalent;
         }
 
-        public Tech(int key)
-            : this(ObjectDatabase.DefaultDatabase, key)
-        {
-        }
-
         public Tech(ObjectDatabase db, int key)
         {
             if (db is null)
@@ -67,7 +62,11 @@ namespace War3Api.Object
             _key = key;
         }
 
-        public ObjectDatabase Db => _db;
+        public ObjectDatabase Db
+        {
+            get => _db;
+            internal set => _db = value;
+        }
 
         public int Key => _key;
 
