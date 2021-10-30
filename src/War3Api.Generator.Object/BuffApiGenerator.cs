@@ -97,8 +97,8 @@ namespace War3Api.Generator.Object
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.BuffClassName, DataConstants.BuffTypeEnumName, DataConstants.BuffTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.BuffClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.BuffClassName, DataConstants.BuffTypeEnumName));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.BuffClassName, DataConstants.BuffTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.BuffClassName, IsBuffClassAbstract, DataConstants.BaseClassName, classMembers));
         }

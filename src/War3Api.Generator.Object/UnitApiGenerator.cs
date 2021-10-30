@@ -121,8 +121,8 @@ namespace War3Api.Generator.Object
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UnitClassName, DataConstants.UnitTypeEnumName, DataConstants.UnitTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UnitClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UnitClassName, DataConstants.UnitTypeEnumName));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UnitClassName, DataConstants.UnitTypeEnumName, properties.Values));
 
 #if false
             if (IsUnitClassAbstract)

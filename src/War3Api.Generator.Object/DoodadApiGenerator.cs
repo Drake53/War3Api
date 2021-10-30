@@ -99,8 +99,8 @@ namespace War3Api.Generator.Object
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DoodadClassName, DataConstants.DoodadTypeEnumName, DataConstants.DoodadTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DoodadClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DoodadClassName, DataConstants.DoodadTypeEnumName));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DoodadClassName, DataConstants.DoodadTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.DoodadClassName, IsDoodadClassAbstract, DataConstants.BaseClassName, classMembers));
         }

@@ -17,6 +17,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Build.Object;
@@ -161,8 +162,10 @@ namespace War3Api.Generator.Object
             yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), ("ObjectDatabase", "db") }, assignments);
         }
 
-        internal static IEnumerable<ConstructorDeclarationSyntax> GetConstructors(string className, string objectTypeName, string objectTypeIdentifier)
+        internal static IEnumerable<ConstructorDeclarationSyntax> GetConstructors(string className, string objectTypeName)
         {
+            var objectTypeIdentifier = objectTypeName.ToCamelCase(true);
+
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier) });
 
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId") });
@@ -176,7 +179,7 @@ namespace War3Api.Generator.Object
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), ("ObjectDatabase", "db") });
         }
 
-        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
+        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
         {
             var mapToUsesVariationBool = new Dictionary<string, bool?>
             {
@@ -187,25 +190,20 @@ namespace War3Api.Generator.Object
                 { "Ability", false },
                 { "Buff", null },
                 { "Upgrade", false },
-            }; 
+            };
 
-            return GetProperties(className, properties, mapToUsesVariationBool[className], isAbstractClass, null);
+            return GetProperties(className, objectTypeName, properties, mapToUsesVariationBool[className], isAbstractClass, null);
         }
 
-        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, IEnumerable<PropertyModel> properties, bool? usesVariation, bool isAbstractClass, int? typeId)
+        internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool? usesVariation, bool isAbstractClass, int? typeId)
         {
             static string GetPrivateFieldName(string name)
             {
-                if (name.Contains('('))
-                {
-                    throw new Exception();
-                }
-
-                return new string(name.Select((@char, i) => i == 0 ? @char.ToString().ToLower()[0] : @char).Prepend('_').ToArray());
+                return name.ToCamelCase(false, true);
             }
 
             var fieldName = GetPrivateFieldName("Modifications");
-            var objectTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
+            var objectModificationTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
             if (!typeId.HasValue)
@@ -223,7 +221,7 @@ namespace War3Api.Generator.Object
                     "Modifications",
                     SyntaxFactory.ParseExpression(fieldName));
 
-                var classVariableName = char.ToLowerInvariant(className[0]) + className[1..];
+                var classVariableName = className.ToCamelCase(true);
                 yield return SyntaxFactory.ConversionOperatorDeclaration(
                     default,
                     SyntaxFactory.TokenList(
@@ -231,11 +229,16 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.Token(SyntaxKind.StaticKeyword)),
                     SyntaxFactory.Token(SyntaxKind.ExplicitKeyword),
                     SyntaxFactory.Token(SyntaxKind.OperatorKeyword),
-                    SyntaxFactory.ParseTypeName(objectTypeName),
-                    SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(className), SyntaxFactory.Identifier(classVariableName), null))),
+                    SyntaxFactory.ParseTypeName(objectModificationTypeName),
+                    SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(
+                        default,
+                        default,
+                        SyntaxFactory.ParseTypeName(className),
+                        SyntaxFactory.Identifier(classVariableName),
+                        null))),
                     null,
                     SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
-                        $"new {objectTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.Modifications.ToList() }}")),
+                        $"new {objectModificationTypeName} {{ OldId = {classVariableName}.OldId, NewId = {classVariableName}.NewId, Modifications = {classVariableName}.Modifications.ToList() }}")),
                     SyntaxFactory.Token(SyntaxKind.SemicolonToken));
             }
 
@@ -857,7 +860,7 @@ namespace War3Api.Generator.Object
                 case TypeModelCategory.EnumLowercase:
                     var keepCasing = typeModel.Category == TypeModelCategory.EnumString;
                     var ignoreCase = ModelService.GetKeywordText(keepCasing ? SyntaxKind.FalseKeyword : SyntaxKind.TrueKeyword);
-                    var toLower = keepCasing ? string.Empty : ".ToLower()";
+                    var toLower = keepCasing ? string.Empty : $".{nameof(string.ToLowerInvariant)}()";
 
                     yield return SyntaxFactoryService.ExtensionMethod(
                         typeModel.Identifier,

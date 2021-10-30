@@ -117,11 +117,11 @@ namespace War3Api.Generator.Object
 
             // Ability (class)
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, properties.Values.Where(property => string.IsNullOrEmpty(property.UseSpecific)), IsAbilityClassAbstract));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, properties.Values.Where(property => string.IsNullOrEmpty(property.UseSpecific)), IsAbilityClassAbstract));
 
             if (!IsAbilityClassAbstract)
             {
-                classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, DataConstants.AbilityTypeEnumParameterName));
+                classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName));
             }
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
@@ -138,6 +138,7 @@ namespace War3Api.Generator.Object
                             DataConstants.AbilityClassName,
                             ObjectApiGenerator.GetProperties(
                                 abilityType.UniqueName,
+                                DataConstants.AbilityTypeEnumName,
                                 properties.Values.Where(property => property.UseSpecific?.Contains(abilityType.Value.ToRawcode(), StringComparison.Ordinal) ?? false),
                                 false,
                                 false,

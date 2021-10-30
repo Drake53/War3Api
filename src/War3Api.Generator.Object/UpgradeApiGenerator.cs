@@ -105,8 +105,8 @@ namespace War3Api.Generator.Object
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UpgradeClassName, DataConstants.UpgradeTypeEnumName, DataConstants.UpgradeTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UpgradeClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UpgradeClassName, DataConstants.UpgradeTypeEnumName));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UpgradeClassName, DataConstants.UpgradeTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.UpgradeClassName, IsUpgradeClassAbstract, DataConstants.BaseClassName, classMembers));
         }

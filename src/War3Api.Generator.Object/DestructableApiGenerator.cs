@@ -97,8 +97,8 @@ namespace War3Api.Generator.Object
             }
 
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DestructableClassName, DataConstants.DestructableTypeEnumName, DataConstants.DestructableTypeEnumParameterName));
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DestructableClassName, properties.Values));
+            classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DestructableClassName, DataConstants.DestructableTypeEnumName));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DestructableClassName, DataConstants.DestructableTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.DestructableClassName, IsDestructableClassAbstract, DataConstants.BaseClassName, classMembers));
         }
