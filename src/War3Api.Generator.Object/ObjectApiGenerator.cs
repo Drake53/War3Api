@@ -244,7 +244,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.ParameterList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Parameter(default, default, SyntaxFactory.ParseTypeName(objectTypeName), SyntaxFactory.Identifier(objectVariableName), null))),
                         null,
                         SyntaxFactory.ArrowExpressionClause(SyntaxFactory.ParseExpression(
-                            $"new {className}({objectVariableName}.OldId, {objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToSimpleObjectDataModifications() }}")),
+                            $"new {className}({objectVariableName}.OldId, {objectVariableName}.NewId) {{ Modifications = {objectVariableName}.Modifications.ToObjectDataModifications() }}")),
                         SyntaxFactory.Token(SyntaxKind.SemicolonToken));
                 }
             }
