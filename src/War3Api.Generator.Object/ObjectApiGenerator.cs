@@ -327,7 +327,7 @@ namespace War3Api.Generator.Object
                 }
 
                 var propertyValueName = valueName;
-                if (valueName == className)
+                if (string.Equals(valueName, className, StringComparison.Ordinal))
                 {
                     propertyValueName = new string(valueName.Append('_').ToArray());
                 }
@@ -376,6 +376,29 @@ namespace War3Api.Generator.Object
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
                         new[] { SyntaxFactory.ParseStatement($"{modificationsFieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
 
+                    const string isModifiedPropertyType = "ReadOnlyObjectProperty<bool>";
+
+                    var isModifiedFieldIdentifier = $"Is{valueName}Modified".ToCamelCase(false, true);
+                    var isModifiedGetterFuncName = $"GetIs{valueName}Modified";
+
+                    privateConstructorAssignments.Add((isModifiedFieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{isModifiedPropertyType}>(() => new {isModifiedPropertyType}({isModifiedGetterFuncName}))")));
+
+                    yield return SyntaxFactoryService.Field(
+                        $"Lazy<{isModifiedPropertyType}>",
+                        isModifiedFieldIdentifier,
+                        true);
+
+                    yield return SyntaxFactoryService.Property(
+                        isModifiedPropertyType,
+                        $"Is{valueName}Modified",
+                        SyntaxFactory.ParseExpression($"{isModifiedFieldIdentifier}.Value"));
+
+                    yield return SyntaxFactoryService.Method(
+                        "bool",
+                        isModifiedGetterFuncName,
+                        new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString) },
+                        new[] { SyntaxFactory.ParseStatement($"return {modificationsFieldName}.ContainsKey({id}, {levelString});") });
+
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
                         var propertyTypeName = $"ObjectProperty<{identifier}>";
@@ -412,6 +435,11 @@ namespace War3Api.Generator.Object
                         simpleIdentifier,
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}].{dataTypeModel.PropertyName}")),
                         SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
+
+                    yield return SyntaxFactoryService.Property(
+                        "bool",
+                        $"Is{valueName}Modified",
+                        SyntaxFactory.ParseExpression($"{modificationsFieldName}.ContainsKey({id})"));
 
                     if (typeModel.Category != TypeModelCategory.Basic)
                     {
