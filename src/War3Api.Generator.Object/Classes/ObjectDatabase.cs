@@ -22,7 +22,7 @@ namespace War3Api.Object
             : this(GetDefaultReservedKeys())
         {
         }
-        
+
         public ObjectDatabase(IEnumerable<int> reservedKeys)
         {
             _reservedKeys = reservedKeys.ToHashSet();
@@ -187,107 +187,177 @@ namespace War3Api.Object
 
             if (objectData.UnitData is not null)
             {
-                foreach (var baseUnit in objectData.UnitData.BaseUnits)
-                {
-                    var unit = new Unit((UnitType)baseUnit.OldId, this);
-                    unit.AddModifications(baseUnit.Modifications);
-                }
-
-                foreach (var newUnit in objectData.UnitData.NewUnits)
-                {
-                    var unit = new Unit((UnitType)newUnit.OldId, newUnit.NewId, this);
-                    unit.AddModifications(newUnit.Modifications);
-                }
+                AddObjects(objectData.UnitData);
             }
 
             if (objectData.ItemData is not null)
             {
-                foreach (var baseItem in objectData.ItemData.BaseItems)
-                {
-                    var item = new Item((ItemType)baseItem.OldId, this);
-                    item.AddModifications(baseItem.Modifications);
-                }
-
-                foreach (var newItem in objectData.ItemData.NewItems)
-                {
-                    var item = new Item((ItemType)newItem.OldId, newItem.NewId, this);
-                    item.AddModifications(newItem.Modifications);
-                }
+                AddObjects(objectData.ItemData);
             }
 
             if (objectData.DestructableData is not null)
             {
-                foreach (var baseDestructable in objectData.DestructableData.BaseDestructables)
-                {
-                    var destructable = new Destructable((DestructableType)baseDestructable.OldId, this);
-                    destructable.AddModifications(baseDestructable.Modifications);
-                }
-
-                foreach (var newDestructable in objectData.DestructableData.NewDestructables)
-                {
-                    var destructable = new Destructable((DestructableType)newDestructable.OldId, newDestructable.NewId, this);
-                    destructable.AddModifications(newDestructable.Modifications);
-                }
+                AddObjects(objectData.DestructableData);
             }
 
             if (objectData.DoodadData is not null)
             {
-                foreach (var baseDoodad in objectData.DoodadData.BaseDoodads)
-                {
-                    var doodad = new Doodad((DoodadType)baseDoodad.OldId, this);
-                    doodad.AddModifications(baseDoodad.Modifications);
-                }
-
-                foreach (var newDoodad in objectData.DoodadData.NewDoodads)
-                {
-                    var doodad = new Doodad((DoodadType)newDoodad.OldId, newDoodad.NewId, this);
-                    doodad.AddModifications(newDoodad.Modifications);
-                }
+                AddObjects(objectData.DoodadData);
             }
 
             if (objectData.AbilityData is not null)
             {
-                foreach (var baseAbility in objectData.AbilityData.BaseAbilities)
-                {
-                    var ability = AbilityFactory.Create((AbilityType)baseAbility.OldId, this);
-                    ability.AddModifications(baseAbility.Modifications);
-                }
-
-                foreach (var newAbility in objectData.AbilityData.NewAbilities)
-                {
-                    var ability = AbilityFactory.Create((AbilityType)newAbility.OldId, newAbility.NewId, this);
-                    ability.AddModifications(newAbility.Modifications);
-                }
+                AddObjects(objectData.AbilityData);
             }
 
             if (objectData.BuffData is not null)
             {
-                foreach (var baseBuff in objectData.BuffData.BaseBuffs)
-                {
-                    var buff = new Buff((BuffType)baseBuff.OldId, this);
-                    buff.AddModifications(baseBuff.Modifications);
-                }
-
-                foreach (var newBuff in objectData.BuffData.NewBuffs)
-                {
-                    var buff = new Buff((BuffType)newBuff.OldId, newBuff.NewId, this);
-                    buff.AddModifications(newBuff.Modifications);
-                }
+                AddObjects(objectData.BuffData);
             }
 
             if (objectData.UpgradeData is not null)
             {
-                foreach (var baseUpgrade in objectData.UpgradeData.BaseUpgrades)
-                {
-                    var upgrade = new Upgrade((UpgradeType)baseUpgrade.OldId, this);
-                    upgrade.AddModifications(baseUpgrade.Modifications);
-                }
+                AddObjects(objectData.UpgradeData);
+            }
+        }
 
-                foreach (var newUpgrade in objectData.UpgradeData.NewUpgrades)
-                {
-                    var upgrade = new Upgrade((UpgradeType)newUpgrade.OldId, newUpgrade.NewId, this);
-                    upgrade.AddModifications(newUpgrade.Modifications);
-                }
+        public void AddObjects(UnitObjectData unitObjectData)
+        {
+            if (unitObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(unitObjectData));
+            }
+
+            foreach (var baseUnit in unitObjectData.BaseUnits)
+            {
+                var unit = new Unit((UnitType)baseUnit.OldId, this);
+                unit.AddModifications(baseUnit.Modifications);
+            }
+
+            foreach (var newUnit in unitObjectData.NewUnits)
+            {
+                var unit = new Unit((UnitType)newUnit.OldId, newUnit.NewId, this);
+                unit.AddModifications(newUnit.Modifications);
+            }
+        }
+
+        public void AddObjects(ItemObjectData itemObjectData)
+        {
+            if (itemObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(itemObjectData));
+            }
+
+            foreach (var baseItem in itemObjectData.BaseItems)
+            {
+                var item = new Item((ItemType)baseItem.OldId, this);
+                item.AddModifications(baseItem.Modifications);
+            }
+
+            foreach (var newItem in itemObjectData.NewItems)
+            {
+                var item = new Item((ItemType)newItem.OldId, newItem.NewId, this);
+                item.AddModifications(newItem.Modifications);
+            }
+        }
+
+        public void AddObjects(DestructableObjectData destructableObjectData)
+        {
+            if (destructableObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(destructableObjectData));
+            }
+
+            foreach (var baseDestructable in destructableObjectData.BaseDestructables)
+            {
+                var destructable = new Destructable((DestructableType)baseDestructable.OldId, this);
+                destructable.AddModifications(baseDestructable.Modifications);
+            }
+
+            foreach (var newDestructable in destructableObjectData.NewDestructables)
+            {
+                var destructable = new Destructable((DestructableType)newDestructable.OldId, newDestructable.NewId, this);
+                destructable.AddModifications(newDestructable.Modifications);
+            }
+        }
+
+        public void AddObjects(DoodadObjectData doodadObjectData)
+        {
+            if (doodadObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(doodadObjectData));
+            }
+
+            foreach (var baseDoodad in doodadObjectData.BaseDoodads)
+            {
+                var doodad = new Doodad((DoodadType)baseDoodad.OldId, this);
+                doodad.AddModifications(baseDoodad.Modifications);
+            }
+
+            foreach (var newDoodad in doodadObjectData.NewDoodads)
+            {
+                var doodad = new Doodad((DoodadType)newDoodad.OldId, newDoodad.NewId, this);
+                doodad.AddModifications(newDoodad.Modifications);
+            }
+        }
+
+        public void AddObjects(AbilityObjectData abilityObjectData)
+        {
+            if (abilityObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(abilityObjectData));
+            }
+
+            foreach (var baseAbility in abilityObjectData.BaseAbilities)
+            {
+                var ability = AbilityFactory.Create((AbilityType)baseAbility.OldId, this);
+                ability.AddModifications(baseAbility.Modifications);
+            }
+
+            foreach (var newAbility in abilityObjectData.NewAbilities)
+            {
+                var ability = AbilityFactory.Create((AbilityType)newAbility.OldId, newAbility.NewId, this);
+                ability.AddModifications(newAbility.Modifications);
+            }
+        }
+
+        public void AddObjects(BuffObjectData buffObjectData)
+        {
+            if (buffObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(buffObjectData));
+            }
+
+            foreach (var baseBuff in buffObjectData.BaseBuffs)
+            {
+                var buff = new Buff((BuffType)baseBuff.OldId, this);
+                buff.AddModifications(baseBuff.Modifications);
+            }
+
+            foreach (var newBuff in buffObjectData.NewBuffs)
+            {
+                var buff = new Buff((BuffType)newBuff.OldId, newBuff.NewId, this);
+                buff.AddModifications(newBuff.Modifications);
+            }
+        }
+
+        public void AddObjects(UpgradeObjectData upgradeObjectData)
+        {
+            if (upgradeObjectData is null)
+            {
+                throw new ArgumentNullException(nameof(upgradeObjectData));
+            }
+
+            foreach (var baseUpgrade in upgradeObjectData.BaseUpgrades)
+            {
+                var upgrade = new Upgrade((UpgradeType)baseUpgrade.OldId, this);
+                upgrade.AddModifications(baseUpgrade.Modifications);
+            }
+
+            foreach (var newUpgrade in upgradeObjectData.NewUpgrades)
+            {
+                var upgrade = new Upgrade((UpgradeType)newUpgrade.OldId, newUpgrade.NewId, this);
+                upgrade.AddModifications(newUpgrade.Modifications);
             }
         }
 
