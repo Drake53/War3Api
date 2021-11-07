@@ -122,8 +122,8 @@ namespace War3Api.Generator.Object
             yield return GenerateDataTypeModel(ObjectDataType.Real, nameof(ObjectDataModification.ValueAsFloat));
             yield return GenerateDataTypeModel(ObjectDataType.Unreal, nameof(ObjectDataModification.ValueAsFloat));
             yield return GenerateDataTypeModel(ObjectDataType.String, nameof(ObjectDataModification.ValueAsString));
-            yield return GenerateDataTypeModel(ObjectDataType.Bool, nameof(ObjectDataModification.ValueAsBool));
-            yield return GenerateDataTypeModel(ObjectDataType.Char, nameof(ObjectDataModification.ValueAsChar));
+            yield return GenerateDataTypeModel(ObjectDataType.Bool, ObjectDataType.Int, nameof(ObjectDataModification.ValueAsInt));
+            yield return GenerateDataTypeModel(ObjectDataType.Char, ObjectDataType.String, nameof(ObjectDataModification.ValueAsString));
         }
 
         private static TypeModel GenerateTypeModel(ObjectDataType type)
@@ -133,7 +133,7 @@ namespace War3Api.Generator.Object
             model.Name = type.ToString().ToLower();
             model.Type = type;
             model.Category = TypeModelCategory.Basic;
-            model.Identifier = GetKeywordText(GetDataTypeKeyword(type));
+            model.Identifier = GetKeywordText(GetDataTypeKeyword(type, false));
 
             return model;
         }
@@ -188,16 +188,22 @@ namespace War3Api.Generator.Object
 
         private static DataTypeModel GenerateDataTypeModel(ObjectDataType type, string propertyName)
         {
+            return GenerateDataTypeModel(type, type, propertyName);
+        }
+
+        private static DataTypeModel GenerateDataTypeModel(ObjectDataType type, ObjectDataType underlyingType, string propertyName)
+        {
             var model = new DataTypeModel();
 
             model.Type = type;
-            model.Identifier = GetKeywordText(GetDataTypeKeyword(type));
+            model.UnderlyingType = underlyingType;
+            model.Identifier = GetKeywordText(GetDataTypeKeyword(type, true));
             model.PropertyName = propertyName;
 
             return model;
         }
 
-        private static SyntaxKind GetDataTypeKeyword(ObjectDataType objectDataType)
+        private static SyntaxKind GetDataTypeKeyword(ObjectDataType objectDataType, bool forDataTypeModel)
         {
             return objectDataType switch
             {
@@ -205,8 +211,8 @@ namespace War3Api.Generator.Object
                 ObjectDataType.Real => SyntaxKind.FloatKeyword,
                 ObjectDataType.Unreal => SyntaxKind.FloatKeyword,
                 ObjectDataType.String => SyntaxKind.StringKeyword,
-                ObjectDataType.Bool => SyntaxKind.BoolKeyword,
-                ObjectDataType.Char => SyntaxKind.CharKeyword,
+                ObjectDataType.Bool => forDataTypeModel ? SyntaxKind.IntKeyword : SyntaxKind.BoolKeyword,
+                ObjectDataType.Char => forDataTypeModel ? SyntaxKind.StringKeyword : SyntaxKind.CharKeyword,
             };
         }
 

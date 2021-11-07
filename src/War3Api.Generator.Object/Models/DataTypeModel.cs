@@ -13,6 +13,8 @@ namespace War3Api.Generator.Object.Models
     {
         public ObjectDataType Type { get; set; }
 
+        public ObjectDataType UnderlyingType { get; set; }
+
         // Name in .cs
         public string Identifier { get; set; }
 

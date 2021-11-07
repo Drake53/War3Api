@@ -334,10 +334,11 @@ namespace War3Api.Generator.Object
                 }
 
                 var identifier = typeModel.FullIdentifier;
-                var underlyingType = typeModel.Type;
-                var dataTypeModel = _dataTypeModels[underlyingType];
+                var dataTypeModel = _dataTypeModels[typeModel.Type];
 
-                var simpleIdentifier = typeModel.Category == TypeModelCategory.Basic ? propertyValueName : $"{valueName}Raw";
+                var hasRawProperty = typeModel.Category != TypeModelCategory.Basic || dataTypeModel.Type != dataTypeModel.UnderlyingType;
+
+                var simpleIdentifier = hasRawProperty ? $"{valueName}Raw" : propertyValueName;
 
                 if (propertyModel.Repeat)
                 {
@@ -346,12 +347,12 @@ namespace War3Api.Generator.Object
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
                     var fieldIdentifier = valueName.ToCamelCase(true, true);
-                    var simpleFieldIdentifier = typeModel.Category == TypeModelCategory.Basic ? fieldIdentifier : $"{fieldIdentifier}Raw";
+                    var simpleFieldIdentifier = hasRawProperty ? $"{fieldIdentifier}Raw" : fieldIdentifier;
 
                     var getterFuncName = $"Get{valueName}";
                     var setterFuncName = $"Set{valueName}";
-                    var simpleGetterFuncName = typeModel.Category == TypeModelCategory.Basic ? getterFuncName : $"{getterFuncName}Raw";
-                    var simpleSetterFuncName = typeModel.Category == TypeModelCategory.Basic ? setterFuncName : $"{setterFuncName}Raw";
+                    var simpleGetterFuncName = hasRawProperty ? $"{getterFuncName}Raw" : getterFuncName;
+                    var simpleSetterFuncName = hasRawProperty ? $"{setterFuncName}Raw" : setterFuncName;
 
                     privateConstructorAssignments.Add((simpleFieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{propertyType}>(() => new {propertyType}({simpleGetterFuncName}, {simpleSetterFuncName}))")));
 
@@ -375,7 +376,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
                         simpleSetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString), (dataTypeModel.Identifier, "value") },
-                        new[] { SyntaxFactory.ParseStatement($"{modificationsFieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
+                        new[] { SyntaxFactory.ParseStatement($"{modificationsFieldName}[{id}, {levelString}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{dataTypeModel.UnderlyingType}, Value = value, {(usesVariation.Value ? "Variation" : "Level")} = {levelString}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }};") });
 
                     const string isModifiedPropertyType = "ReadOnlyObjectProperty<bool>";
 
@@ -400,7 +401,7 @@ namespace War3Api.Generator.Object
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString) },
                         new[] { SyntaxFactory.ParseStatement($"return {modificationsFieldName}.ContainsKey({id}, {levelString});") });
 
-                    if (typeModel.Category != TypeModelCategory.Basic)
+                    if (hasRawProperty)
                     {
                         var propertyTypeName = $"ObjectProperty<{identifier}>";
 
@@ -435,14 +436,14 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleIdentifier,
                         SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}].{dataTypeModel.PropertyName}")),
-                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{underlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
+                        SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{dataTypeModel.UnderlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
 
                     yield return SyntaxFactoryService.Property(
                         "bool",
                         $"Is{valueName}Modified",
                         SyntaxFactory.ParseExpression($"{modificationsFieldName}.ContainsKey({id})"));
 
-                    if (typeModel.Category != TypeModelCategory.Basic)
+                    if (hasRawProperty)
                     {
                         var propertyTypeName = identifier;
 
