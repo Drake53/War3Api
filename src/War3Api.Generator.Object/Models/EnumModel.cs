@@ -11,13 +11,16 @@ namespace War3Api.Generator.Object.Models
 {
     internal sealed class EnumModel
     {
-        public EnumModel(string name)
+        public EnumModel(string name, bool unused = false)
         {
             Name = name;
+            Unused = unused;
             Members = new List<EnumMemberModel>();
         }
 
         public string Name { get; set; }
+
+        public bool Unused { get; set; }
 
         public IList<EnumMemberModel> Members { get; set; }
     }

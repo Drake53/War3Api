@@ -136,6 +136,7 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Linq")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Api.Object.Abilities")),
+                    SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Api.Object.Enums")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Build.Object")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Net.Common.Extensions")),
                 }),
@@ -344,7 +345,7 @@ namespace War3Api.Generator.Object
 
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
-                    var fieldIdentifier = valueName.ToCamelCase(false, true);
+                    var fieldIdentifier = valueName.ToCamelCase(true, true);
                     var simpleFieldIdentifier = typeModel.Category == TypeModelCategory.Basic ? fieldIdentifier : $"{fieldIdentifier}Raw";
 
                     var getterFuncName = $"Get{valueName}";
@@ -378,7 +379,7 @@ namespace War3Api.Generator.Object
 
                     const string isModifiedPropertyType = "ReadOnlyObjectProperty<bool>";
 
-                    var isModifiedFieldIdentifier = $"Is{valueName}Modified".ToCamelCase(false, true);
+                    var isModifiedFieldIdentifier = $"Is{valueName}Modified".ToCamelCase(true, true);
                     var isModifiedGetterFuncName = $"GetIs{valueName}Modified";
 
                     privateConstructorAssignments.Add((isModifiedFieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{isModifiedPropertyType}>(() => new {isModifiedPropertyType}({isModifiedGetterFuncName}))")));
@@ -677,24 +678,14 @@ namespace War3Api.Generator.Object
 
         internal static void GenerateEnumFile(EnumModel enumModel)
         {
-            var enumName = enumModel.Name.Dehumanize();
+            var enumName = enumModel.Name;
             var enumMembers = enumModel.Members;
 
-            var duplicateNames = enumMembers.GroupBy(member => member.Name).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
-
-            var overrideNames = new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                // TODO: merge prevent & require into single enum
-                { "PathingListRequire", "PathingRequire" },
-                { "PathingListPrevent", "PathingPrevent" },
-                { "TargetList", "Target" },
-                { "UnitClass", "UnitClassification" },
-            };
-
-            if (overrideNames.TryGetValue(enumName, out var overrideName))
-            {
-                enumName = overrideName;
-            }
+            var duplicateNames = enumMembers
+                .GroupBy(member => member.Name, StringComparer.Ordinal)
+                .Where(grouping => grouping.Count() > 1)
+                .Select(grouping => grouping.Key)
+                .ToHashSet(StringComparer.Ordinal);
 
             // Can not use EndsWith("Flags"), because FullFlags is not really a Flags enum.
             var flagEnumNames = new HashSet<string>(StringComparer.Ordinal)
@@ -709,6 +700,7 @@ namespace War3Api.Generator.Object
             };
 
             var isFlagsEnum = flagEnumNames.Contains(enumName);
+            var isUnusedEnum = enumModel.Unused;
 
             static string GetSummary(string displayName, int value)
             {
@@ -720,11 +712,22 @@ namespace War3Api.Generator.Object
                 return $"{displayName.Humanize()}{(value > (1 << 24) ? $" ('{value.ToRawcode()}')" : string.Empty)}.";
             }
 
-            GenerateMember(SyntaxFactory.EnumDeclaration(
-                isFlagsEnum
-                    ? SyntaxFactory.SingletonList(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Attribute(SyntaxFactory.ParseName(nameof(FlagsAttribute))))))
+            var attributesList = new List<AttributeSyntax>();
+            if (isFlagsEnum)
+            {
+                attributesList.Add(SyntaxFactory.Attribute(SyntaxFactory.ParseName(nameof(FlagsAttribute))));
+            }
+
+            if (isUnusedEnum)
+            {
+                attributesList.Add(SyntaxFactory.Attribute(SyntaxFactory.ParseName(nameof(ObsoleteAttribute))));
+            }
+
+            var enumDeclaration = SyntaxFactory.EnumDeclaration(
+                attributesList.Any()
+                    ? SyntaxFactory.SingletonList(SyntaxFactory.AttributeList(SyntaxFactory.SeparatedList(attributesList)))
                     : default,
-                SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PublicKeyword)),
+                SyntaxTokenList.Create(SyntaxFactory.Token(isUnusedEnum ? SyntaxKind.InternalKeyword : SyntaxKind.PublicKeyword)),
                 SyntaxFactory.Identifier(enumName),
                 null,
                 SyntaxFactory.SeparatedList(
@@ -752,7 +755,9 @@ namespace War3Api.Generator.Object
                                         SyntaxFactory.XmlText(
                                             SyntaxFactory.XmlTextNewLine("\r\n", false)),
                                     }),
-                                    SyntaxFactory.Token(SyntaxKind.EndOfDocumentationCommentToken))))))));
+                                    SyntaxFactory.Token(SyntaxKind.EndOfDocumentationCommentToken)))))));
+
+            GenerateMember(enumDeclaration, "Enums");
         }
 
         private static IEnumerable<EnumModel> GenerateEnums()
@@ -778,7 +783,9 @@ namespace War3Api.Generator.Object
                                 yield return currentEnumModel;
                             }
 
-                            currentEnumModel = new EnumModel(line[1..^1]);
+                            var enumTypeModel = _typeModels.Single(typeModel => string.Equals(typeModel.Name, line[1..^1], StringComparison.Ordinal));
+
+                            currentEnumModel = new EnumModel(enumTypeModel.Identifier, enumTypeModel.Category == TypeModelCategory.EnumUnused);
                         }
                         else
                         {
@@ -897,6 +904,7 @@ namespace War3Api.Generator.Object
 
             switch (typeModel.Category)
             {
+                case TypeModelCategory.EnumUnused:
                 case TypeModelCategory.Basic:
                     break;
 

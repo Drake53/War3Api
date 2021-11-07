@@ -12,6 +12,8 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using War3Api.Object.Enums;
+
 using War3Net.Build.Extensions;
 using War3Net.Build.Object;
 using War3Net.Common.Extensions;
@@ -93,8 +95,8 @@ namespace War3Api.Object.Tests
             var altar = new Unit(UnitType.Altarofkings, db);
             altar.ArtModelFileExtraVersions = VersionFlags.ReignOfChaos | VersionFlags.TheFrozenThrone;
             altar.CombatAttack1WeaponType = WeaponType.Mline;
-            altar.PathingPlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Blighted };
-            altar.PathingPlacementRequires = Array.Empty<PathingPrevent>();
+            altar.PathingPlacementPreventedBy = new[] { PathingType.Unbuildable, PathingType.Blighted };
+            altar.PathingPlacementRequires = Array.Empty<PathingType>();
             altar.StatsHitPointsRegenerationType = RegenType.Night;
             altar.StatsRace = UnitRace.Other;
             altar.StatsUnitClassification = new[] { UnitClassification.Ancient, UnitClassification.Mechanical, UnitClassification.Peon };
@@ -469,7 +471,7 @@ namespace War3Api.Object.Tests
 
             var keep = new Unit(UnitType.Keep, db);
             keep.ArtRequiredAnimationNames = Array.Empty<string>();
-            keep.PathingPlacementRequires = Array.Empty<PathingPrevent>();
+            keep.PathingPlacementRequires = Array.Empty<PathingType>();
             keep.TechtreeResearchesAvailable = Array.Empty<Upgrade>();
             keep.StatsUnitClassification = Array.Empty<UnitClassification>();
 
@@ -487,7 +489,7 @@ namespace War3Api.Object.Tests
             paladin.CombatTargetedAs = Array.Empty<Target>();
 
             var ziggurat = new Unit(UnitType.Ziggurat, db);
-            ziggurat.PathingPlacementPreventedBy = Array.Empty<PathingRequire>();
+            ziggurat.PathingPlacementPreventedBy = Array.Empty<PathingType>();
 
             // Non-empty lists test
             var bloodmage = new Unit(UnitType.Bloodmage, db);
@@ -505,8 +507,8 @@ namespace War3Api.Object.Tests
 
             var workshop = new Unit(UnitType.Workshop, db);
             workshop.TechtreeResearchesAvailable = new[] { new Upgrade(UpgradeType.HumanFlare), new Upgrade(UpgradeType.HumanFragShards) };
-            workshop.PathingPlacementRequires = new[] { PathingPrevent.Unfloat, PathingPrevent.Blighted };
-            workshop.PathingPlacementPreventedBy = new[] { PathingRequire.Unbuildable, PathingRequire.Unwalkable };
+            workshop.PathingPlacementRequires = new[] { PathingType.Unfloat, PathingType.Blighted };
+            workshop.PathingPlacementPreventedBy = new[] { PathingType.Unbuildable, PathingType.Unwalkable };
 
             var expectUnit = new Dictionary<string, Type>()
             {

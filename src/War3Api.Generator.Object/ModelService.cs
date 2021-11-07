@@ -64,15 +64,14 @@ namespace War3Api.Generator.Object
             yield return GenerateTypeModel("weaponType", TypeModelCategory.EnumLowercase);
 
             // Enums (only used for lists)
-            yield return GenerateTypeModel("pathingPrevent", TypeModelCategory.EnumLowercase);
-            yield return GenerateTypeModel("pathingRequire", TypeModelCategory.EnumLowercase);
+            yield return GenerateTypeModel("pathingType", TypeModelCategory.EnumLowercase);
             yield return GenerateTypeModel("target", TypeModelCategory.EnumLowercase);
             yield return GenerateTypeModel("tileset", TypeModelCategory.EnumChar);
             yield return GenerateTypeModel("unitClassification", TypeModelCategory.EnumLowercase);
 
             // Unused enums
-            // TargetType.cs
-            // TechAvail.cs
+            yield return GenerateTypeModel("targetType", TypeModelCategory.EnumUnused);
+            yield return GenerateTypeModel("techAvail", TypeModelCategory.EnumUnused);
 
             // Strings
             yield return GenerateTypeModel("icon");
@@ -105,8 +104,8 @@ namespace War3Api.Generator.Object
             yield return GenerateTypeListModel("itemList", "Item");
             yield return GenerateTypeListModel("lightningList", "LightningEffect");
             yield return GenerateTypeListModel("modelList", GetKeywordText(SyntaxKind.StringKeyword));
-            yield return GenerateTypeListModel("pathingListPrevent", "PathingPrevent");
-            yield return GenerateTypeListModel("pathingListRequire", "PathingRequire");
+            yield return GenerateTypeListModel("pathingListPrevent", "PathingType");
+            yield return GenerateTypeListModel("pathingListRequire", "PathingType");
             yield return GenerateTypeListModel("stringList", GetKeywordText(SyntaxKind.StringKeyword));
             yield return GenerateTypeListModel("targetList", "Target");
             yield return GenerateTypeListModel("techList", "Tech");

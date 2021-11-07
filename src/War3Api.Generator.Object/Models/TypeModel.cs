@@ -23,5 +23,7 @@ namespace War3Api.Generator.Object.Models
 
         // Name in .cs
         public string FullIdentifier => Category == TypeModelCategory.List ? $"{ObjectApiGenerator.ListTypeName}<{Identifier}>" : Identifier;
+
+        public override string ToString() => FullIdentifier + $" ({Name})";
     }
 }
