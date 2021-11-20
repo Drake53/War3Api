@@ -19,8 +19,6 @@
     <Content Include="API\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Remove="Classes\**" />
-    <Content Include="Classes\**" />
   </ItemGroup>
 
 </Project>

@@ -31,11 +31,6 @@ namespace War3Api.Generator.Object
             AbilityApiGenerator.Generate(inputFolder);
             BuffApiGenerator.Generate(inputFolder);
             UpgradeApiGenerator.Generate(inputFolder);
-
-            foreach (var classFile in Directory.EnumerateFiles(@"..\..\..\Classes"))
-            {
-                File.Copy(classFile, Path.Combine(outputFolder, new FileInfo(classFile).Name), true);
-            }
         }
     }
 }

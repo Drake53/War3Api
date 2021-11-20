@@ -47,9 +47,4 @@
     <PackageReference Include="War3Net.Build.Core" Version="5.2.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Generated\**" />
-    <None Include="Generated\**" />
-  </ItemGroup>
-
 </Project>
