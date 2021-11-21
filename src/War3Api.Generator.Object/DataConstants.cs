@@ -20,6 +20,10 @@ namespace War3Api.Generator.Object
         internal const string CommentsColumn = "comments";
         internal const string CommentOrCommentsColumn = "comment(s)";
 
+        // Database
+        internal const string DatabaseClassName = "ObjectDatabaseBase";
+        internal const string DatabaseVariableName = "db";
+
         // Unit
         internal const string UnitNamespace = "Units";
         internal const string UnitClassName = "Unit";

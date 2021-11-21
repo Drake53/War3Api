@@ -1,12 +1,10 @@
 ﻿using System;
 
-using War3Net.Common.Extensions;
-
 namespace War3Api.Object
 {
     public class Tech
     {
-        private readonly ObjectDatabase _db;
+        private readonly ObjectDatabaseBase? _db;
         private readonly int _key;
 
         public Tech(Unit unit)
@@ -47,7 +45,7 @@ namespace War3Api.Object
         {
         }
 
-        public Tech(ObjectDatabase db, int key)
+        public Tech(ObjectDatabaseBase db, int key)
         {
             if (db is null)
             {
@@ -67,7 +65,7 @@ namespace War3Api.Object
             _key = key;
         }
 
-        public ObjectDatabase Db => _db;
+        public ObjectDatabaseBase? Db => _db;
 
         public int Key => _key;
 

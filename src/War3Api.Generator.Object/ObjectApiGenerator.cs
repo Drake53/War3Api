@@ -134,6 +134,7 @@ namespace War3Api.Generator.Object
                 {
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Collections.Generic")),
+                    SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Diagnostics.CodeAnalysis")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Linq")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Api.Object.Abilities")),
                     SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("War3Api.Object.Enums")),
@@ -157,11 +158,11 @@ namespace War3Api.Generator.Object
 
             yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode") }, assignments);
 
-            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { ("ObjectDatabase", "db") }, assignments);
+            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) }, assignments);
 
-            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), ("ObjectDatabase", "db") }, assignments);
+            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) }, assignments);
 
-            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), ("ObjectDatabase", "db") }, assignments);
+            yield return SyntaxFactoryService.Constructor(accessModifier, className, false, initializerValues, new[] { (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) }, assignments);
         }
 
         internal static IEnumerable<ConstructorDeclarationSyntax> GetConstructors(string className, string objectTypeName)
@@ -174,11 +175,11 @@ namespace War3Api.Generator.Object
 
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode") });
 
-            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), ("ObjectDatabase", "db") });
+            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
 
-            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), ("ObjectDatabase", "db") });
+            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
 
-            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), ("ObjectDatabase", "db") });
+            yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
         }
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
@@ -205,6 +206,8 @@ namespace War3Api.Generator.Object
             var objectModificationTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectModification) : nameof(LevelObjectModification) : nameof(SimpleObjectModification);
             var dataTypeName = usesVariation.HasValue ? usesVariation.Value ? nameof(VariationObjectDataModification) : nameof(LevelObjectDataModification) : nameof(SimpleObjectDataModification);
 
+            var privateConstructorAssignments = new List<(string field, ExpressionSyntax expression)>();
+
             if (!typeId.HasValue)
             {
                 var dictTypeName = usesVariation.HasValue ? usesVariation.Value ? DataConstants.VariationDictClassName : DataConstants.LevelDictClassName : DataConstants.SimpleDictClassName;
@@ -212,8 +215,10 @@ namespace War3Api.Generator.Object
                 yield return SyntaxFactoryService.Field(
                     dictTypeName,
                     modificationsFieldName,
-                    SyntaxFactory.ParseExpression($"new {dictTypeName}()"),
+                    null,
                     isAbstractClass ? SyntaxKind.ProtectedKeyword : SyntaxKind.PrivateKeyword);
+
+                privateConstructorAssignments.Add((modificationsFieldName, SyntaxFactory.ParseExpression("new(this)")));
 
                 yield return SyntaxFactoryService.Property(
                     dictTypeName,
@@ -241,8 +246,7 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.Token(SyntaxKind.SemicolonToken));
 
                 yield return SyntaxFactoryService.Method(
-                    SyntaxKind.PublicKeyword,
-                    false,
+                    new[] { SyntaxKind.PublicKeyword },
                     "void",
                     "AddModifications",
                     new[]
@@ -257,11 +261,34 @@ namespace War3Api.Generator.Object
                             SyntaxFactory.ParseExpression("modifications"),
                             SyntaxFactory.ParseStatement($"{modificationsFieldName}[modification.Id] = modification;")),
                     });
+
+                if (!usesVariation.HasValue)
+                {
+                    yield return SyntaxFactory.ParseMemberDeclaration(@"internal override bool TryGetSimpleModifications([NotNullWhen(true)] out SimpleObjectDataModifications? modifications)
+{
+    modifications = _modifications;
+    return true;
+}");
+                }
+                else if (usesVariation.Value)
+                {
+                    yield return SyntaxFactory.ParseMemberDeclaration(@"internal override bool TryGetVariationModifications([NotNullWhen(true)] out VariationObjectDataModifications? modifications)
+{
+    modifications = _modifications;
+    return true;
+}");
+                }
+                else
+                {
+                    yield return SyntaxFactory.ParseMemberDeclaration(@"internal override bool TryGetLevelModifications([NotNullWhen(true)] out LevelObjectDataModifications? modifications)
+{
+    modifications = _modifications;
+    return true;
+}");
+                }
             }
 
             var typeDict = _typeModels.ToDictionary(type => type.Name);
-
-            var privateConstructorAssignments = new List<(string field, ExpressionSyntax expression)>();
 
             var duplicatePropertyNames = (HashSet<string>)null;
             if (properties.All(propertyModel => propertyModel.DehumanizedName != null))
@@ -370,7 +397,7 @@ namespace War3Api.Generator.Object
                         dataTypeModel.Identifier,
                         simpleGetterFuncName,
                         new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, levelString) },
-                        new[] { SyntaxFactory.ParseStatement($"return {modificationsFieldName}[{id}, {levelString}].{dataTypeModel.PropertyName};") });
+                        new[] { SyntaxFactory.ParseStatement($"return {modificationsFieldName}.GetModification({id}, {levelString}).{dataTypeModel.PropertyName};") });
 
                     yield return SyntaxFactoryService.Method(
                         SyntaxFactory.Token(SyntaxKind.VoidKeyword).ValueText,
@@ -435,7 +462,7 @@ namespace War3Api.Generator.Object
                     yield return SyntaxFactoryService.Property(
                         dataTypeModel.Identifier,
                         simpleIdentifier,
-                        SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}].{dataTypeModel.PropertyName}")),
+                        SyntaxFactoryService.Getter(SyntaxFactory.ParseExpression($"{modificationsFieldName}.GetModification({id}).{dataTypeModel.PropertyName}")),
                         SyntaxFactoryService.Setter(SyntaxFactory.ParseExpression($"{modificationsFieldName}[{id}] = new {dataTypeName} {{ Id = {id}, Type = ObjectDataType.{dataTypeModel.UnderlyingType}, Value = value{(usesVariation.HasValue ? $", {(usesVariation.Value ? "Variation" : "Level")} = 0" : string.Empty)}{(propertyModel.Data > 0 ? $", Pointer = {propertyModel.Data}" : string.Empty)} }}")));
 
                     yield return SyntaxFactoryService.Property(
@@ -509,19 +536,19 @@ namespace War3Api.Generator.Object
                 yield return SyntaxFactoryService.Constructor(
                     ctorAccessModifier,
                     className,
-                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), ("ObjectDatabase", "db") },
+                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) },
                     privateConstructorAssignments);
 
                 yield return SyntaxFactoryService.Constructor(
                     ctorAccessModifier,
                     className,
-                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), ("ObjectDatabase", "db") },
+                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) },
                     privateConstructorAssignments);
 
                 yield return SyntaxFactoryService.Constructor(
                     ctorAccessModifier,
                     className,
-                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), ("ObjectDatabase", "db") },
+                    new[] { (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "oldId"), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) },
                     privateConstructorAssignments);
             }
             else

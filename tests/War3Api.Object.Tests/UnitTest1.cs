@@ -24,6 +24,87 @@ namespace War3Api.Object.Tests
     public class UnitTest1
     {
         [TestMethod]
+        public void TestFallbackWithCampaign()
+        {
+            var campaignDb = new ObjectDatabase(null);
+            var mapDb = new ObjectDatabase(campaignDb);
+
+            var unitCampaign1 = new Unit(UnitType.Paladin, campaignDb);
+            var unitCampaign2 = new Unit(UnitType.Paladin, "H002", campaignDb);
+
+            var unitMap1 = new Unit(UnitType.Paladin, mapDb);
+            var unitMap2 = new Unit(UnitType.Paladin, "H002", mapDb);
+            var unitMap3 = new Unit(UnitType.Paladin, "H003", mapDb);
+
+            unitCampaign1.StatsHitPointsMaximumBase = 1000;
+            unitCampaign1.StatsManaMaximum = 2000;
+
+            unitCampaign2.StatsStartingStrength = 200;
+            unitCampaign2.StatsStartingAgility = 250;
+
+            unitMap1.StatsManaMaximum = 3000;
+
+            unitMap2.StatsStartingAgility = 200;
+
+            unitMap3.StatsStartingIntelligence = 300;
+
+            Assert.AreEqual(unitCampaign1.StatsHitPointsMaximumBase, 1000);
+            Assert.AreEqual(unitCampaign1.StatsManaMaximum, 2000);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign1.StatsStartingStrength);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign1.StatsStartingAgility);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign1.StatsStartingIntelligence);
+            Assert.IsTrue(unitCampaign1.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsTrue(unitCampaign1.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingIntelligenceModified);
+
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign2.StatsHitPointsMaximumBase);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign2.StatsManaMaximum);
+            Assert.AreEqual(unitCampaign2.StatsStartingStrength, 200);
+            Assert.AreEqual(unitCampaign2.StatsStartingAgility, 250);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitCampaign2.StatsStartingIntelligence);
+            Assert.IsFalse(unitCampaign2.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitCampaign2.IsStatsManaMaximumModified);
+            Assert.IsTrue(unitCampaign2.IsStatsStartingStrengthModified);
+            Assert.IsTrue(unitCampaign2.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitCampaign2.IsStatsStartingIntelligenceModified);
+
+            Assert.AreEqual(unitMap1.StatsHitPointsMaximumBase, 1000);
+            Assert.AreEqual(unitMap1.StatsManaMaximum, 3000);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap1.StatsStartingStrength);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap1.StatsStartingAgility);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap1.StatsStartingIntelligence);
+            Assert.IsFalse(unitMap1.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsTrue(unitMap1.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingIntelligenceModified);
+
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap2.StatsHitPointsMaximumBase);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap2.StatsManaMaximum);
+            Assert.AreEqual(unitMap2.StatsStartingStrength, 200);
+            Assert.AreEqual(unitMap2.StatsStartingAgility, 200);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap2.StatsStartingIntelligence);
+            Assert.IsFalse(unitMap2.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitMap2.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap2.IsStatsStartingStrengthModified);
+            Assert.IsTrue(unitMap2.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitMap2.IsStatsStartingIntelligenceModified);
+
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap3.StatsHitPointsMaximumBase);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap3.StatsManaMaximum);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap3.StatsStartingStrength);
+            Assert.ThrowsException<KeyNotFoundException>(() => unitMap3.StatsStartingAgility);
+            Assert.AreEqual(unitMap3.StatsStartingIntelligence, 300);
+            Assert.IsFalse(unitMap3.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitMap3.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap3.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitMap3.IsStatsStartingAgilityModified);
+            Assert.IsTrue(unitMap3.IsStatsStartingIntelligenceModified);
+        }
+
+        [TestMethod]
         public void TestDefaultDatabaseSingleton()
         {
             var u = new Unit(UnitType.Peasant);
@@ -33,7 +114,7 @@ namespace War3Api.Object.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var db = new ObjectDatabase(Array.Empty<int>());
+            var db = new ObjectDatabase(Array.Empty<int>(), null);
 
             var peasant = new Unit(UnitType.Peasant, db);
             // Assert.AreEqual(1, ObjectDatabase.DefaultDatabase.ObjectCount);
@@ -57,7 +138,7 @@ namespace War3Api.Object.Tests
         [TestMethod]
         public void TestEnums()
         {
-            var db = new ObjectDatabase(Array.Empty<int>());
+            var db = new ObjectDatabase(Array.Empty<int>(), null);
 
             const string TestFilePath = @"..\..\..\TestData\TestEnums.w3o";
 
@@ -451,7 +532,7 @@ namespace War3Api.Object.Tests
         [TestMethod]
         public void TestLists()
         {
-            var db = new ObjectDatabase(Array.Empty<int>());
+            var db = new ObjectDatabase(Array.Empty<int>(), null);
 
             const string TestFilePath = @"..\..\..\TestData\TestLists.w3o";
 

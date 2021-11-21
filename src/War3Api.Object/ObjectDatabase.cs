@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using War3Api.Object.Enums;
@@ -10,22 +11,28 @@ using War3Net.Common.Extensions;
 
 namespace War3Api.Object
 {
-    public sealed class ObjectDatabase
+    public sealed class ObjectDatabase : ObjectDatabaseBase
     {
-        private static readonly Lazy<ObjectDatabase> _defaultDatabase = new Lazy<ObjectDatabase>();
-        private static readonly Lazy<HashSet<int>> _objectTypes = new Lazy<HashSet<int>>(() => GetObjectTypes().ToHashSet());
-        private static readonly Lazy<HashSet<int>> _techTypes = new Lazy<HashSet<int>>(() => GetTechTypes().ToHashSet());
+        private static readonly Lazy<ObjectDatabase> _defaultDatabase = new();
+        private static readonly Lazy<HashSet<int>> _objectTypes = new(() => GetObjectTypes().ToHashSet());
+        private static readonly Lazy<HashSet<int>> _techTypes = new(() => GetTechTypes().ToHashSet());
 
         private readonly HashSet<int> _reservedKeys;
         private readonly HashSet<int> _reservedTechs;
         private readonly Dictionary<int, BaseObject> _objects;
 
         public ObjectDatabase()
-            : this(GetDefaultReservedKeys())
+            : this(GetDefaultReservedKeys(), null)
         {
         }
 
-        public ObjectDatabase(IEnumerable<int> reservedKeys)
+        public ObjectDatabase(ObjectDatabaseBase? fallbackDatabase)
+            : this(GetDefaultReservedKeys(), fallbackDatabase)
+        {
+        }
+
+        public ObjectDatabase(IEnumerable<int> reservedKeys, ObjectDatabaseBase? fallbackDatabase)
+            : base(fallbackDatabase)
         {
             _reservedKeys = reservedKeys.ToHashSet();
             _reservedTechs = new();
@@ -71,7 +78,7 @@ namespace War3Api.Object
 
         public BaseObject GetObject(int id)
         {
-            return _objects[id];
+            return TryGetObject(id, out var baseObject) ? baseObject : throw new KeyNotFoundException($"Could not find object with key '{id.ToRawcode()}' in the database.");
         }
 
         public Tech GetTech(int id)
@@ -116,17 +123,136 @@ namespace War3Api.Object
 
         public BaseObject? TryGetObject(int id)
         {
-            if (_objects.TryGetValue(id, out var baseObject))
+            return TryGetObject(id, out var baseObject) ? baseObject : null;
+        }
+
+        public Tech? TryGetTech(int id)
+        {
+            return TryGetTech(id, out var tech) ? tech : null;
+        }
+
+        public bool TryGetUnit(int id, [NotNullWhen(true)] out Unit? unit)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Unit unit_)
             {
-                return baseObject;
+                unit = unit_;
+                return true;
             }
 
-            if (_objectTypes.Value.Contains(id))
+            unit = null;
+            return false;
+        }
+
+        public bool TryGetItem(int id, [NotNullWhen(true)] out Item? item)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Item item_)
             {
-                // todo: create new?
+                item = item_;
+                return true;
             }
 
-            return null;
+            item = null;
+            return false;
+        }
+
+        public bool TryGetDestructable(int id, [NotNullWhen(true)] out Destructable? destructable)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Destructable destructable_)
+            {
+                destructable = destructable_;
+                return true;
+            }
+
+            destructable = null;
+            return false;
+        }
+
+        public bool TryGetDoodad(int id, [NotNullWhen(true)] out Doodad? doodad)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Doodad doodad_)
+            {
+                doodad = doodad_;
+                return true;
+            }
+
+            doodad = null;
+            return false;
+        }
+
+        public bool TryGetAbility(int id, [NotNullWhen(true)] out Ability? ability)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Ability ability_)
+            {
+                ability = ability_;
+                return true;
+            }
+
+            ability = null;
+            return false;
+        }
+
+        public bool TryGetBuff(int id, [NotNullWhen(true)] out Buff? buff)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Buff buff_)
+            {
+                buff = buff_;
+                return true;
+            }
+
+            buff = null;
+            return false;
+        }
+
+        public bool TryGetUpgrade(int id, [NotNullWhen(true)] out Upgrade? upgrade)
+        {
+            if (TryGetObject(id, out var baseObject) && baseObject is Upgrade upgrade_)
+            {
+                upgrade = upgrade_;
+                return true;
+            }
+
+            upgrade = null;
+            return false;
+        }
+
+        public override bool TryGetObject(int id, [NotNullWhen(true)] out BaseObject? baseObject)
+        {
+            if (_objects.TryGetValue(id, out baseObject))
+            {
+                return true;
+            }
+
+            var fallback = FallbackDatabase;
+            while (fallback is not null)
+            {
+                if (fallback.TryGetObject(id, out var fallbackObject))
+                {
+                    baseObject = BaseObject.ShallowCopy(fallbackObject, this);
+                    return true;
+                }
+
+                fallback = fallback.FallbackDatabase;
+            }
+
+            return false;
+        }
+
+        public bool TryGetTech(int id, [NotNullWhen(true)] out Tech? tech)
+        {
+            if (Enum.IsDefined(typeof(TechEquivalent), id))
+            {
+                tech = new Tech((TechEquivalent)id);
+                return true;
+            }
+
+            if (TryGetObject(id, out var baseObject) && (baseObject is Unit || baseObject is Upgrade))
+            {
+                tech = new Tech(this, id);
+                return true;
+            }
+
+            tech = null;
+            return false;
         }
 
         public IEnumerable<Unit> GetUnits()
@@ -162,22 +288,6 @@ namespace War3Api.Object
         public IEnumerable<Upgrade> GetUpgrades()
         {
             return _objects.CastWhere<int, BaseObject, Upgrade>();
-        }
-
-        public Tech? TryGetTech(int id)
-        {
-            if (Enum.IsDefined(typeof(TechEquivalent), id))
-            {
-                return new Tech((TechEquivalent)id);
-            }
-
-            var baseObject = TryGetObject(id);
-            if (baseObject != null && (baseObject is Unit || baseObject is Upgrade))
-            {
-                return new Tech(this, id);
-            }
-
-            return null;
         }
 
         public void AddObjects(ObjectData objectData)
@@ -413,7 +523,7 @@ namespace War3Api.Object
             };
         }
 
-        internal void AddObject(BaseObject baseObject)
+        internal override void AddObject(BaseObject baseObject)
         {
             if (_objects.ContainsKey(baseObject.Key))
             {
@@ -476,7 +586,7 @@ namespace War3Api.Object
             _objects.Add(baseObject.Key, baseObject);
         }
 
-        internal void ReserveTech(int id)
+        internal override void ReserveTech(int id)
         {
             if (_techTypes.Value.Contains(id))
             {

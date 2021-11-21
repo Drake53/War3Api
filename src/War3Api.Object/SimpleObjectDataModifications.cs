@@ -8,7 +8,14 @@ namespace War3Api.Object
 {
     public sealed class SimpleObjectDataModifications : IEnumerable<SimpleObjectDataModification>
     {
-        private readonly Dictionary<int, SimpleObjectDataModification> _modifications = new();
+        private readonly BaseObject _baseObject;
+        private readonly Dictionary<int, SimpleObjectDataModification> _modifications;
+
+        internal SimpleObjectDataModifications(BaseObject baseObject)
+        {
+            _baseObject = baseObject;
+            _modifications = new();
+        }
 
         public SimpleObjectDataModification this[int key]
         {
@@ -28,6 +35,27 @@ namespace War3Api.Object
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _modifications.Values.GetEnumerator();
+        }
+
+        internal SimpleObjectDataModification GetModification(int key)
+        {
+            if (_modifications.TryGetValue(key, out var modification))
+            {
+                return modification;
+            }
+
+            var fallback = _baseObject.Db.FallbackDatabase;
+            while (fallback is not null)
+            {
+                if (fallback.TryGetObject(_baseObject.Key, out var fallbackObject) && _baseObject.OldId == fallbackObject.OldId && fallbackObject.TryGetSimpleModifications(out var fallbackModifications))
+                {
+                    return fallbackModifications.GetModification(key);
+                }
+
+                fallback = fallback.FallbackDatabase;
+            }
+
+            throw new KeyNotFoundException();
         }
     }
 }

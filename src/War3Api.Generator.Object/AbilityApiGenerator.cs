@@ -112,10 +112,7 @@ namespace War3Api.Generator.Object
                 member.UniqueName = duplicateNames.Contains(member.Name) ? $"{member.Name}_{member.Value.ToRawcode()}" : member.Name;
             }
 
-            // if (!IsAbilityClassAbstract)
-            {
-                ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
-            }
+            ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
 
             // Ability (class)
             var classMembers = new List<MemberDeclarationSyntax>();
@@ -127,6 +124,8 @@ namespace War3Api.Generator.Object
             }
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
 
             // Abilities (subclasses)
             if (IsAbilityClassAbstract)
@@ -148,11 +147,10 @@ namespace War3Api.Generator.Object
                         DataConstants.AbilityNamespace);
                 }
 
-                var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
                 ObjectApiGenerator.GenerateMember(
                     SyntaxFactoryService.Class(
                         $"{DataConstants.AbilityClassName}Factory",
-                        SyntaxKind.StaticKeyword,
+                        new[] { SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword },
                         null,
                         new[]
                         {
@@ -180,7 +178,7 @@ namespace War3Api.Generator.Object
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
-                                    ("ObjectDatabase", "db"),
+                                    (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
                                 }),
 
                             FactoryCreateMethod(abilityTypeEnumModel.Members,
@@ -188,7 +186,7 @@ namespace War3Api.Generator.Object
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                     ("int", "newId"),
-                                    ("ObjectDatabase", "db"),
+                                    (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
                                 }),
 
                             FactoryCreateMethod(abilityTypeEnumModel.Members,
@@ -196,7 +194,7 @@ namespace War3Api.Generator.Object
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                     ("string", "newRawcode"),
-                                    ("ObjectDatabase", "db"),
+                                    (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
                                 }),
                         }));
             }
@@ -216,8 +214,7 @@ namespace War3Api.Generator.Object
                 SyntaxFactory.ParseExpression($"throw new System.ComponentModel.InvalidEnumArgumentException(nameof({abilityTypeIdentifier}), (int){abilityTypeIdentifier}, typeof({DataConstants.AbilityTypeEnumName}))")));
 
             return SyntaxFactoryService.Method(
-                SyntaxKind.PublicKeyword,
-                true,
+                new[] { SyntaxKind.PublicKeyword, SyntaxKind.StaticKeyword },
                 DataConstants.AbilityClassName,
                 "Create",
                 parameters,

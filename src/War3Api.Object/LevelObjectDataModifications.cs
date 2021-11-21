@@ -9,7 +9,14 @@ namespace War3Api.Object
 {
     public sealed class LevelObjectDataModifications : IEnumerable<LevelObjectDataModification>
     {
-        private readonly Dictionary<long, LevelObjectDataModification> _modifications = new();
+        private readonly BaseObject _baseObject;
+        private readonly Dictionary<long, LevelObjectDataModification> _modifications;
+
+        internal LevelObjectDataModifications(BaseObject baseObject)
+        {
+            _baseObject = baseObject;
+            _modifications = new();
+        }
 
         public LevelObjectDataModification this[int key]
         {
@@ -41,9 +48,34 @@ namespace War3Api.Object
             return _modifications.Values.GetEnumerator();
         }
 
+        internal LevelObjectDataModification GetModification(int key) => GetModification((long)key);
+
+        internal LevelObjectDataModification GetModification(int key, int level) => GetModification(GetKey(key, level));
+
 #pragma warning disable CS0675
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static long GetKey(int key, int level) => key | ((long)level << 32);
 #pragma warning restore CS0675
+
+        private LevelObjectDataModification GetModification(long key)
+        {
+            if (_modifications.TryGetValue(key, out var modification))
+            {
+                return modification;
+            }
+
+            var fallback = _baseObject.Db.FallbackDatabase;
+            while (fallback is not null)
+            {
+                if (fallback.TryGetObject(_baseObject.Key, out var fallbackObject) && _baseObject.OldId == fallbackObject.OldId && fallbackObject.TryGetLevelModifications(out var fallbackModifications))
+                {
+                    return fallbackModifications.GetModification(key);
+                }
+
+                fallback = fallback.FallbackDatabase;
+            }
+
+            throw new KeyNotFoundException();
+        }
     }
 }

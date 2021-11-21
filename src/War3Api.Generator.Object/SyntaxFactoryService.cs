@@ -33,6 +33,9 @@ namespace War3Api.Generator.Object
                     SyntaxKind.ConstKeyword => 1 << 6,
                     SyntaxKind.ImplicitKeyword => 1 << 7,
                     SyntaxKind.ExplicitKeyword => 1 << 8,
+                    SyntaxKind.VirtualKeyword => 1 << 9,
+                    SyntaxKind.OverrideKeyword => 1 << 10,
+                    SyntaxKind.SealedKeyword => 1 << 11,
                 };
             }
 
@@ -43,27 +46,27 @@ namespace War3Api.Generator.Object
 
             if (member is ConversionOperatorDeclarationSyntax)
             {
-                return modifierValue + (1 << 9);
+                return modifierValue + (1 << 12);
             }
 
             if (member is OperatorDeclarationSyntax)
             {
-                return modifierValue + (1 << 10);
+                return modifierValue + (1 << 13);
             }
 
             if (member is PropertyDeclarationSyntax)
             {
-                return modifierValue + (1 << 11);
+                return modifierValue + (1 << 14);
             }
 
             if (member is ConstructorDeclarationSyntax)
             {
-                return modifierValue + (1 << 12);
+                return modifierValue + (1 << 15);
             }
 
             if (member is FieldDeclarationSyntax)
             {
-                return modifierValue + (1 << 13);
+                return modifierValue + (1 << 16);
             }
 
             throw new NotSupportedException(member.GetType().FullName);
@@ -71,10 +74,10 @@ namespace War3Api.Generator.Object
 
         internal static ClassDeclarationSyntax Class(string identifier, bool isAbstract, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
         {
-            return Class(identifier, isAbstract ? SyntaxKind.AbstractKeyword : SyntaxKind.SealedKeyword, baseType, members);
+            return Class(identifier, new[] { SyntaxKind.PublicKeyword, isAbstract ? SyntaxKind.AbstractKeyword : SyntaxKind.SealedKeyword }, baseType, members);
         }
 
-        internal static ClassDeclarationSyntax Class(string identifier, SyntaxKind keyword, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
+        internal static ClassDeclarationSyntax Class(string identifier, IEnumerable<SyntaxKind> keywords, string? baseType, IEnumerable<MemberDeclarationSyntax> members)
         {
             BaseListSyntax baseList = null;
             if (!string.IsNullOrWhiteSpace(baseType))
@@ -84,9 +87,7 @@ namespace War3Api.Generator.Object
 
             return SyntaxFactory.ClassDeclaration(
                 default,
-                new SyntaxTokenList(
-                    SyntaxFactory.Token(SyntaxKind.PublicKeyword),
-                    SyntaxFactory.Token(keyword)),
+                new SyntaxTokenList(keywords.Select(keyword => SyntaxFactory.Token(keyword))),
                 SyntaxFactory.Identifier(identifier),
                 null,
                 baseList,
@@ -111,7 +112,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.VariableDeclarator(identifier))));
         }
 
-        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax expression, SyntaxKind accessModifier = SyntaxKind.PrivateKeyword)
+        internal static FieldDeclarationSyntax Field(string type, string identifier, ExpressionSyntax? expression, SyntaxKind accessModifier = SyntaxKind.PrivateKeyword)
         {
             return SyntaxFactory.FieldDeclaration(
                 default,
@@ -124,7 +125,7 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.VariableDeclarator(
                             SyntaxFactory.Identifier(identifier),
                             null,
-                            SyntaxFactory.EqualsValueClause(expression)))));
+                            expression is null ? null : SyntaxFactory.EqualsValueClause(expression)))));
         }
 
         internal static ConstructorDeclarationSyntax Constructor(
@@ -354,30 +355,19 @@ namespace War3Api.Generator.Object
             IEnumerable<(string type, string identifier)> parameters,
             IEnumerable<StatementSyntax> statements)
         {
-            return Method(SyntaxKind.PrivateKeyword, false, returnType, identifier, parameters, statements);
+            return Method(new[] { SyntaxKind.PrivateKeyword }, returnType, identifier, parameters, statements);
         }
 
         internal static MethodDeclarationSyntax Method(
-            SyntaxKind accessModifierKeyword,
-            bool isStatic,
+            IEnumerable<SyntaxKind> keywords,
             string returnType,
             string identifier,
             IEnumerable<(string type, string identifier)> parameters,
             IEnumerable<StatementSyntax> statements)
         {
-            var tokenList = new List<SyntaxToken>
-            {
-                SyntaxFactory.Token(accessModifierKeyword),
-            };
-
-            if (isStatic)
-            {
-                tokenList.Add(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
-            }
-
             return SyntaxFactory.MethodDeclaration(
                 default,
-                SyntaxFactory.TokenList(tokenList),
+                new SyntaxTokenList(keywords.Select(keyword => SyntaxFactory.Token(keyword))),
                 SyntaxFactory.ParseTypeName(returnType),
                 null,
                 SyntaxFactory.Identifier(identifier),
