@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -63,6 +65,7 @@ namespace War3Api.Generator.Object
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
                     Repeat = property[repeatColumn].ParseBool(),
+                    RepeatCount = (int)property[repeatColumn],
                     Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
                     DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
                     Type = (string)property[typeColumn],
@@ -80,29 +83,47 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsDoodadClassAbstract)
+            // Doodad types (enum)
+            var doodadTypeEnumModel = new EnumModel(DataConstants.DoodadTypeEnumName);
+            foreach (var doodadType in data.Skip(1))
             {
-                var doodadTypeEnumModel = new EnumModel(DataConstants.DoodadTypeEnumName);
-                foreach (var doodadType in data.Skip(1))
-                {
-                    var doodadTypeEnumMemberModel = new EnumMemberModel();
+                var doodadTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize((string)doodadType[commentColumn]);
-                    doodadTypeEnumMemberModel.Name = name.Dehumanize();
-                    doodadTypeEnumMemberModel.DisplayName = name;
-                    doodadTypeEnumMemberModel.Value = ((string)doodadType[doodadIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize((string)doodadType[commentColumn]);
+                doodadTypeEnumMemberModel.Name = name.Dehumanize();
+                doodadTypeEnumMemberModel.DisplayName = name;
+                doodadTypeEnumMemberModel.Value = ((string)doodadType[doodadIdColumn]).FromRawcode();
 
-                    doodadTypeEnumModel.Members.Add(doodadTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(doodadTypeEnumModel);
+                doodadTypeEnumModel.Members.Add(doodadTypeEnumMemberModel);
             }
 
+            doodadTypeEnumModel.EnsureMemberNamesUnique();
+
+            ObjectApiGenerator.GenerateEnumFile(doodadTypeEnumModel);
+
+            // Doodad (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DoodadClassName, DataConstants.DoodadTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DoodadClassName, DataConstants.DoodadTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.DoodadClassName, IsDoodadClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // DoodadLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                doodadTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.DoodadClassName,
+                DataConstants.DoodadTypeEnumName,
+                DataConstants.DoodadDataKeyColumn,
+                IsDoodadClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.DoodadClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }

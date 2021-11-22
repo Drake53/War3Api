@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -69,6 +71,7 @@ namespace War3Api.Generator.Object
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
                     Repeat = property[repeatColumn].ParseBool(),
+                    RepeatCount = (int)property[repeatColumn],
                     Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
                     DisplayName = GetDisplayName((string)property[displayNameColumn], (string)property[fieldColumn]),
                     Type = (string)property[typeColumn],
@@ -86,29 +89,47 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsUpgradeClassAbstract)
+            // Upgrade types (enum)
+            var upgradeTypeEnumModel = new EnumModel(DataConstants.UpgradeTypeEnumName);
+            foreach (var upgradeType in data.Skip(1))
             {
-                var upgradeTypeEnumModel = new EnumModel(DataConstants.UpgradeTypeEnumName);
-                foreach (var upgradeType in data.Skip(1))
-                {
-                    var upgradeTypeEnumMemberModel = new EnumMemberModel();
+                var upgradeTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize((string)upgradeType[commentColumn]);
-                    upgradeTypeEnumMemberModel.Name = name.Dehumanize();
-                    upgradeTypeEnumMemberModel.DisplayName = name;
-                    upgradeTypeEnumMemberModel.Value = ((string)upgradeType[upgradeIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize((string)upgradeType[commentColumn]);
+                upgradeTypeEnumMemberModel.Name = name.Dehumanize();
+                upgradeTypeEnumMemberModel.DisplayName = name;
+                upgradeTypeEnumMemberModel.Value = ((string)upgradeType[upgradeIdColumn]).FromRawcode();
 
-                    upgradeTypeEnumModel.Members.Add(upgradeTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(upgradeTypeEnumModel);
+                upgradeTypeEnumModel.Members.Add(upgradeTypeEnumMemberModel);
             }
 
+            upgradeTypeEnumModel.EnsureMemberNamesUnique();
+
+            ObjectApiGenerator.GenerateEnumFile(upgradeTypeEnumModel);
+
+            // Upgrade (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UpgradeClassName, DataConstants.UpgradeTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UpgradeClassName, DataConstants.UpgradeTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.UpgradeClassName, IsUpgradeClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // UpgradeLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                upgradeTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.UpgradeClassName,
+                DataConstants.UpgradeTypeEnumName,
+                DataConstants.UpgradeDataKeyColumn,
+                IsUpgradeClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.UpgradeClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }

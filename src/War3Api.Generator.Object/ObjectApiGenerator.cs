@@ -36,6 +36,7 @@ namespace War3Api.Generator.Object
         private static IDictionary<string, IDictionary<string, string[]>> _worldEditData;
 
         private static IList<TypeModel> _typeModels;
+        private static IDictionary<string, TypeModel> _typeModelsDict;
         private static IDictionary<ObjectDataType, DataTypeModel> _dataTypeModels;
 
         private static string _inputFolder;
@@ -62,6 +63,7 @@ namespace War3Api.Generator.Object
             _worldEditStrings = GenerateWorldEditStringLookup();
             _worldEditData = GenerateWorldEditDataLookup();
             _typeModels = ModelService.GetTypeModels().ToList();
+            _typeModelsDict = _typeModels.ToDictionary(type => type.Name);
             _dataTypeModels = ModelService.GetDataTypeModels().ToDictionary(type => type.Type);
 
             GenerateDataConverter();
@@ -80,6 +82,8 @@ namespace War3Api.Generator.Object
                 destructableCategory.Members.Add(memberModel);
             }
 
+            destructableCategory.EnsureMemberNamesUnique();
+
             GenerateEnumFile(destructableCategory);
 
             var doodadCategory = new EnumModel("DoodadCategory");
@@ -96,11 +100,15 @@ namespace War3Api.Generator.Object
                 doodadCategory.Members.Add(memberModel);
             }
 
+            doodadCategory.EnsureMemberNamesUnique();
+
             GenerateEnumFile(doodadCategory);
 
             var enumModels = GenerateEnums().ToList();
             foreach (var enumModel in enumModels)
             {
+                enumModel.EnsureMemberNamesUnique();
+
                 GenerateEnumFile(enumModel);
             }
 
@@ -289,8 +297,6 @@ namespace War3Api.Generator.Object
                 }
             }
 
-            var typeDict = _typeModels.ToDictionary(type => type.Name);
-
             var duplicatePropertyNames = (HashSet<string>)null;
             if (properties.All(propertyModel => propertyModel.DehumanizedName != null))
             {
@@ -300,7 +306,7 @@ namespace War3Api.Generator.Object
             foreach (var propertyModel in properties)
             {
                 var type = propertyModel.Type;
-                if (!typeDict.TryGetValue(type, out var typeModel))
+                if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
                     throw new InvalidDataException($"Unknown type '{type}' for {className} property {propertyModel.DehumanizedName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
                 }
@@ -567,10 +573,11 @@ namespace War3Api.Generator.Object
             SylkTable data,
             string objectClassName,
             string objectTypeName,
-            string objectVariableName,
-            string objectTypeVariableName,
-            string objectDataKeyColumn)
+            string objectDataKeyColumn,
+            bool isAbstractClass)
         {
+            var objectTypeVariableName = objectTypeName.ToCamelCase(true);
+
             var switchExpressionArms = members
                 .Select(objectType => SyntaxFactory.SwitchExpressionArm(
                     SyntaxFactory.ConstantPattern(SyntaxFactory.ParseExpression($"{objectTypeName}.{objectType.UniqueName}")),
@@ -599,7 +606,7 @@ namespace War3Api.Generator.Object
 
             foreach (var member in members)
             {
-                yield return LoaderLoadMethod(member, properties, data, objectVariableName, objectDataKeyColumn);
+                yield return LoaderLoadMethod(member, properties, data, objectClassName, objectTypeName, objectDataKeyColumn, isAbstractClass);
             }
         }
 
@@ -607,12 +614,22 @@ namespace War3Api.Generator.Object
             EnumMemberModel objectType,
             IEnumerable<PropertyModel> properties,
             SylkTable data,
-            string objectVariableName,
-            string objectDataKeyColumn)
+            string objectClassName,
+            string objectTypeName,
+            string objectDataKeyColumn,
+            bool isAbstractClass)
         {
-            var typeDict = _typeModels.ToDictionary(type => type.Name);
+            var objectVariableName = objectClassName.ToCamelCase(true);
 
             var statements = new List<StatementSyntax>();
+
+            var objectCreationArgumentList = new List<ArgumentSyntax>();
+            if (!isAbstractClass)
+            {
+                objectCreationArgumentList.Add(SyntaxFactory.Argument(SyntaxFactory.ParseExpression($"{objectTypeName}.{objectType.UniqueName}")));
+            }
+
+            objectCreationArgumentList.Add(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(DataConstants.DatabaseVariableName)));
 
             statements.Add(SyntaxFactory.LocalDeclarationStatement(SyntaxFactory.VariableDeclaration(
                 SyntaxFactory.ParseTypeName("var"),
@@ -620,8 +637,8 @@ namespace War3Api.Generator.Object
                     SyntaxFactory.Identifier(objectVariableName),
                     null,
                     SyntaxFactory.EqualsValueClause(SyntaxFactory.ObjectCreationExpression(
-                        SyntaxFactory.ParseTypeName(objectType.UniqueName),
-                        SyntaxFactory.ArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(DataConstants.DatabaseVariableName)))),
+                        SyntaxFactory.ParseTypeName(isAbstractClass ? objectType.UniqueName : objectClassName),
+                        SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(objectCreationArgumentList)),
                         null)))))));
 
             var objectIdColumn = data[objectDataKeyColumn].Single();
@@ -641,6 +658,8 @@ namespace War3Api.Generator.Object
 
             var duplicatePropertyNames = objectProperties.GroupBy(propertyModel => propertyModel.DehumanizedName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
 
+            var format = $"D{(objectProperties.Select(propertyModel => propertyModel.RepeatCount).Max() >= 10 ? "2" : "1")}";
+
             foreach (var propertyModel in objectProperties)
             {
                 var valueName = propertyModel.DehumanizedName;
@@ -650,7 +669,7 @@ namespace War3Api.Generator.Object
                 }
 
                 var type = propertyModel.Type;
-                if (!typeDict.TryGetValue(type, out var typeModel))
+                if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
                     throw new InvalidDataException($"Unknown type '{type}' for property {valueName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
                 }
@@ -666,7 +685,9 @@ namespace War3Api.Generator.Object
                 {
                     for (var i = 1; i <= propertyModel.RepeatCount; i++)
                     {
-                        var columnName = propertyModel.Data > 0 ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i}" : $"{propertyModel.Name}{i}";
+                        var columnName = propertyModel.Data > 0
+                            ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format)}"
+                            : $"{propertyModel.Name}{i.ToString(format)}";
 
                         var column = data[columnName].Cast<int?>().SingleOrDefault();
                         if (column.HasValue)
@@ -702,7 +723,7 @@ namespace War3Api.Generator.Object
 
             return SyntaxFactoryService.Method(
                 new[] { SyntaxKind.ProtectedKeyword, SyntaxKind.VirtualKeyword },
-                objectType.UniqueName,
+                isAbstractClass ? objectType.UniqueName : objectClassName,
                 $"Load{objectType.UniqueName}",
                 new[]
                 {
@@ -718,7 +739,7 @@ namespace War3Api.Generator.Object
                 ObjectDataType.Int => value is null || value is string ? $"{default(int)}" : $"{value}",
                 ObjectDataType.Real => value is null || value is string ? $"{default(float)}f" : $"{value}f",
                 ObjectDataType.Unreal => value is null || value is string ? $"{default(float)}f" : $"{value}f",
-                ObjectDataType.String => $"\"{value}\"",
+                ObjectDataType.String => value is null ? "null" : $"\"{((string)value).Replace("\\", @"\\")}\"",
 
                 _ => throw new InvalidEnumArgumentException(nameof(objectDataType), (int)objectDataType, typeof(ObjectDataType)),
             };
@@ -873,12 +894,6 @@ namespace War3Api.Generator.Object
             var enumName = enumModel.Name;
             var enumMembers = enumModel.Members;
 
-            var duplicateNames = enumMembers
-                .GroupBy(member => member.Name, StringComparer.Ordinal)
-                .Where(grouping => grouping.Count() > 1)
-                .Select(grouping => grouping.Key)
-                .ToHashSet(StringComparer.Ordinal);
-
             // Can not use EndsWith("Flags"), because FullFlags is not really a Flags enum.
             var flagEnumNames = new HashSet<string>(StringComparer.Ordinal)
             {
@@ -926,7 +941,7 @@ namespace War3Api.Generator.Object
                     enumMembers.Select(enumMember =>
                         SyntaxFactory.EnumMemberDeclaration(
                             default,
-                            SyntaxFactory.Identifier(enumMember.UniqueName ?? (duplicateNames.Contains(enumMember.Name) ? $"{enumMember.Name}_{enumMember.Value.ToRawcode()}" : enumMember.Name)),
+                            SyntaxFactory.Identifier(enumMember.UniqueName),
                             SyntaxFactory.EqualsValueClause(
                                 SyntaxFactory.ParseExpression(isFlagsEnum ? $"1 << {enumMember.Value}" : enumMember.ValueString)))
                         .WithLeadingTrivia(

@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -85,30 +87,47 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsItemClassAbstract)
+            // Item types (enum)
+            var itemTypeEnumModel = new EnumModel(DataConstants.ItemTypeEnumName);
+            foreach (var itemType in data.Skip(1))
             {
-                var itemTypeEnumModel = new EnumModel(DataConstants.ItemTypeEnumName);
-                foreach (var itemType in data.Skip(1))
-                {
-                    var itemTypeEnumMemberModel = new EnumMemberModel();
+                var itemTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize((string)itemType[commentColumn]);
-                    itemTypeEnumMemberModel.Name = name.Dehumanize();
-                    itemTypeEnumMemberModel.DisplayName = name;
-                    itemTypeEnumMemberModel.Value = ((string)itemType[itemIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize((string)itemType[commentColumn]);
+                itemTypeEnumMemberModel.Name = name.Dehumanize();
+                itemTypeEnumMemberModel.DisplayName = name;
+                itemTypeEnumMemberModel.Value = ((string)itemType[itemIdColumn]).FromRawcode();
 
-                    itemTypeEnumModel.Members.Add(itemTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(itemTypeEnumModel);
+                itemTypeEnumModel.Members.Add(itemTypeEnumMemberModel);
             }
 
-            var classMembers = new List<MemberDeclarationSyntax>();
+            itemTypeEnumModel.EnsureMemberNamesUnique();
 
+            ObjectApiGenerator.GenerateEnumFile(itemTypeEnumModel);
+
+            // Item (class)
+            var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.ItemClassName, DataConstants.ItemTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.ItemClassName, DataConstants.ItemTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.ItemClassName, IsItemClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // ItemLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                itemTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.ItemClassName,
+                DataConstants.ItemTypeEnumName,
+                DataConstants.ItemDataKeyColumn,
+                IsItemClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.ItemClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }

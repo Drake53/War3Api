@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -102,24 +104,25 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsUnitClassAbstract)
+            // Unit types (enum)
+            var unitTypeEnumModel = new EnumModel(DataConstants.UnitTypeEnumName);
+            foreach (var unitType in data.Skip(1))
             {
-                var unitTypeEnumModel = new EnumModel(DataConstants.UnitTypeEnumName);
-                foreach (var unitType in data.Skip(1))
-                {
-                    var unitTypeEnumMemberModel = new EnumMemberModel();
+                var unitTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize(((string)unitType[nameColumn]) ?? commentColumns.Where(col => (string)unitType[col] != null).Select(col => (string)unitType[col]).First());
-                    unitTypeEnumMemberModel.Name = name.Dehumanize();
-                    unitTypeEnumMemberModel.DisplayName = name;
-                    unitTypeEnumMemberModel.Value = ((string)unitType[unitIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize(((string)unitType[nameColumn]) ?? commentColumns.Where(col => (string)unitType[col] != null).Select(col => (string)unitType[col]).First());
+                unitTypeEnumMemberModel.Name = name.Dehumanize();
+                unitTypeEnumMemberModel.DisplayName = name;
+                unitTypeEnumMemberModel.Value = ((string)unitType[unitIdColumn]).FromRawcode();
 
-                    unitTypeEnumModel.Members.Add(unitTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(unitTypeEnumModel);
+                unitTypeEnumModel.Members.Add(unitTypeEnumMemberModel);
             }
 
+            unitTypeEnumModel.EnsureMemberNamesUnique();
+
+            ObjectApiGenerator.GenerateEnumFile(unitTypeEnumModel);
+
+            // Unit (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.UnitClassName, DataConstants.UnitTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.UnitClassName, DataConstants.UnitTypeEnumName, properties.Values));
@@ -196,6 +199,23 @@ namespace War3Api.Generator.Object
 #endif
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.UnitClassName, IsUnitClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // UnitLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                unitTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.UnitClassName,
+                DataConstants.UnitTypeEnumName,
+                DataConstants.UnitDataKeyColumn,
+                IsUnitClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.UnitClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }

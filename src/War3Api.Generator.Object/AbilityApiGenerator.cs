@@ -107,11 +107,7 @@ namespace War3Api.Generator.Object
                 abilityTypeEnumModel.Members.Add(abilityTypeEnumMemberModel);
             }
 
-            var duplicateNames = abilityTypeEnumModel.Members.GroupBy(member => member.Name).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
-            foreach (var member in abilityTypeEnumModel.Members)
-            {
-                member.UniqueName = duplicateNames.Contains(member.Name) ? $"{member.Name}_{member.Value.ToRawcode()}" : member.Name;
-            }
+            abilityTypeEnumModel.EnsureMemberNamesUnique();
 
             ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
 
@@ -125,9 +121,6 @@ namespace War3Api.Generator.Object
             }
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
-
-            var abilityVariableName = DataConstants.AbilityClassName.ToCamelCase(true);
-            var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
 
             // Abilities (subclasses)
             if (IsAbilityClassAbstract)
@@ -149,6 +142,7 @@ namespace War3Api.Generator.Object
                         DataConstants.AbilityNamespace);
                 }
 
+                var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
                 ObjectApiGenerator.GenerateMember(
                     SyntaxFactoryService.Class(
                         $"{DataConstants.AbilityClassName}Factory",
@@ -208,9 +202,8 @@ namespace War3Api.Generator.Object
                 data,
                 DataConstants.AbilityClassName,
                 DataConstants.AbilityTypeEnumName,
-                abilityVariableName,
-                abilityTypeVariableName,
-                DataConstants.AbilityDataKeyColumn);
+                DataConstants.AbilityDataKeyColumn,
+                IsAbilityClassAbstract);
 
             ObjectApiGenerator.GenerateMember(
                 SyntaxFactoryService.Class(

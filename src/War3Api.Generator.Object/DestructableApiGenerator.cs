@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -78,29 +80,47 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsDestructableClassAbstract)
+            // Destructable types (enum)
+            var destructableTypeEnumModel = new EnumModel(DataConstants.DestructableTypeEnumName);
+            foreach (var destructableType in data.Skip(1))
             {
-                var destructableTypeEnumModel = new EnumModel(DataConstants.DestructableTypeEnumName);
-                foreach (var destructableType in data.Skip(1))
-                {
-                    var destructableTypeEnumMemberModel = new EnumMemberModel();
+                var destructableTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize((string)destructableType[commentColumn]);
-                    destructableTypeEnumMemberModel.Name = name.Dehumanize();
-                    destructableTypeEnumMemberModel.DisplayName = name;
-                    destructableTypeEnumMemberModel.Value = ((string)destructableType[destructableIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize((string)destructableType[commentColumn]);
+                destructableTypeEnumMemberModel.Name = name.Dehumanize();
+                destructableTypeEnumMemberModel.DisplayName = name;
+                destructableTypeEnumMemberModel.Value = ((string)destructableType[destructableIdColumn]).FromRawcode();
 
-                    destructableTypeEnumModel.Members.Add(destructableTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(destructableTypeEnumModel);
+                destructableTypeEnumModel.Members.Add(destructableTypeEnumMemberModel);
             }
 
+            destructableTypeEnumModel.EnsureMemberNamesUnique();
+
+            ObjectApiGenerator.GenerateEnumFile(destructableTypeEnumModel);
+
+            // Destructable (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.DestructableClassName, DataConstants.DestructableTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.DestructableClassName, DataConstants.DestructableTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.DestructableClassName, IsDestructableClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // DestructableLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                destructableTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.DestructableClassName,
+                DataConstants.DestructableTypeEnumName,
+                DataConstants.DestructableDataKeyColumn,
+                IsDestructableClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.DestructableClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }

@@ -14,8 +14,10 @@ using System.Linq;
 
 using Humanizer;
 
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
 
 using War3Net.Common.Extensions;
@@ -78,29 +80,47 @@ namespace War3Api.Generator.Object
                 propertyModel.DehumanizedName = category + name;
             }
 
-            if (!IsBuffClassAbstract)
+            // Buff types (enum)
+            var buffTypeEnumModel = new EnumModel(DataConstants.BuffTypeEnumName);
+            foreach (var buffType in data.Skip(1))
             {
-                var buffTypeEnumModel = new EnumModel(DataConstants.BuffTypeEnumName);
-                foreach (var buffType in data.Skip(1))
-                {
-                    var buffTypeEnumMemberModel = new EnumMemberModel();
+                var buffTypeEnumMemberModel = new EnumMemberModel();
 
-                    var name = ObjectApiGenerator.Localize((string)buffType[commentColumn]);
-                    buffTypeEnumMemberModel.Name = name.Dehumanize();
-                    buffTypeEnumMemberModel.DisplayName = name;
-                    buffTypeEnumMemberModel.Value = ((string)buffType[buffIdColumn]).FromRawcode();
+                var name = ObjectApiGenerator.Localize((string)buffType[commentColumn]);
+                buffTypeEnumMemberModel.Name = name.Dehumanize();
+                buffTypeEnumMemberModel.DisplayName = name;
+                buffTypeEnumMemberModel.Value = ((string)buffType[buffIdColumn]).FromRawcode();
 
-                    buffTypeEnumModel.Members.Add(buffTypeEnumMemberModel);
-                }
-
-                ObjectApiGenerator.GenerateEnumFile(buffTypeEnumModel);
+                buffTypeEnumModel.Members.Add(buffTypeEnumMemberModel);
             }
 
+            buffTypeEnumModel.EnsureMemberNamesUnique();
+
+            ObjectApiGenerator.GenerateEnumFile(buffTypeEnumModel);
+
+            // Buff (class)
             var classMembers = new List<MemberDeclarationSyntax>();
             classMembers.AddRange(ObjectApiGenerator.GetConstructors(DataConstants.BuffClassName, DataConstants.BuffTypeEnumName));
             classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.BuffClassName, DataConstants.BuffTypeEnumName, properties.Values));
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.BuffClassName, IsBuffClassAbstract, DataConstants.BaseClassName, classMembers));
+
+            // BuffLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                buffTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.BuffClassName,
+                DataConstants.BuffTypeEnumName,
+                DataConstants.BuffDataKeyColumn,
+                IsBuffClassAbstract);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.BuffClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
     }
 }
