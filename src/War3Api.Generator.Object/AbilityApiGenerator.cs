@@ -68,6 +68,7 @@ namespace War3Api.Generator.Object
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
                     Repeat = property[repeatColumn].ParseBool(),
+                    RepeatCount = (int)property[repeatColumn],
                     Data = (int)property[dataColumn],
                     Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
                     DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
@@ -125,6 +126,7 @@ namespace War3Api.Generator.Object
 
             ObjectApiGenerator.GenerateMember(SyntaxFactoryService.Class(DataConstants.AbilityClassName, IsAbilityClassAbstract, DataConstants.BaseClassName, classMembers));
 
+            var abilityVariableName = DataConstants.AbilityClassName.ToCamelCase(true);
             var abilityTypeVariableName = DataConstants.AbilityTypeEnumName.ToCamelCase(true);
 
             // Abilities (subclasses)
@@ -198,6 +200,24 @@ namespace War3Api.Generator.Object
                                 }),
                         }));
             }
+
+            // AbilityLoader
+            var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
+                abilityTypeEnumModel.Members,
+                properties.Values,
+                data,
+                DataConstants.AbilityClassName,
+                DataConstants.AbilityTypeEnumName,
+                abilityVariableName,
+                abilityTypeVariableName,
+                DataConstants.AbilityDataKeyColumn);
+
+            ObjectApiGenerator.GenerateMember(
+                SyntaxFactoryService.Class(
+                    $"{DataConstants.AbilityClassName}Loader",
+                    new[] { SyntaxKind.InternalKeyword },
+                    null,
+                    loaderMembers));
         }
 
         private static MethodDeclarationSyntax FactoryCreateMethod(IEnumerable<EnumMemberModel> members, IEnumerable<(string type, string identifier)> parameters)

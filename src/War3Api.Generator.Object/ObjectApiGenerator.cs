@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
@@ -558,6 +559,169 @@ namespace War3Api.Generator.Object
                     yield return ctor;
                 }
             }
+        }
+
+        internal static IEnumerable<MemberDeclarationSyntax> GetLoaderMethods(
+            IEnumerable<EnumMemberModel> members,
+            IEnumerable<PropertyModel> properties,
+            SylkTable data,
+            string objectClassName,
+            string objectTypeName,
+            string objectVariableName,
+            string objectTypeVariableName,
+            string objectDataKeyColumn)
+        {
+            var switchExpressionArms = members
+                .Select(objectType => SyntaxFactory.SwitchExpressionArm(
+                    SyntaxFactory.ConstantPattern(SyntaxFactory.ParseExpression($"{objectTypeName}.{objectType.UniqueName}")),
+                    SyntaxFactory.ParseExpression($"Load{objectType.UniqueName}({DataConstants.DatabaseVariableName})")))
+                .ToList();
+
+            switchExpressionArms.Add(SyntaxFactory.SwitchExpressionArm(
+                SyntaxFactory.DiscardPattern(),
+                SyntaxFactory.ParseExpression($"throw new System.ComponentModel.InvalidEnumArgumentException(nameof({objectTypeVariableName}), (int){objectTypeVariableName}, typeof({objectTypeName}))")));
+
+            yield return SyntaxFactoryService.Method(
+                new[] { SyntaxKind.PublicKeyword },
+                objectClassName,
+                "Load",
+                new[]
+                {
+                    (objectTypeName, objectTypeVariableName),
+                    (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
+                },
+                new[]
+                {
+                    SyntaxFactory.ReturnStatement(SyntaxFactory.SwitchExpression(
+                        SyntaxFactory.ParseExpression(objectTypeVariableName),
+                        SyntaxFactory.SeparatedList(switchExpressionArms))),
+                });
+
+            foreach (var member in members)
+            {
+                yield return LoaderLoadMethod(member, properties, data, objectVariableName, objectDataKeyColumn);
+            }
+        }
+
+        private static MethodDeclarationSyntax LoaderLoadMethod(
+            EnumMemberModel objectType,
+            IEnumerable<PropertyModel> properties,
+            SylkTable data,
+            string objectVariableName,
+            string objectDataKeyColumn)
+        {
+            var typeDict = _typeModels.ToDictionary(type => type.Name);
+
+            var statements = new List<StatementSyntax>();
+
+            statements.Add(SyntaxFactory.LocalDeclarationStatement(SyntaxFactory.VariableDeclaration(
+                SyntaxFactory.ParseTypeName("var"),
+                SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclarator(
+                    SyntaxFactory.Identifier(objectVariableName),
+                    null,
+                    SyntaxFactory.EqualsValueClause(SyntaxFactory.ObjectCreationExpression(
+                        SyntaxFactory.ParseTypeName(objectType.UniqueName),
+                        SyntaxFactory.ArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(DataConstants.DatabaseVariableName)))),
+                        null)))))));
+
+            var objectIdColumn = data[objectDataKeyColumn].Single();
+            var row = 1;
+            for (; row <= data.Rows; row++)
+            {
+                if (objectType.Value == ((string)data[objectIdColumn, row]).FromRawcode())
+                {
+                    break;
+                }
+            }
+
+            var objectTypeCode = objectType.Value.ToRawcode();
+            var objectProperties = properties
+                .Where(propertyModel => string.IsNullOrEmpty(propertyModel.UseSpecific) || propertyModel.UseSpecific.Contains(objectTypeCode, StringComparison.Ordinal))
+                .ToList();
+
+            var duplicatePropertyNames = objectProperties.GroupBy(propertyModel => propertyModel.DehumanizedName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
+
+            foreach (var propertyModel in objectProperties)
+            {
+                var valueName = propertyModel.DehumanizedName;
+                if (duplicatePropertyNames.Contains(propertyModel.DehumanizedName))
+                {
+                    valueName = $"{propertyModel.DehumanizedName}_{propertyModel.Rawcode}";
+                }
+
+                var type = propertyModel.Type;
+                if (!typeDict.TryGetValue(type, out var typeModel))
+                {
+                    throw new InvalidDataException($"Unknown type '{type}' for property {valueName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
+                }
+
+                var dataTypeModel = _dataTypeModels[typeModel.Type];
+
+                var hasRawProperty = typeModel.Category != TypeModelCategory.Basic || dataTypeModel.Type != dataTypeModel.UnderlyingType;
+                var isStringProperty = typeModel.Category != TypeModelCategory.Basic && typeModel.Category != TypeModelCategory.EnumInt && typeModel.Category != TypeModelCategory.EnumFlags;
+
+                var left = hasRawProperty ? $"{objectVariableName}.{valueName}Raw" : $"{objectVariableName}.{valueName}";
+
+                if (propertyModel.RepeatCount > 0)
+                {
+                    for (var i = 1; i <= propertyModel.RepeatCount; i++)
+                    {
+                        var columnName = propertyModel.Data > 0 ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i}" : $"{propertyModel.Name}{i}";
+
+                        var column = data[columnName].Cast<int?>().SingleOrDefault();
+                        if (column.HasValue)
+                        {
+                            var value = data[column.Value, row];
+                            var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
+
+                            statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                                SyntaxKind.SimpleAssignmentExpression,
+                                SyntaxFactory.ElementAccessExpression(
+                                    SyntaxFactory.ParseExpression(left),
+                                    SyntaxFactory.BracketedArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(i.ToString()))))),
+                                SyntaxFactory.ParseExpression(propertyValue))));
+                        }
+                    }
+                }
+                else
+                {
+                    if (propertyModel.Column.HasValue)
+                    {
+                        var value = data[propertyModel.Column.Value, row];
+                        var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
+
+                        statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                            SyntaxKind.SimpleAssignmentExpression,
+                            SyntaxFactory.ParseExpression(left),
+                            SyntaxFactory.ParseExpression(propertyValue))));
+                    }
+                }
+            }
+
+            statements.Add(SyntaxFactory.ReturnStatement(SyntaxFactory.ParseExpression(objectVariableName)));
+
+            return SyntaxFactoryService.Method(
+                new[] { SyntaxKind.ProtectedKeyword, SyntaxKind.VirtualKeyword },
+                objectType.UniqueName,
+                $"Load{objectType.UniqueName}",
+                new[]
+                {
+                    (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
+                },
+                statements);
+        }
+
+        private static string GetPropertyValue(ObjectDataType objectDataType, object value)
+        {
+            return objectDataType switch
+            {
+                ObjectDataType.Int => value is null || value is string ? $"{default(int)}" : $"{value}",
+                ObjectDataType.Real => value is null || value is string ? $"{default(float)}f" : $"{value}f",
+                ObjectDataType.Unreal => value is null || value is string ? $"{default(float)}f" : $"{value}f",
+                ObjectDataType.String => $"\"{value}\"",
+
+                _ => throw new InvalidEnumArgumentException(nameof(objectDataType), (int)objectDataType, typeof(ObjectDataType)),
+            };
         }
 
         internal static string Localize(string value)
