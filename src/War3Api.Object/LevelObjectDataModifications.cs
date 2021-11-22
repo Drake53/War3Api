@@ -67,9 +67,19 @@ namespace War3Api.Object
             var fallback = _baseObject.Db.FallbackDatabase;
             while (fallback is not null)
             {
-                if (fallback.TryGetObject(_baseObject.Key, out var fallbackObject) && _baseObject.OldId == fallbackObject.OldId && fallbackObject.TryGetLevelModifications(out var fallbackModifications))
+                if (fallback is LazyStandardObjectDatabase)
                 {
-                    return fallbackModifications.GetModification(key);
+                    if (fallback.TryGetObject(_baseObject.OldId, out var fallbackObject) && fallbackObject.TryGetLevelModifications(out var fallbackModifications))
+                    {
+                        return fallbackModifications.GetModification(key);
+                    }
+                }
+                else
+                {
+                    if (fallback.TryGetObject(_baseObject.Key, out var fallbackObject) && _baseObject.OldId == fallbackObject.OldId && fallbackObject.TryGetLevelModifications(out var fallbackModifications))
+                    {
+                        return fallbackModifications.GetModification(key);
+                    }
                 }
 
                 fallback = fallback.FallbackDatabase;

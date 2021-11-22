@@ -21,7 +21,7 @@ namespace War3Api.Object
         private readonly Dictionary<int, BaseObject> _objects;
 
         public ObjectDatabase()
-            : this(GetDefaultReservedKeys(), null)
+            : this(GetDefaultReservedKeys(), LazyStandardObjectDatabase.GetStandardDatabase())
         {
         }
 
