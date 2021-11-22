@@ -63,30 +63,22 @@ namespace War3Api.Generator.Object
             // Properties
             var properties = metaData
                 .Skip(1)
-                .Select(property => new PropertyModel()
+                .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
-                    Repeat = property[repeatColumn].ParseBool(),
-                    RepeatCount = (int)property[repeatColumn],
+                    UniqueName = ObjectApiGenerator.CreateUniquePropertyName(
+                        (string)property[fieldColumn],
+                        (string)property[categoryColumn],
+                        (string)property[displayNameColumn]),
+                    Repeat = (int)property[repeatColumn],
                     Data = (int)property[dataColumn],
-                    Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
-                    DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
                     UseSpecific = (string)property[useSpecificColumn],
-                    Column = data[property[fieldColumn]].Cast<int?>().SingleOrDefault(),
                 })
                 .ToDictionary(property => property.Rawcode);
-
-            foreach (var propertyModel in properties.Values)
-            {
-                var category = propertyModel.Category.Replace("&", string.Empty, StringComparison.Ordinal).Dehumanize();
-                var name = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
-
-                propertyModel.DehumanizedName = category + name;
-            }
 
             // Ability types (enum)
             var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
@@ -97,14 +89,7 @@ namespace War3Api.Generator.Object
                     continue;
                 }
 
-                var abilityTypeEnumMemberModel = new EnumMemberModel();
-
-                var name = ObjectApiGenerator.Localize((string)abilityType[commentColumn]);
-                abilityTypeEnumMemberModel.Name = name.Dehumanize().TrimStart('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-                abilityTypeEnumMemberModel.DisplayName = name;
-                abilityTypeEnumMemberModel.Value = ((string)abilityType[abilityIdColumn]).FromRawcode();
-
-                abilityTypeEnumModel.Members.Add(abilityTypeEnumMemberModel);
+                abilityTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)abilityType[commentColumn], (string)abilityType[abilityIdColumn]));
             }
 
             abilityTypeEnumModel.EnsureMemberNamesUnique();

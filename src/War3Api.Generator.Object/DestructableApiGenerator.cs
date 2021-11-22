@@ -59,39 +59,25 @@ namespace War3Api.Generator.Object
 
             var properties = metaData
                 .Skip(1)
-                .Select(property => new PropertyModel()
+                .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
-                    Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
-                    DisplayName = ObjectApiGenerator.Localize((string)property[displayNameColumn]),
+                    UniqueName = ObjectApiGenerator.CreateUniquePropertyName(
+                        (string)property[fieldColumn],
+                        (string)property[categoryColumn],
+                        (string)property[displayNameColumn]),
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
-                    Column = data[property[fieldColumn]].Cast<int?>().SingleOrDefault(),
                 })
                 .ToDictionary(property => property.Rawcode);
-
-            foreach (var propertyModel in properties.Values)
-            {
-                var category = propertyModel.Category.Replace("&", string.Empty, StringComparison.Ordinal).Dehumanize();
-                var name = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
-
-                propertyModel.DehumanizedName = category + name;
-            }
 
             // Destructable types (enum)
             var destructableTypeEnumModel = new EnumModel(DataConstants.DestructableTypeEnumName);
             foreach (var destructableType in data.Skip(1))
             {
-                var destructableTypeEnumMemberModel = new EnumMemberModel();
-
-                var name = ObjectApiGenerator.Localize((string)destructableType[commentColumn]);
-                destructableTypeEnumMemberModel.Name = name.Dehumanize();
-                destructableTypeEnumMemberModel.DisplayName = name;
-                destructableTypeEnumMemberModel.Value = ((string)destructableType[destructableIdColumn]).FromRawcode();
-
-                destructableTypeEnumModel.Members.Add(destructableTypeEnumMemberModel);
+                destructableTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)destructableType[commentColumn], (string)destructableType[destructableIdColumn]));
             }
 
             destructableTypeEnumModel.EnsureMemberNamesUnique();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 using Humanizer;
 
@@ -65,52 +66,6 @@ namespace War3Api.Generator.Object
             _typeModels = ModelService.GetTypeModels().ToList();
             _typeModelsDict = _typeModels.ToDictionary(type => type.Name);
             _dataTypeModels = ModelService.GetDataTypeModels().ToDictionary(type => type.Type);
-
-            GenerateDataConverter();
-
-            var destructableCategory = new EnumModel("DestructableCategory");
-            foreach (var member in _worldEditData["DestructibleCategories"])
-            {
-                var memberModel = new EnumMemberModel();
-
-                var name = Localize(member.Value.First());
-                memberModel.Name = name.Dehumanize();
-                memberModel.DisplayName = name;
-                memberModel.Value = char.Parse(member.Key);
-                memberModel.IsValueChar = true;
-
-                destructableCategory.Members.Add(memberModel);
-            }
-
-            destructableCategory.EnsureMemberNamesUnique();
-
-            GenerateEnumFile(destructableCategory);
-
-            var doodadCategory = new EnumModel("DoodadCategory");
-            foreach (var member in _worldEditData["DoodadCategories"])
-            {
-                var memberModel = new EnumMemberModel();
-
-                var name = Localize(member.Value.First());
-                memberModel.Name = name.Dehumanize();
-                memberModel.DisplayName = name;
-                memberModel.Value = char.Parse(member.Key);
-                memberModel.IsValueChar = true;
-
-                doodadCategory.Members.Add(memberModel);
-            }
-
-            doodadCategory.EnsureMemberNamesUnique();
-
-            GenerateEnumFile(doodadCategory);
-
-            var enumModels = GenerateEnums().ToList();
-            foreach (var enumModel in enumModels)
-            {
-                enumModel.EnsureMemberNamesUnique();
-
-                GenerateEnumFile(enumModel);
-            }
 
             _initialized = true;
         }
@@ -189,6 +144,33 @@ namespace War3Api.Generator.Object
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.IntKeyword).ValueText, "newId"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
 
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
+        }
+
+        internal static string CreateUniquePropertyName(string field, string category, string displayName)
+        {
+            var sb = new StringBuilder();
+            sb.Append(Localize(LookupCategory(category)).Replace("&", string.Empty, StringComparison.Ordinal));
+
+            var localizedDisplayName = Localize(displayName);
+            sb.Append(localizedDisplayName.Contains('%', StringComparison.Ordinal) ? field : localizedDisplayName);
+
+            return sb.ToString().Dehumanize();
+        }
+
+        internal static EnumMemberModel CreateEnumMemberModel(string name, string value)
+        {
+            var enumMemberModel = new EnumMemberModel();
+
+            enumMemberModel.DisplayName = Localize(name);
+            enumMemberModel.Name = enumMemberModel.DisplayName.Dehumanize();
+            enumMemberModel.Value = value.FromRawcode();
+
+            if (char.IsDigit(enumMemberModel.Name[0]))
+            {
+                enumMemberModel.Name = "_" + enumMemberModel.Name;
+            }
+
+            return enumMemberModel;
         }
 
         internal static IEnumerable<MemberDeclarationSyntax> GetProperties(string className, string objectTypeName, IEnumerable<PropertyModel> properties, bool isAbstractClass = false)
@@ -297,18 +279,14 @@ namespace War3Api.Generator.Object
                 }
             }
 
-            var duplicatePropertyNames = (HashSet<string>)null;
-            if (properties.All(propertyModel => propertyModel.DehumanizedName != null))
-            {
-                duplicatePropertyNames = properties.GroupBy(propertyModel => propertyModel.DehumanizedName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
-            }
+            var duplicatePropertyNames = properties.GroupBy(propertyModel => propertyModel.UniqueName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
 
             foreach (var propertyModel in properties)
             {
                 var type = propertyModel.Type;
                 if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
-                    throw new InvalidDataException($"Unknown type '{type}' for {className} property {propertyModel.DehumanizedName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
+                    throw new InvalidDataException($"Unknown type '{type}' for {className} property {propertyModel.UniqueName} '{propertyModel.Rawcode}'.");
                 }
 
                 static string ParseMinMaxValue(object value)
@@ -355,10 +333,10 @@ namespace War3Api.Generator.Object
 
                 var id = propertyModel.Rawcode.FromRawcode();
                 // var valueName = propertyModel.DisplayName.Split('(')[0].Dehumanize();
-                var valueName = propertyModel.DehumanizedName ?? new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
-                if (duplicatePropertyNames != null && duplicatePropertyNames.Contains(propertyModel.DehumanizedName))
+                var valueName = propertyModel.UniqueName;
+                if (duplicatePropertyNames != null && duplicatePropertyNames.Contains(propertyModel.UniqueName))
                 {
-                    valueName = $"{propertyModel.DehumanizedName}_{propertyModel.Rawcode}";
+                    valueName = $"{propertyModel.UniqueName}_{propertyModel.Rawcode}";
                 }
 
                 var propertyValueName = valueName;
@@ -374,7 +352,7 @@ namespace War3Api.Generator.Object
 
                 var simpleIdentifier = hasRawProperty ? $"{valueName}Raw" : propertyValueName;
 
-                if (propertyModel.Repeat)
+                if (propertyModel.Repeat > 0)
                 {
                     var levelString = usesVariation.Value ? "variation" : "level";
 
@@ -656,22 +634,22 @@ namespace War3Api.Generator.Object
                 .Where(propertyModel => string.IsNullOrEmpty(propertyModel.UseSpecific) || propertyModel.UseSpecific.Contains(objectTypeCode, StringComparison.Ordinal))
                 .ToList();
 
-            var duplicatePropertyNames = objectProperties.GroupBy(propertyModel => propertyModel.DehumanizedName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
+            var duplicatePropertyNames = objectProperties.GroupBy(propertyModel => propertyModel.UniqueName).Where(grouping => grouping.Count() > 1).Select(grouping => grouping.Key).ToHashSet();
 
-            var format = $"D{(objectProperties.Select(propertyModel => propertyModel.RepeatCount).Max() >= 10 ? "2" : "1")}";
+            var format = $"D{(objectProperties.Select(propertyModel => propertyModel.Repeat).Max() >= 10 ? "2" : "1")}";
 
             foreach (var propertyModel in objectProperties)
             {
-                var valueName = propertyModel.DehumanizedName;
-                if (duplicatePropertyNames.Contains(propertyModel.DehumanizedName))
+                var valueName = propertyModel.UniqueName;
+                if (duplicatePropertyNames.Contains(propertyModel.UniqueName))
                 {
-                    valueName = $"{propertyModel.DehumanizedName}_{propertyModel.Rawcode}";
+                    valueName = $"{propertyModel.UniqueName}_{propertyModel.Rawcode}";
                 }
 
                 var type = propertyModel.Type;
                 if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
-                    throw new InvalidDataException($"Unknown type '{type}' for property {valueName ?? propertyModel.DisplayName} '{propertyModel.Rawcode}'.");
+                    throw new InvalidDataException($"Unknown type '{type}' for property {valueName} '{propertyModel.Rawcode}'.");
                 }
 
                 var dataTypeModel = _dataTypeModels[typeModel.Type];
@@ -681,9 +659,9 @@ namespace War3Api.Generator.Object
 
                 var left = hasRawProperty ? $"{objectVariableName}.{valueName}Raw" : $"{objectVariableName}.{valueName}";
 
-                if (propertyModel.RepeatCount > 0)
+                if (propertyModel.Repeat > 0)
                 {
-                    for (var i = 1; i <= propertyModel.RepeatCount; i++)
+                    for (var i = 1; i <= propertyModel.Repeat; i++)
                     {
                         var columnName = propertyModel.Data > 0
                             ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format)}"
@@ -706,9 +684,12 @@ namespace War3Api.Generator.Object
                 }
                 else
                 {
-                    if (propertyModel.Column.HasValue)
+                    var columnName = propertyModel.Name;
+
+                    var column = data[columnName].Cast<int?>().SingleOrDefault();
+                    if (column.HasValue)
                     {
-                        var value = data[propertyModel.Column.Value, row];
+                        var value = data[column.Value, row];
                         var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
                         statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
@@ -820,7 +801,7 @@ namespace War3Api.Generator.Object
 
         internal static string LookupCategory(string category)
         {
-            return (string)_worldEditData["ObjectEditorCategories"][category].Single();
+            return _worldEditData["ObjectEditorCategories"][category].Single();
         }
 
         private static IDictionary<string, IDictionary<string, string[]>> GenerateWorldEditDataLookup()
@@ -967,7 +948,7 @@ namespace War3Api.Generator.Object
             GenerateMember(enumDeclaration, "Enums");
         }
 
-        private static IEnumerable<EnumModel> GenerateEnums()
+        private static IEnumerable<EnumModel> GetEnums()
         {
             using (var unitEditorDataFile = File.OpenRead(Path.Combine(_inputFolder, PathConstants.EnumDataFilePath)))
             {
@@ -1022,7 +1003,7 @@ namespace War3Api.Generator.Object
                                     throw new InvalidDataException(line);
                                 }
 
-                                currentEnumModel.Members.Single(member => member.Value == altKey).AlternativeName = valueString;
+                                // currentEnumModel.Members.Single(member => member.Value == altKey).AlternativeName = valueString;
                             }
                             else if (int.TryParse(keyString, out var key))
                             {
@@ -1047,7 +1028,7 @@ namespace War3Api.Generator.Object
 
                                 var memberModel = new EnumMemberModel();
                                 memberModel.DisplayName = displayName;
-                                memberModel.GameVersion = values.Length == 3 ? int.Parse(values[2]) : 0;
+                                // memberModel.GameVersion = values.Length == 3 ? int.Parse(values[2]) : 0;
                                 if (int.TryParse(values[0], out var i))
                                 {
                                     memberModel.Name = displayName.Dehumanize();
@@ -1084,7 +1065,7 @@ namespace War3Api.Generator.Object
             }
         }
 
-        private static void GenerateDataConverter()
+        internal static void GenerateDataConverter()
         {
             GenerateMember(SyntaxFactory.ClassDeclaration(
                 default,
@@ -1102,6 +1083,57 @@ namespace War3Api.Generator.Object
                     .GroupBy(typeModel => typeModel.FullIdentifier)
                     .Select(grouping => grouping.First())
                     .SelectMany(GetConvertMethods))));
+        }
+
+        internal static void GenerateEnums()
+        {
+            var destructableCategory = new EnumModel("DestructableCategory");
+            foreach (var member in _worldEditData["DestructibleCategories"])
+            {
+                var memberModel = new EnumMemberModel();
+
+                var name = Localize(member.Value.First());
+                memberModel.Name = name.Dehumanize();
+                memberModel.DisplayName = name;
+                memberModel.Value = char.Parse(member.Key);
+                memberModel.IsValueChar = true;
+
+                destructableCategory.Members.Add(memberModel);
+            }
+
+            destructableCategory.EnsureMemberNamesUnique();
+
+            GenerateEnumFile(destructableCategory);
+
+            var doodadCategory = new EnumModel("DoodadCategory");
+            foreach (var member in _worldEditData["DoodadCategories"])
+            {
+                var memberModel = new EnumMemberModel();
+
+                var name = Localize(member.Value.First());
+                memberModel.Name = name.Dehumanize();
+                memberModel.DisplayName = name;
+                memberModel.Value = char.Parse(member.Key);
+                memberModel.IsValueChar = true;
+
+                doodadCategory.Members.Add(memberModel);
+            }
+
+            doodadCategory.EnsureMemberNamesUnique();
+
+            GenerateEnumFile(doodadCategory);
+
+            var enumModels = GetEnums()
+                .GroupBy(enumModel => enumModel.Name, StringComparer.Ordinal)
+                .Select(grouping => grouping.First())
+                .ToList();
+
+            foreach (var enumModel in enumModels)
+            {
+                enumModel.EnsureMemberNamesUnique();
+
+                GenerateEnumFile(enumModel);
+            }
         }
 
         private static IEnumerable<MethodDeclarationSyntax> GetConvertMethods(TypeModel typeModel)

@@ -11,18 +11,16 @@ namespace War3Api.Generator.Object.Models
     {
         public string Name { get; set; }
 
-        public string AlternativeName { get; set; }
-
         public string DisplayName { get; set; }
 
         public string UniqueName { get; set; }
-
-        public int GameVersion { get; set; }
 
         public int Value { get; set; }
 
         public bool IsValueChar { get; set; }
 
         public string ValueString => IsValueChar ? $"'{(char)Value}'" : Value.ToString();
+
+        public override string ToString() => DisplayName;
     }
 }

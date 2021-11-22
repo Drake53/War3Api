@@ -24,6 +24,10 @@ namespace War3Api.Generator.Object
             var outputFolder = OutputAbsolute ?? Path.Combine(OutputFolder, Version);
 
             ObjectApiGenerator.InitializeGenerator(inputFolder, outputFolder);
+
+            ObjectApiGenerator.GenerateDataConverter();
+            ObjectApiGenerator.GenerateEnums();
+
             UnitApiGenerator.Generate(inputFolder);
             ItemApiGenerator.Generate(inputFolder);
             DestructableApiGenerator.Generate(inputFolder);

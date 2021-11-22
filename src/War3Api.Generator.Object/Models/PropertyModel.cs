@@ -14,18 +14,12 @@ namespace War3Api.Generator.Object.Models
         // Column name
         public string Name { get; set; }
 
-        // If true, property's value can be set for each level (or variation for doodads) individually.
-        public bool Repeat { get; set; }
+        public string UniqueName { get; set; }
 
-        public int RepeatCount { get; set; }
+        // The amount of levels or variations.
+        public int Repeat { get; set; }
 
         public int Data { get; set; }
-
-        public string Category { get; set; }
-
-        public string DisplayName { get; set; }
-
-        public string DehumanizedName { get; set; }
 
         public string Type { get; set; }
 
@@ -35,8 +29,6 @@ namespace War3Api.Generator.Object.Models
 
         public string UseSpecific { get; set; }
 
-        public int? Column { get; set; }
-
-        public override string ToString() => DehumanizedName;
+        public override string ToString() => UniqueName;
     }
 }

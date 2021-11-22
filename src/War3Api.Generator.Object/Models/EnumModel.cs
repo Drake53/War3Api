@@ -23,5 +23,7 @@ namespace War3Api.Generator.Object.Models
         public bool Unused { get; set; }
 
         public IList<EnumMemberModel> Members { get; set; }
+
+        public override string ToString() => Name;
     }
 }

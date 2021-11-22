@@ -58,49 +58,28 @@ namespace War3Api.Generator.Object
             var minValColumn = metaData[DataConstants.MetaDataMinValColumn].Single();
             var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
 
-            static string GetDisplayName(string displayNameColumn, string fieldColumn)
-            {
-                var localized = ObjectApiGenerator.Localize(displayNameColumn);
-                return localized.Contains('%', StringComparison.Ordinal) ? fieldColumn : localized;
-            }
-
             var properties = metaData
                 .Skip(1)
-                .Select(property => new PropertyModel()
+                .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
-                    Repeat = property[repeatColumn].ParseBool(),
-                    RepeatCount = (int)property[repeatColumn],
-                    Category = ObjectApiGenerator.Localize(ObjectApiGenerator.LookupCategory((string)property[categoryColumn])),
-                    DisplayName = GetDisplayName((string)property[displayNameColumn], (string)property[fieldColumn]),
+                    UniqueName = ObjectApiGenerator.CreateUniquePropertyName(
+                        (string)property[fieldColumn],
+                        (string)property[categoryColumn],
+                        (string)property[displayNameColumn]),
+                    Repeat = (int)property[repeatColumn],
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
-                    Column = data[property[fieldColumn]].Cast<int?>().SingleOrDefault(),
                 })
                 .ToDictionary(property => property.Rawcode);
-
-            foreach (var propertyModel in properties.Values)
-            {
-                var category = propertyModel.Category.Replace("&", string.Empty, StringComparison.Ordinal).Dehumanize();
-                var name = new string(propertyModel.DisplayName.Where(@char => @char != '(' && @char != ')').ToArray()).Dehumanize();
-
-                propertyModel.DehumanizedName = category + name;
-            }
 
             // Upgrade types (enum)
             var upgradeTypeEnumModel = new EnumModel(DataConstants.UpgradeTypeEnumName);
             foreach (var upgradeType in data.Skip(1))
             {
-                var upgradeTypeEnumMemberModel = new EnumMemberModel();
-
-                var name = ObjectApiGenerator.Localize((string)upgradeType[commentColumn]);
-                upgradeTypeEnumMemberModel.Name = name.Dehumanize();
-                upgradeTypeEnumMemberModel.DisplayName = name;
-                upgradeTypeEnumMemberModel.Value = ((string)upgradeType[upgradeIdColumn]).FromRawcode();
-
-                upgradeTypeEnumModel.Members.Add(upgradeTypeEnumMemberModel);
+                upgradeTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)upgradeType[commentColumn], (string)upgradeType[upgradeIdColumn]));
             }
 
             upgradeTypeEnumModel.EnsureMemberNamesUnique();
