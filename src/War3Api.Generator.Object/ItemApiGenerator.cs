@@ -67,7 +67,7 @@ namespace War3Api.Generator.Object
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
-                    UniqueName = ObjectApiGenerator.CreateUniquePropertyName(
+                    IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
                         (string)property[fieldColumn],
                         (string)property[categoryColumn],
                         (string)property[displayNameColumn]),
@@ -76,6 +76,8 @@ namespace War3Api.Generator.Object
                     MaxVal = property[maxValColumn],
                 })
                 .ToDictionary(property => property.Rawcode);
+
+            ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values);
 
             // Item types (enum)
             var itemTypeEnumModel = new EnumModel(DataConstants.ItemTypeEnumName);

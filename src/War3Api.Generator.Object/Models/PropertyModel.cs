@@ -14,6 +14,8 @@ namespace War3Api.Generator.Object.Models
         // Column name
         public string Name { get; set; }
 
+        public string IdentifierName { get; set; }
+
         public string UniqueName { get; set; }
 
         // The amount of levels or variations.

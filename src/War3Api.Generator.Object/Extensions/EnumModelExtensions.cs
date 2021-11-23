@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using War3Api.Generator.Object.Models;
 
@@ -11,11 +10,7 @@ namespace War3Api.Generator.Object.Extensions
     {
         internal static void EnsureMemberNamesUnique(this EnumModel enumModel)
         {
-            var duplicateNames = enumModel.Members
-                .GroupBy(member => member.Name, StringComparer.Ordinal)
-                .Where(grouping => grouping.Count() > 1)
-                .Select(grouping => grouping.Key)
-                .ToHashSet(StringComparer.Ordinal);
+            var duplicateNames = enumModel.Members.FindDuplicates(member => member.Name, StringComparer.Ordinal);
 
             foreach (var member in enumModel.Members)
             {

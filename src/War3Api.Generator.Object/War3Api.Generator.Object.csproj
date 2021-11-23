@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Humanizer.Core" Version="2.7.9" />
+    <PackageReference Include="Humanizer.Core" Version="2.13.14" />
     <PackageReference Include="War3Net.Build" Version="5.0.1" />
     <PackageReference Include="War3Net.IO.Slk" Version="0.1.2" />
   </ItemGroup>
