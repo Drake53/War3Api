@@ -1,14 +1,26 @@
 ﻿using System;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 using Humanizer;
 
 using Microsoft.CodeAnalysis.CSharp;
 
+using War3Net.Common.Extensions;
+
 namespace War3Api.Generator.Object.Extensions
 {
     public static class StringExtensions
     {
+        public static ImmutableHashSet<int> GetSpecifics(this string? s)
+        {
+            return (s ?? string.Empty)
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(specific => specific.FromRawcode())
+                .ToImmutableHashSet();
+        }
+
         public static string ToIdentifier(this string s)
         {
             s = s.Pascalize();
@@ -38,10 +50,6 @@ namespace War3Api.Generator.Object.Extensions
                 if (SyntaxFacts.IsIdentifierPartCharacter(c))
                 {
                     sb.Append(c);
-                }
-                else if (c == '(')
-                {
-                    break;
                 }
             }
 

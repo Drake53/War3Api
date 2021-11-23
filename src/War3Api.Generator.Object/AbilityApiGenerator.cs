@@ -76,11 +76,12 @@ namespace War3Api.Generator.Object
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
-                    UseSpecific = (string)property[useSpecificColumn],
+                    Specifics = ((string)property[useSpecificColumn]).GetSpecifics(),
+                    SpecificUniqueNames = new(),
                 })
                 .ToDictionary(property => property.Rawcode);
 
-            ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values);
+            ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values, useSpecific: true);
 
             // Ability types (enum)
             var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
@@ -100,7 +101,7 @@ namespace War3Api.Generator.Object
 
             // Ability (class)
             var classMembers = new List<MemberDeclarationSyntax>();
-            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, properties.Values.Where(property => string.IsNullOrEmpty(property.UseSpecific)), IsAbilityClassAbstract));
+            classMembers.AddRange(ObjectApiGenerator.GetProperties(DataConstants.AbilityClassName, DataConstants.AbilityTypeEnumName, properties.Values.Where(propertyModel => propertyModel.Specifics.IsEmpty), IsAbilityClassAbstract));
 
             if (!IsAbilityClassAbstract)
             {
@@ -122,7 +123,7 @@ namespace War3Api.Generator.Object
                             ObjectApiGenerator.GetProperties(
                                 abilityType.UniqueName,
                                 DataConstants.AbilityTypeEnumName,
-                                properties.Values.Where(property => property.UseSpecific?.Contains(abilityType.Value.ToRawcode(), StringComparison.Ordinal) ?? false),
+                                properties.Values.Where(propertyModel => propertyModel.Specifics.Contains(abilityType.Value)),
                                 false,
                                 false,
                                 abilityType.Value)),

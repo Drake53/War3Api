@@ -5,6 +5,9 @@
 // </copyright>
 // ------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
 namespace War3Api.Generator.Object.Models
 {
     internal sealed class PropertyModel
@@ -29,7 +32,9 @@ namespace War3Api.Generator.Object.Models
 
         public object MaxVal { get; set; }
 
-        public string UseSpecific { get; set; }
+        public ImmutableHashSet<int> Specifics { get; set; }
+
+        public Dictionary<int, string> SpecificUniqueNames { get; set; }
 
         public override string ToString() => UniqueName;
     }

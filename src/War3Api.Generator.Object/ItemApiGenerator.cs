@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -74,6 +75,8 @@ namespace War3Api.Generator.Object
                     Type = (string)property[typeColumn],
                     MinVal = property[minValColumn],
                     MaxVal = property[maxValColumn],
+                    Specifics = ImmutableHashSet<int>.Empty,
+                    SpecificUniqueNames = new(),
                 })
                 .ToDictionary(property => property.Rawcode);
 

@@ -157,15 +157,46 @@ namespace War3Api.Generator.Object
             return sb.ToString().ToIdentifier();
         }
 
-        internal static void EnsurePropertyNamesUnique(IEnumerable<PropertyModel> properties)
+        internal static void EnsurePropertyNamesUnique(IEnumerable<PropertyModel> properties, bool useSpecific = false)
         {
-            var duplicateNames = properties.FindDuplicates(propertyModel => propertyModel.IdentifierName, StringComparer.Ordinal);
-
-            foreach (var propertyModel in properties)
+            if (useSpecific)
             {
-                propertyModel.UniqueName = duplicateNames.Contains(propertyModel.IdentifierName)
-                    ? $"{propertyModel.IdentifierName}_{propertyModel.Rawcode}"
-                    : propertyModel.IdentifierName;
+                var knownSpecifics = properties.SelectMany(propertyModel => propertyModel.Specifics).ToHashSet();
+
+                foreach (var specific in knownSpecifics)
+                {
+                    var propertiesSubset = properties.Where(propertyModel => propertyModel.Specifics.IsEmpty || propertyModel.Specifics.Contains(specific)).ToList();
+                    var specificDuplicateNames = propertiesSubset.FindDuplicates(propertyModel => propertyModel.IdentifierName, StringComparer.Ordinal);
+
+                    foreach (var propertyModel in propertiesSubset)
+                    {
+                        if (!propertyModel.Specifics.IsEmpty && specificDuplicateNames.Contains(propertyModel.IdentifierName))
+                        {
+                            propertyModel.SpecificUniqueNames.Add(specific, $"{propertyModel.IdentifierName}_{propertyModel.Rawcode}");
+                        }
+                    }
+                }
+
+                foreach (var propertyModel in properties)
+                {
+                    if (!propertyModel.Specifics.IsEmpty)
+                    {
+                        propertyModel.UniqueName = propertyModel.IdentifierName;
+                    }
+                }
+
+                EnsurePropertyNamesUnique(properties.Where(propertyModel => propertyModel.Specifics.IsEmpty));
+            }
+            else
+            {
+                var duplicateNames = properties.FindDuplicates(propertyModel => propertyModel.IdentifierName, StringComparer.Ordinal);
+
+                foreach (var propertyModel in properties)
+                {
+                    propertyModel.UniqueName = duplicateNames.Contains(propertyModel.IdentifierName)
+                        ? $"{propertyModel.IdentifierName}_{propertyModel.Rawcode}"
+                        : propertyModel.IdentifierName;
+                }
             }
         }
 
@@ -293,10 +324,14 @@ namespace War3Api.Generator.Object
 
             foreach (var propertyModel in properties)
             {
+                var uniqueName = typeId.HasValue && propertyModel.SpecificUniqueNames.TryGetValue(typeId.Value, out var specificUniqueName)
+                    ? specificUniqueName
+                    : propertyModel.UniqueName;
+
                 var type = propertyModel.Type;
                 if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
-                    throw new InvalidDataException($"Unknown type '{type}' for {className} property {propertyModel.UniqueName} '{propertyModel.Rawcode}'.");
+                    throw new InvalidDataException($"Unknown type '{type}' for {className} property {uniqueName} ('{propertyModel.Rawcode}').");
                 }
 
                 static string ParseMinMaxValue(object value)
@@ -343,7 +378,7 @@ namespace War3Api.Generator.Object
 
                 var id = propertyModel.Rawcode.FromRawcode();
 
-                var propertyValueName = propertyModel.UniqueName;
+                var propertyValueName = uniqueName;
                 if (string.Equals(propertyValueName, className, StringComparison.Ordinal))
                 {
                     propertyValueName += "_";
@@ -354,7 +389,7 @@ namespace War3Api.Generator.Object
 
                 var hasRawProperty = typeModel.Category != TypeModelCategory.Basic || dataTypeModel.Type != dataTypeModel.UnderlyingType;
 
-                var simpleIdentifier = hasRawProperty ? $"{propertyModel.UniqueName}Raw" : propertyValueName;
+                var simpleIdentifier = hasRawProperty ? $"{uniqueName}Raw" : propertyValueName;
 
                 if (propertyModel.Repeat > 0)
                 {
@@ -362,11 +397,11 @@ namespace War3Api.Generator.Object
 
                     var propertyType = $"ObjectProperty<{dataTypeModel.Identifier}>";
 
-                    var fieldIdentifier = propertyModel.UniqueName.ToCamelCase(true, true);
+                    var fieldIdentifier = uniqueName.ToCamelCase(true, true);
                     var simpleFieldIdentifier = hasRawProperty ? $"{fieldIdentifier}Raw" : fieldIdentifier;
 
-                    var getterFuncName = $"Get{propertyModel.UniqueName}";
-                    var setterFuncName = $"Set{propertyModel.UniqueName}";
+                    var getterFuncName = $"Get{uniqueName}";
+                    var setterFuncName = $"Set{uniqueName}";
                     var simpleGetterFuncName = hasRawProperty ? $"{getterFuncName}Raw" : getterFuncName;
                     var simpleSetterFuncName = hasRawProperty ? $"{setterFuncName}Raw" : setterFuncName;
 
@@ -396,8 +431,8 @@ namespace War3Api.Generator.Object
 
                     const string isModifiedPropertyType = "ReadOnlyObjectProperty<bool>";
 
-                    var isModifiedFieldIdentifier = $"Is{propertyModel.UniqueName}Modified".ToCamelCase(true, true);
-                    var isModifiedGetterFuncName = $"GetIs{propertyModel.UniqueName}Modified";
+                    var isModifiedFieldIdentifier = $"Is{uniqueName}Modified".ToCamelCase(true, true);
+                    var isModifiedGetterFuncName = $"GetIs{uniqueName}Modified";
 
                     privateConstructorAssignments.Add((isModifiedFieldIdentifier, SyntaxFactory.ParseExpression($"new Lazy<{isModifiedPropertyType}>(() => new {isModifiedPropertyType}({isModifiedGetterFuncName}))")));
 
@@ -408,7 +443,7 @@ namespace War3Api.Generator.Object
 
                     yield return SyntaxFactoryService.Property(
                         isModifiedPropertyType,
-                        $"Is{propertyModel.UniqueName}Modified",
+                        $"Is{uniqueName}Modified",
                         SyntaxFactory.ParseExpression($"{isModifiedFieldIdentifier}.Value"));
 
                     yield return SyntaxFactoryService.Method(
@@ -456,7 +491,7 @@ namespace War3Api.Generator.Object
 
                     yield return SyntaxFactoryService.Property(
                         "bool",
-                        $"Is{propertyModel.UniqueName}Modified",
+                        $"Is{uniqueName}Modified",
                         SyntaxFactory.ParseExpression($"{modificationsFieldName}.ContainsKey({id})"));
 
                     if (hasRawProperty)
@@ -635,17 +670,21 @@ namespace War3Api.Generator.Object
 
             var objectTypeCode = objectType.Value.ToRawcode();
             var objectProperties = properties
-                .Where(propertyModel => string.IsNullOrEmpty(propertyModel.UseSpecific) || propertyModel.UseSpecific.Contains(objectTypeCode, StringComparison.Ordinal))
+                .Where(propertyModel => propertyModel.Specifics.IsEmpty || propertyModel.Specifics.Contains(objectType.Value))
                 .ToList();
 
             var format = $"D{(objectProperties.Select(propertyModel => propertyModel.Repeat).Max() >= 10 ? "2" : "1")}";
 
             foreach (var propertyModel in objectProperties)
             {
+                var uniqueName = propertyModel.SpecificUniqueNames.TryGetValue(objectType.Value, out var specificUniqueName)
+                    ? specificUniqueName
+                    : propertyModel.UniqueName;
+
                 var type = propertyModel.Type;
                 if (!_typeModelsDict.TryGetValue(type, out var typeModel))
                 {
-                    throw new InvalidDataException($"Unknown type '{type}' for property {propertyModel.UniqueName} ('{propertyModel.Rawcode}').");
+                    throw new InvalidDataException($"Unknown type '{type}' for property {uniqueName} ('{propertyModel.Rawcode}').");
                 }
 
                 var dataTypeModel = _dataTypeModels[typeModel.Type];
@@ -653,7 +692,7 @@ namespace War3Api.Generator.Object
                 var hasRawProperty = typeModel.Category != TypeModelCategory.Basic || dataTypeModel.Type != dataTypeModel.UnderlyingType;
                 var isStringProperty = typeModel.Category != TypeModelCategory.Basic && typeModel.Category != TypeModelCategory.EnumInt && typeModel.Category != TypeModelCategory.EnumFlags;
 
-                var left = hasRawProperty ? $"{objectVariableName}.{propertyModel.UniqueName}Raw" : $"{objectVariableName}.{propertyModel.UniqueName}";
+                var left = hasRawProperty ? $"{objectVariableName}.{uniqueName}Raw" : $"{objectVariableName}.{uniqueName}";
 
                 if (propertyModel.Repeat > 0)
                 {
