@@ -24,17 +24,24 @@ namespace War3Api.Generator.Object
             var outputFolder = OutputAbsolute ?? Path.Combine(OutputFolder, Version);
 
             ObjectApiGenerator.InitializeGenerator(inputFolder, outputFolder);
+            UnitApiGenerator.InitializeGenerator(inputFolder);
+            ItemApiGenerator.InitializeGenerator(inputFolder);
+            DestructableApiGenerator.InitializeGenerator(inputFolder);
+            DoodadApiGenerator.InitializeGenerator(inputFolder);
+            AbilityApiGenerator.InitializeGenerator(inputFolder);
+            BuffApiGenerator.InitializeGenerator(inputFolder);
+            UpgradeApiGenerator.InitializeGenerator(inputFolder);
 
             ObjectApiGenerator.GenerateDataConverter();
             ObjectApiGenerator.GenerateEnums();
 
-            UnitApiGenerator.Generate(inputFolder);
-            ItemApiGenerator.Generate(inputFolder);
-            DestructableApiGenerator.Generate(inputFolder);
-            DoodadApiGenerator.Generate(inputFolder);
-            AbilityApiGenerator.Generate(inputFolder);
-            BuffApiGenerator.Generate(inputFolder);
-            UpgradeApiGenerator.Generate(inputFolder);
+            UnitApiGenerator.Generate();
+            ItemApiGenerator.Generate();
+            DestructableApiGenerator.Generate();
+            DoodadApiGenerator.Generate();
+            AbilityApiGenerator.Generate();
+            BuffApiGenerator.Generate();
+            UpgradeApiGenerator.Generate();
         }
     }
 }

@@ -13,16 +13,11 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
-using Humanizer;
-
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
-
-using War3Net.Common.Extensions;
-using War3Net.IO.Slk;
 
 namespace War3Api.Generator.Object
 {
@@ -30,44 +25,75 @@ namespace War3Api.Generator.Object
     {
         private const bool IsItemClassAbstract = false;
 
-        internal static void Generate(string inputFolder)
+        private static Dictionary<string, TableModel> _dataTables;
+        private static TableModel _metadataTable;
+
+        private static EnumModel _enumModel;
+
+        private static bool _initialized = false;
+
+        internal static void InitializeGenerator(string inputFolder)
         {
+            if (_initialized)
+            {
+                throw new InvalidOperationException("Already initialized.");
+            }
+
             if (!ObjectApiGenerator.IsInitialized)
             {
                 throw new InvalidOperationException("Must initialize ObjectApiGenerator first.");
             }
 
-            var itemData = new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.ItemDataPath))).Shrink();
-            var unitMetaData = ObjectApiGenerator.Localize(new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.UnitMetaDataPath))));
+            _dataTables = new[]
+            {
+                new TableModel(Path.Combine(inputFolder, PathConstants.ItemDataPath), DataConstants.ItemDataKeyColumn, DataConstants.CommentColumn),
+            }
+            .ToDictionary(table => table.TableName, StringComparer.OrdinalIgnoreCase);
 
-            Generate(itemData, unitMetaData);
+            _metadataTable = new TableModel(Path.Combine(inputFolder, PathConstants.ItemMetaDataPath));
+            ObjectApiGenerator.Localize(_metadataTable.Table);
+
+            _enumModel = new EnumModel(DataConstants.ItemTypeEnumName);
+
+            var members = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var dataTable in _dataTables.Values)
+            {
+                dataTable.AddValues(members);
+            }
+
+            foreach (var member in members)
+            {
+                _enumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel(member.Value, member.Key));
+            }
+
+            _enumModel.EnsureMemberNamesUnique();
+
+            _initialized = true;
         }
 
-        internal static void Generate(SylkTable data, SylkTable metaData)
+        internal static void Generate()
         {
             const int LimitSubclasses = 100;
 
-            // Data columns
-            var itemIdColumn = data[DataConstants.ItemDataKeyColumn].Single();
-            var commentColumn = data[DataConstants.CommentColumn].Single();
-
             // MetaData columns
-            var idColumn = metaData[DataConstants.MetaDataIdColumn].Single();
-            var fieldColumn = metaData[DataConstants.MetaDataFieldColumn].Single();
-            var categoryColumn = metaData[DataConstants.MetaDataCategoryColumn].Single();
-            var displayNameColumn = metaData[DataConstants.MetaDataDisplayNameColumn].Single();
-            var typeColumn = metaData[DataConstants.MetaDataTypeColumn].Single();
-            var minValColumn = metaData[DataConstants.MetaDataMinValColumn].Single();
-            var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
-            var useItemColumn = metaData[DataConstants.MetaDataUseItemColumn].Single();
+            var idColumn = _metadataTable.Table[DataConstants.MetaDataIdColumn].Single();
+            var fieldColumn = _metadataTable.Table[DataConstants.MetaDataFieldColumn].Single();
+            var dataSourceColumn = _metadataTable.Table[DataConstants.MetaDataSlkColumn].Single();
+            var categoryColumn = _metadataTable.Table[DataConstants.MetaDataCategoryColumn].Single();
+            var displayNameColumn = _metadataTable.Table[DataConstants.MetaDataDisplayNameColumn].Single();
+            var typeColumn = _metadataTable.Table[DataConstants.MetaDataTypeColumn].Single();
+            var minValColumn = _metadataTable.Table[DataConstants.MetaDataMinValColumn].Single();
+            var maxValColumn = _metadataTable.Table[DataConstants.MetaDataMaxValColumn].Single();
+            var useItemColumn = _metadataTable.Table[DataConstants.MetaDataUseItemColumn].Single();
 
-            var properties = metaData
+            var properties = _metadataTable.Table
                 .Skip(1)
                 .Where(property => property[useItemColumn].ParseBool())
                 .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
+                    DataSource = (string)property[dataSourceColumn],
                     IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
                         (string)property[fieldColumn],
                         (string)property[categoryColumn],
@@ -83,15 +109,7 @@ namespace War3Api.Generator.Object
             ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values);
 
             // Item types (enum)
-            var itemTypeEnumModel = new EnumModel(DataConstants.ItemTypeEnumName);
-            foreach (var itemType in data.Skip(1))
-            {
-                itemTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)itemType[commentColumn], (string)itemType[itemIdColumn]));
-            }
-
-            itemTypeEnumModel.EnsureMemberNamesUnique();
-
-            ObjectApiGenerator.GenerateEnumFile(itemTypeEnumModel);
+            ObjectApiGenerator.GenerateEnumFile(_enumModel);
 
             // Item (class)
             var classMembers = new List<MemberDeclarationSyntax>();
@@ -102,12 +120,11 @@ namespace War3Api.Generator.Object
 
             // ItemLoader
             var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
-                itemTypeEnumModel.Members,
+                _enumModel.Members,
                 properties.Values,
-                data,
+                _dataTables,
                 DataConstants.ItemClassName,
                 DataConstants.ItemTypeEnumName,
-                DataConstants.ItemDataKeyColumn,
                 IsItemClassAbstract);
 
             ObjectApiGenerator.GenerateMember(

@@ -13,16 +13,11 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
-using Humanizer;
-
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
-
-using War3Net.Common.Extensions;
-using War3Net.IO.Slk;
 
 namespace War3Api.Generator.Object
 {
@@ -30,41 +25,72 @@ namespace War3Api.Generator.Object
     {
         private const bool IsUpgradeClassAbstract = false;
 
-        internal static void Generate(string inputFolder)
+        private static Dictionary<string, TableModel> _dataTables;
+        private static TableModel _metadataTable;
+
+        private static EnumModel _enumModel;
+
+        private static bool _initialized = false;
+
+        internal static void InitializeGenerator(string inputFolder)
         {
+            if (_initialized)
+            {
+                throw new InvalidOperationException("Already initialized.");
+            }
+
             if (!ObjectApiGenerator.IsInitialized)
             {
                 throw new InvalidOperationException("Must initialize ObjectApiGenerator first.");
             }
 
-            var upgradeData = new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.UpgradeDataPath))).Shrink();
-            var upgradeMetaData = ObjectApiGenerator.Localize(new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.UpgradeMetaDataPath))));
+            _dataTables = new[]
+            {
+                new TableModel(Path.Combine(inputFolder, PathConstants.UpgradeDataPath), DataConstants.UpgradeDataKeyColumn, DataConstants.CommentsColumn),
+            }
+            .ToDictionary(table => table.TableName, StringComparer.OrdinalIgnoreCase);
 
-            Generate(upgradeData, upgradeMetaData);
+            _metadataTable = new TableModel(Path.Combine(inputFolder, PathConstants.UpgradeMetaDataPath));
+            ObjectApiGenerator.Localize(_metadataTable.Table);
+
+            _enumModel = new EnumModel(DataConstants.UpgradeTypeEnumName);
+
+            var members = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var dataTable in _dataTables.Values)
+            {
+                dataTable.AddValues(members);
+            }
+
+            foreach (var member in members)
+            {
+                _enumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel(member.Value, member.Key));
+            }
+
+            _enumModel.EnsureMemberNamesUnique();
+
+            _initialized = true;
         }
 
-        internal static void Generate(SylkTable data, SylkTable metaData)
+        internal static void Generate()
         {
-            // Data columns
-            var upgradeIdColumn = data[DataConstants.UpgradeDataKeyColumn].Single();
-            var commentColumn = data[DataConstants.CommentsColumn].Single();
-
             // MetaData columns
-            var idColumn = metaData[DataConstants.MetaDataIdColumn].Single();
-            var fieldColumn = metaData[DataConstants.MetaDataFieldColumn].Single();
-            var repeatColumn = metaData[DataConstants.MetaDataRepeatColumn].Single();
-            var categoryColumn = metaData[DataConstants.MetaDataCategoryColumn].Single();
-            var displayNameColumn = metaData[DataConstants.MetaDataDisplayNameColumn].Single();
-            var typeColumn = metaData[DataConstants.MetaDataTypeColumn].Single();
-            var minValColumn = metaData[DataConstants.MetaDataMinValColumn].Single();
-            var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
+            var idColumn = _metadataTable.Table[DataConstants.MetaDataIdColumn].Single();
+            var fieldColumn = _metadataTable.Table[DataConstants.MetaDataFieldColumn].Single();
+            var dataSourceColumn = _metadataTable.Table[DataConstants.MetaDataSlkColumn].Single();
+            var repeatColumn = _metadataTable.Table[DataConstants.MetaDataRepeatColumn].Single();
+            var categoryColumn = _metadataTable.Table[DataConstants.MetaDataCategoryColumn].Single();
+            var displayNameColumn = _metadataTable.Table[DataConstants.MetaDataDisplayNameColumn].Single();
+            var typeColumn = _metadataTable.Table[DataConstants.MetaDataTypeColumn].Single();
+            var minValColumn = _metadataTable.Table[DataConstants.MetaDataMinValColumn].Single();
+            var maxValColumn = _metadataTable.Table[DataConstants.MetaDataMaxValColumn].Single();
 
-            var properties = metaData
+            var properties = _metadataTable.Table
                 .Skip(1)
                 .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
+                    DataSource = (string)property[dataSourceColumn],
                     IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
                         (string)property[fieldColumn],
                         (string)property[categoryColumn],
@@ -81,15 +107,7 @@ namespace War3Api.Generator.Object
             ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values);
 
             // Upgrade types (enum)
-            var upgradeTypeEnumModel = new EnumModel(DataConstants.UpgradeTypeEnumName);
-            foreach (var upgradeType in data.Skip(1))
-            {
-                upgradeTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)upgradeType[commentColumn], (string)upgradeType[upgradeIdColumn]));
-            }
-
-            upgradeTypeEnumModel.EnsureMemberNamesUnique();
-
-            ObjectApiGenerator.GenerateEnumFile(upgradeTypeEnumModel);
+            ObjectApiGenerator.GenerateEnumFile(_enumModel);
 
             // Upgrade (class)
             var classMembers = new List<MemberDeclarationSyntax>();
@@ -100,12 +118,11 @@ namespace War3Api.Generator.Object
 
             // UpgradeLoader
             var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
-                upgradeTypeEnumModel.Members,
+                _enumModel.Members,
                 properties.Values,
-                data,
+                _dataTables,
                 DataConstants.UpgradeClassName,
                 DataConstants.UpgradeTypeEnumName,
-                DataConstants.UpgradeDataKeyColumn,
                 IsUpgradeClassAbstract);
 
             ObjectApiGenerator.GenerateMember(

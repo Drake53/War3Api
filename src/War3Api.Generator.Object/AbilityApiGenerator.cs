@@ -12,16 +12,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Humanizer;
-
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using War3Api.Generator.Object.Extensions;
 using War3Api.Generator.Object.Models;
-
-using War3Net.Common.Extensions;
-using War3Net.IO.Slk;
 
 namespace War3Api.Generator.Object
 {
@@ -29,44 +24,75 @@ namespace War3Api.Generator.Object
     {
         private const bool IsAbilityClassAbstract = true;
 
-        internal static void Generate(string inputFolder)
+        private static Dictionary<string, TableModel> _dataTables;
+        private static TableModel _metadataTable;
+
+        private static EnumModel _enumModel;
+
+        private static bool _initialized = false;
+
+        internal static void InitializeGenerator(string inputFolder)
         {
+            if (_initialized)
+            {
+                throw new InvalidOperationException("Already initialized.");
+            }
+
             if (!ObjectApiGenerator.IsInitialized)
             {
                 throw new InvalidOperationException("Must initialize ObjectApiGenerator first.");
             }
 
-            var abilityData = new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.AbilityDataPath))).Shrink();
-            var abilityMetaData = ObjectApiGenerator.Localize(new SylkParser().Parse(File.OpenRead(Path.Combine(inputFolder, PathConstants.AbilityMetaDataPath))));
+            _dataTables = new[]
+            {
+                new TableModel(Path.Combine(inputFolder, PathConstants.AbilityDataPath), DataConstants.AbilityDataKeyColumn, DataConstants.CommentsColumn),
+            }
+            .ToDictionary(table => table.TableName, StringComparer.OrdinalIgnoreCase);
 
-            Generate(abilityData, abilityMetaData);
+            _metadataTable = new TableModel(Path.Combine(inputFolder, PathConstants.AbilityMetaDataPath));
+            ObjectApiGenerator.Localize(_metadataTable.Table);
+
+            _enumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
+
+            var members = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var dataTable in _dataTables.Values)
+            {
+                dataTable.AddValues(members);
+            }
+
+            foreach (var member in members)
+            {
+                _enumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel(member.Value, member.Key));
+            }
+
+            _enumModel.EnsureMemberNamesUnique();
+
+            _initialized = true;
         }
 
-        internal static void Generate(SylkTable data, SylkTable metaData)
+        internal static void Generate()
         {
-            // Data columns
-            var abilityIdColumn = data[DataConstants.AbilityDataKeyColumn].Single();
-            var commentColumn = data[DataConstants.CommentsColumn].Single();
-
             // MetaData columns
-            var idColumn = metaData[DataConstants.MetaDataIdColumn].Single();
-            var fieldColumn = metaData[DataConstants.MetaDataFieldColumn].Single();
-            var repeatColumn = metaData[DataConstants.MetaDataRepeatColumn].Single();
-            var dataColumn = metaData[DataConstants.MetaDataDataColumn].Single();
-            var categoryColumn = metaData[DataConstants.MetaDataCategoryColumn].Single();
-            var displayNameColumn = metaData[DataConstants.MetaDataDisplayNameColumn].Single();
-            var typeColumn = metaData[DataConstants.MetaDataTypeColumn].Single();
-            var minValColumn = metaData[DataConstants.MetaDataMinValColumn].Single();
-            var maxValColumn = metaData[DataConstants.MetaDataMaxValColumn].Single();
-            var useSpecificColumn = metaData[DataConstants.MetaDataUseSpecificColumn].Single();
+            var idColumn = _metadataTable.Table[DataConstants.MetaDataIdColumn].Single();
+            var fieldColumn = _metadataTable.Table[DataConstants.MetaDataFieldColumn].Single();
+            var dataSourceColumn = _metadataTable.Table[DataConstants.MetaDataSlkColumn].Single();
+            var repeatColumn = _metadataTable.Table[DataConstants.MetaDataRepeatColumn].Single();
+            var dataColumn = _metadataTable.Table[DataConstants.MetaDataDataColumn].Single();
+            var categoryColumn = _metadataTable.Table[DataConstants.MetaDataCategoryColumn].Single();
+            var displayNameColumn = _metadataTable.Table[DataConstants.MetaDataDisplayNameColumn].Single();
+            var typeColumn = _metadataTable.Table[DataConstants.MetaDataTypeColumn].Single();
+            var minValColumn = _metadataTable.Table[DataConstants.MetaDataMinValColumn].Single();
+            var maxValColumn = _metadataTable.Table[DataConstants.MetaDataMaxValColumn].Single();
+            var useSpecificColumn = _metadataTable.Table[DataConstants.MetaDataUseSpecificColumn].Single();
 
             // Properties
-            var properties = metaData
+            var properties = _metadataTable.Table
                 .Skip(1)
                 .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
                     Name = (string)property[fieldColumn],
+                    DataSource = (string)property[dataSourceColumn],
                     IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
                         (string)property[fieldColumn],
                         (string)property[categoryColumn],
@@ -84,20 +110,7 @@ namespace War3Api.Generator.Object
             ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values, useSpecific: true);
 
             // Ability types (enum)
-            var abilityTypeEnumModel = new EnumModel(DataConstants.AbilityTypeEnumName);
-            foreach (var abilityType in data.Skip(1))
-            {
-                if (string.IsNullOrEmpty((string)abilityType[abilityIdColumn]))
-                {
-                    continue;
-                }
-
-                abilityTypeEnumModel.Members.Add(ObjectApiGenerator.CreateEnumMemberModel((string)abilityType[commentColumn], (string)abilityType[abilityIdColumn]));
-            }
-
-            abilityTypeEnumModel.EnsureMemberNamesUnique();
-
-            ObjectApiGenerator.GenerateEnumFile(abilityTypeEnumModel);
+            ObjectApiGenerator.GenerateEnumFile(_enumModel);
 
             // Ability (class)
             var classMembers = new List<MemberDeclarationSyntax>();
@@ -113,7 +126,7 @@ namespace War3Api.Generator.Object
             // Abilities (subclasses)
             if (IsAbilityClassAbstract)
             {
-                foreach (var abilityType in abilityTypeEnumModel.Members)
+                foreach (var abilityType in _enumModel.Members)
                 {
                     ObjectApiGenerator.GenerateMember(
                         SyntaxFactoryService.Class(
@@ -138,34 +151,34 @@ namespace War3Api.Generator.Object
                         null,
                         new[]
                         {
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                 }),
 
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                     ("int", "newId"),
                                 }),
 
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                     ("string", "newRawcode"),
                                 }),
 
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
                                     (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
                                 }),
 
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
@@ -173,7 +186,7 @@ namespace War3Api.Generator.Object
                                     (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName),
                                 }),
 
-                            FactoryCreateMethod(abilityTypeEnumModel.Members,
+                            FactoryCreateMethod(_enumModel.Members,
                                 new[]
                                 {
                                     (DataConstants.AbilityTypeEnumName, abilityTypeVariableName),
@@ -185,12 +198,11 @@ namespace War3Api.Generator.Object
 
             // AbilityLoader
             var loaderMembers = ObjectApiGenerator.GetLoaderMethods(
-                abilityTypeEnumModel.Members,
+                _enumModel.Members,
                 properties.Values,
-                data,
+                _dataTables,
                 DataConstants.AbilityClassName,
                 DataConstants.AbilityTypeEnumName,
-                DataConstants.AbilityDataKeyColumn,
                 IsAbilityClassAbstract);
 
             ObjectApiGenerator.GenerateMember(

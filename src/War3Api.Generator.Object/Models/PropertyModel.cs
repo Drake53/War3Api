@@ -17,6 +17,9 @@ namespace War3Api.Generator.Object.Models
         // Column name
         public string Name { get; set; }
 
+        // Slk name
+        public string DataSource { get; set; }
+
         public string IdentifierName { get; set; }
 
         public string UniqueName { get; set; }

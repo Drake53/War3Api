@@ -85,6 +85,8 @@ namespace War3Api.Generator.Object
         internal const string MetaDataIdColumn = "ID";
         /// <summary>The property's column name in the corresponding object data .slk file.</summary>
         internal const string MetaDataFieldColumn = "field";
+        /// <summary>The file name of the property's corresponding object data .slk file.</summary>
+        internal const string MetaDataSlkColumn = "slk";
         /// <summary>If true (value is not 0), this property's value can be set individually for every level or variation of the object.</summary>
         internal const string MetaDataRepeatColumn = "repeat";
         internal const string MetaDataDataColumn = "data";

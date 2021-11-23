@@ -587,10 +587,9 @@ namespace War3Api.Generator.Object
         internal static IEnumerable<MemberDeclarationSyntax> GetLoaderMethods(
             IEnumerable<EnumMemberModel> members,
             IEnumerable<PropertyModel> properties,
-            SylkTable data,
+            IDictionary<string, TableModel> dataTables,
             string objectClassName,
             string objectTypeName,
-            string objectDataKeyColumn,
             bool isAbstractClass)
         {
             var objectTypeVariableName = objectTypeName.ToCamelCase(true);
@@ -623,17 +622,16 @@ namespace War3Api.Generator.Object
 
             foreach (var member in members)
             {
-                yield return LoaderLoadMethod(member, properties, data, objectClassName, objectTypeName, objectDataKeyColumn, isAbstractClass);
+                yield return LoaderLoadMethod(member, properties, dataTables, objectClassName, objectTypeName, isAbstractClass);
             }
         }
 
         private static MethodDeclarationSyntax LoaderLoadMethod(
             EnumMemberModel objectType,
             IEnumerable<PropertyModel> properties,
-            SylkTable data,
+            IDictionary<string, TableModel> dataTables,
             string objectClassName,
             string objectTypeName,
-            string objectDataKeyColumn,
             bool isAbstractClass)
         {
             var objectVariableName = objectClassName.ToCamelCase(true);
@@ -658,17 +656,8 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(objectCreationArgumentList)),
                         null)))))));
 
-            var objectIdColumn = data[objectDataKeyColumn].Single();
-            var row = 1;
-            for (; row <= data.Rows; row++)
-            {
-                if (objectType.Value == ((string)data[objectIdColumn, row]).FromRawcode())
-                {
-                    break;
-                }
-            }
+            var dataRows = new Dictionary<string, int>(StringComparer.Ordinal);
 
-            var objectTypeCode = objectType.Value.ToRawcode();
             var objectProperties = properties
                 .Where(propertyModel => propertyModel.Specifics.IsEmpty || propertyModel.Specifics.Contains(objectType.Value))
                 .ToList();
@@ -677,6 +666,29 @@ namespace War3Api.Generator.Object
 
             foreach (var propertyModel in objectProperties)
             {
+                if (!dataTables.TryGetValue(propertyModel.DataSource, out var dataTable))
+                {
+                    continue;
+                }
+
+                if (!dataRows.TryGetValue(propertyModel.DataSource, out var dataRow))
+                {
+                    for (var row = 1; row <= dataTable.Table.Rows; row++)
+                    {
+                        if (objectType.Value == ((string)dataTable.Table[dataTable.TableKeyColumn, row]).FromRawcode())
+                        {
+                            dataRows.Add(propertyModel.DataSource, row);
+                            dataRow = row;
+                            break;
+                        }
+                    }
+                }
+
+                if (dataRow == default)
+                {
+                    continue;
+                }
+
                 var uniqueName = propertyModel.SpecificUniqueNames.TryGetValue(objectType.Value, out var specificUniqueName)
                     ? specificUniqueName
                     : propertyModel.UniqueName;
@@ -702,10 +714,10 @@ namespace War3Api.Generator.Object
                             ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format)}"
                             : $"{propertyModel.Name}{i.ToString(format)}";
 
-                        var column = data[columnName].Cast<int?>().SingleOrDefault();
+                        var column = dataTable.Table[columnName].Cast<int?>().SingleOrDefault();
                         if (column.HasValue)
                         {
-                            var value = data[column.Value, row];
+                            var value = dataTable.Table[column.Value, dataRow];
                             var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
                             statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
@@ -721,10 +733,10 @@ namespace War3Api.Generator.Object
                 {
                     var columnName = propertyModel.Name;
 
-                    var column = data[columnName].Cast<int?>().SingleOrDefault();
+                    var column = dataTable.Table[columnName].Cast<int?>().SingleOrDefault();
                     if (column.HasValue)
                     {
-                        var value = data[column.Value, row];
+                        var value = dataTable.Table[column.Value, dataRow];
                         var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
                         statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
