@@ -105,6 +105,93 @@ namespace War3Api.Object.Tests
         }
 
         [TestMethod]
+        public void TestFallbackWithCampaignAndStandard()
+        {
+            const int PaladinDefaultHp = 100;
+            const int PaladinDefaultMp = 0;
+            const int PaladinDefaultStr = 22;
+            const int PaladinDefaultAgi = 13;
+            const int PaladinDefaultInt = 17;
+
+            var campaignDb = new ObjectDatabase();
+            var mapDb = new ObjectDatabase(campaignDb);
+
+            var unitCampaign1 = new Unit(UnitType.Paladin, campaignDb);
+            var unitCampaign2 = new Unit(UnitType.Paladin, "H002", campaignDb);
+
+            var unitMap1 = new Unit(UnitType.Paladin, mapDb);
+            var unitMap2 = new Unit(UnitType.Paladin, "H002", mapDb);
+            var unitMap3 = new Unit(UnitType.Paladin, "H003", mapDb);
+
+            unitCampaign1.StatsHitPointsMaximumBase = 1000;
+            unitCampaign1.StatsManaMaximum = 2000;
+
+            unitCampaign2.StatsStartingStrength = 200;
+            unitCampaign2.StatsStartingAgility = 250;
+
+            unitMap1.StatsManaMaximum = 3000;
+
+            unitMap2.StatsStartingAgility = 200;
+
+            unitMap3.StatsStartingIntelligence = 300;
+
+            Assert.AreEqual(unitCampaign1.StatsHitPointsMaximumBase, 1000);
+            Assert.AreEqual(unitCampaign1.StatsManaMaximum, 2000);
+            Assert.AreEqual(unitCampaign1.StatsStartingStrength, PaladinDefaultStr);
+            Assert.AreEqual(unitCampaign1.StatsStartingAgility, PaladinDefaultAgi);
+            Assert.AreEqual(unitCampaign1.StatsStartingIntelligence, PaladinDefaultInt);
+            Assert.IsTrue(unitCampaign1.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsTrue(unitCampaign1.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitCampaign1.IsStatsStartingIntelligenceModified);
+
+            Assert.AreEqual(unitCampaign2.StatsHitPointsMaximumBase, PaladinDefaultHp);
+            Assert.AreEqual(unitCampaign2.StatsManaMaximum, PaladinDefaultMp);
+            Assert.AreEqual(unitCampaign2.StatsStartingStrength, 200);
+            Assert.AreEqual(unitCampaign2.StatsStartingAgility, 250);
+            Assert.AreEqual(unitCampaign2.StatsStartingIntelligence, PaladinDefaultInt);
+            Assert.IsFalse(unitCampaign2.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitCampaign2.IsStatsManaMaximumModified);
+            Assert.IsTrue(unitCampaign2.IsStatsStartingStrengthModified);
+            Assert.IsTrue(unitCampaign2.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitCampaign2.IsStatsStartingIntelligenceModified);
+
+            Assert.AreEqual(unitMap1.StatsHitPointsMaximumBase, 1000);
+            Assert.AreEqual(unitMap1.StatsManaMaximum, 3000);
+            Assert.AreEqual(unitMap1.StatsStartingStrength, PaladinDefaultStr);
+            Assert.AreEqual(unitMap1.StatsStartingAgility, PaladinDefaultAgi);
+            Assert.AreEqual(unitMap1.StatsStartingIntelligence, PaladinDefaultInt);
+            Assert.IsFalse(unitMap1.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsTrue(unitMap1.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitMap1.IsStatsStartingIntelligenceModified);
+
+            Assert.AreEqual(unitMap2.StatsHitPointsMaximumBase, PaladinDefaultHp);
+            Assert.AreEqual(unitMap2.StatsManaMaximum, PaladinDefaultMp);
+            Assert.AreEqual(unitMap2.StatsStartingStrength, 200);
+            Assert.AreEqual(unitMap2.StatsStartingAgility, 200);
+            Assert.AreEqual(unitMap2.StatsStartingIntelligence, PaladinDefaultInt);
+            Assert.IsFalse(unitMap2.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitMap2.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap2.IsStatsStartingStrengthModified);
+            Assert.IsTrue(unitMap2.IsStatsStartingAgilityModified);
+            Assert.IsFalse(unitMap2.IsStatsStartingIntelligenceModified);
+
+            Assert.AreEqual(unitMap3.StatsHitPointsMaximumBase, PaladinDefaultHp);
+            Assert.AreEqual(unitMap3.StatsManaMaximum, PaladinDefaultMp);
+            Assert.AreEqual(unitMap3.StatsStartingStrength, PaladinDefaultStr);
+            Assert.AreEqual(unitMap3.StatsStartingAgility, PaladinDefaultAgi);
+            Assert.AreEqual(unitMap3.StatsStartingIntelligence, 300);
+            Assert.IsFalse(unitMap3.IsStatsHitPointsMaximumBaseModified);
+            Assert.IsFalse(unitMap3.IsStatsManaMaximumModified);
+            Assert.IsFalse(unitMap3.IsStatsStartingStrengthModified);
+            Assert.IsFalse(unitMap3.IsStatsStartingAgilityModified);
+            Assert.IsTrue(unitMap3.IsStatsStartingIntelligenceModified);
+        }
+
+        [TestMethod]
         public void TestDefaultDatabaseSingleton()
         {
             var u = new Unit(UnitType.Peasant);
