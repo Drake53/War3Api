@@ -15,10 +15,14 @@ namespace War3Api.Generator.Object.Models
         public string Rawcode { get; set; }
 
         // Column name
-        public string Name { get; set; }
+        public string DataName { get; set; }
 
         // Slk name
         public string DataSource { get; set; }
+
+        public int DataColumn { get; set; }
+
+        public int[] DataColumns { get; set; }
 
         public string IdentifierName { get; set; }
 

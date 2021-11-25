@@ -5,7 +5,9 @@
 // </copyright>
 // ------------------------------------------------------------------------------
 
+using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace War3Api.Generator.Object
 {
@@ -24,24 +26,31 @@ namespace War3Api.Generator.Object
             var outputFolder = OutputAbsolute ?? Path.Combine(OutputFolder, Version);
 
             ObjectApiGenerator.InitializeGenerator(inputFolder, outputFolder);
-            UnitApiGenerator.InitializeGenerator(inputFolder);
-            ItemApiGenerator.InitializeGenerator(inputFolder);
-            DestructableApiGenerator.InitializeGenerator(inputFolder);
-            DoodadApiGenerator.InitializeGenerator(inputFolder);
-            AbilityApiGenerator.InitializeGenerator(inputFolder);
-            BuffApiGenerator.InitializeGenerator(inputFolder);
-            UpgradeApiGenerator.InitializeGenerator(inputFolder);
 
-            ObjectApiGenerator.GenerateDataConverter();
-            ObjectApiGenerator.GenerateEnums();
+            Parallel.Invoke(new Action[]
+            {
+                () => ObjectApiGenerator.GenerateDataConverter(),
+                () => ObjectApiGenerator.GenerateEnums(),
 
-            UnitApiGenerator.Generate();
-            ItemApiGenerator.Generate();
-            DestructableApiGenerator.Generate();
-            DoodadApiGenerator.Generate();
-            AbilityApiGenerator.Generate();
-            BuffApiGenerator.Generate();
-            UpgradeApiGenerator.Generate();
+                () => UnitApiGenerator.InitializeGenerator(inputFolder),
+                () => ItemApiGenerator.InitializeGenerator(inputFolder),
+                () => DestructableApiGenerator.InitializeGenerator(inputFolder),
+                () => DoodadApiGenerator.InitializeGenerator(inputFolder),
+                () => AbilityApiGenerator.InitializeGenerator(inputFolder),
+                () => BuffApiGenerator.InitializeGenerator(inputFolder),
+                () => UpgradeApiGenerator.InitializeGenerator(inputFolder),
+            });
+
+            Parallel.Invoke(new Action[]
+            {
+                () => UnitApiGenerator.Generate(),
+                () => ItemApiGenerator.Generate(),
+                () => DestructableApiGenerator.Generate(),
+                () => DoodadApiGenerator.Generate(),
+                () => AbilityApiGenerator.Generate(),
+                () => BuffApiGenerator.Generate(),
+                () => UpgradeApiGenerator.Generate(),
+            });
         }
     }
 }

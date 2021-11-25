@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using War3Net.Common.Extensions;
 using War3Net.IO.Slk;
 
 namespace War3Api.Generator.Object.Models
@@ -16,6 +18,20 @@ namespace War3Api.Generator.Object.Models
             if (!string.IsNullOrEmpty(keyColumn))
             {
                 TableKeyColumn = Table[keyColumn].Single();
+
+                var mappings = new Dictionary<int, int>();
+                for (var row = 1; row <= Table.Rows; row++)
+                {
+                    var key = (string)Table[TableKeyColumn, row];
+                    if (string.IsNullOrEmpty(key))
+                    {
+                        continue;
+                    }
+
+                    mappings.Add(key.FromRawcode(), row);
+                }
+
+                ObjectToRowMappings = mappings;
             }
 
             if (!string.IsNullOrEmpty(nameColumn))
@@ -41,6 +57,8 @@ namespace War3Api.Generator.Object.Models
         public int TableNameColumn { get; set; }
 
         public string TableName { get; set; }
+
+        public IReadOnlyDictionary<int, int>? ObjectToRowMappings { get; set; }
 
         public void AddValues(Dictionary<string, string> dict)
         {

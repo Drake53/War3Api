@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -196,6 +197,35 @@ namespace War3Api.Generator.Object
                     propertyModel.UniqueName = duplicateNames.Contains(propertyModel.IdentifierName)
                         ? $"{propertyModel.IdentifierName}_{propertyModel.Rawcode}"
                         : propertyModel.IdentifierName;
+                }
+            }
+        }
+
+        internal static void PrecomputePropertyDataColumns(IEnumerable<PropertyModel> properties, IDictionary<string, TableModel> dataTables)
+        {
+            var format = $"D{(properties.Select(propertyModel => propertyModel.Repeat).Max() >= 10 ? "2" : "1")}";
+
+            foreach (var propertyModel in properties)
+            {
+                if (dataTables.TryGetValue(propertyModel.DataSource, out var dataTable))
+                {
+                    if (propertyModel.Repeat > 0)
+                    {
+                        propertyModel.DataColumns = new int[propertyModel.Repeat];
+
+                        for (var i = 1; i <= propertyModel.Repeat; i++)
+                        {
+                            var columnName = propertyModel.Data > 0
+                                ? $"{propertyModel.DataName}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format, CultureInfo.InvariantCulture)}"
+                                : $"{propertyModel.DataName}{i.ToString(format, CultureInfo.InvariantCulture)}";
+
+                            propertyModel.DataColumns[i - 1] = dataTable.Table[columnName].Single();
+                        }
+                    }
+                    else
+                    {
+                        propertyModel.DataColumn = dataTable.Table[propertyModel.DataName].Single();
+                    }
                 }
             }
         }
@@ -656,13 +686,9 @@ namespace War3Api.Generator.Object
                         SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(objectCreationArgumentList)),
                         null)))))));
 
-            var dataRows = new Dictionary<string, int>(StringComparer.Ordinal);
-
             var objectProperties = properties
                 .Where(propertyModel => propertyModel.Specifics.IsEmpty || propertyModel.Specifics.Contains(objectType.Value))
                 .ToList();
-
-            var format = $"D{(objectProperties.Select(propertyModel => propertyModel.Repeat).Max() >= 10 ? "2" : "1")}";
 
             foreach (var propertyModel in objectProperties)
             {
@@ -671,20 +697,7 @@ namespace War3Api.Generator.Object
                     continue;
                 }
 
-                if (!dataRows.TryGetValue(propertyModel.DataSource, out var dataRow))
-                {
-                    for (var row = 1; row <= dataTable.Table.Rows; row++)
-                    {
-                        if (objectType.Value == ((string)dataTable.Table[dataTable.TableKeyColumn, row]).FromRawcode())
-                        {
-                            dataRows.Add(propertyModel.DataSource, row);
-                            dataRow = row;
-                            break;
-                        }
-                    }
-                }
-
-                if (dataRow == default)
+                if (!dataTable.ObjectToRowMappings.TryGetValue(objectType.Value, out var dataRow))
                 {
                     continue;
                 }
@@ -710,12 +723,7 @@ namespace War3Api.Generator.Object
                 {
                     for (var i = 1; i <= propertyModel.Repeat; i++)
                     {
-                        var columnName = propertyModel.Data > 0
-                            ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format)}"
-                            : $"{propertyModel.Name}{i.ToString(format)}";
-
-                        var column = dataTable.Table[columnName].Single();
-                        var value = dataTable.Table[column, dataRow];
+                        var value = dataTable.Table[propertyModel.DataColumns[i - 1], dataRow];
                         var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
                         statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
@@ -728,10 +736,7 @@ namespace War3Api.Generator.Object
                 }
                 else
                 {
-                    var columnName = propertyModel.Name;
-
-                    var column = dataTable.Table[columnName].Single();
-                    var value = dataTable.Table[column, dataRow];
+                    var value = dataTable.Table[propertyModel.DataColumn, dataRow];
                     var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
                     statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(

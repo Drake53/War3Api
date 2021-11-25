@@ -89,7 +89,7 @@ namespace War3Api.Generator.Object
                 .Select(property => new PropertyModel
                 {
                     Rawcode = (string)property[idColumn],
-                    Name = (string)property[fieldColumn],
+                    DataName = (string)property[fieldColumn],
                     DataSource = (string)property[dataSourceColumn],
                     IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
                         (string)property[fieldColumn],
@@ -105,6 +105,7 @@ namespace War3Api.Generator.Object
                 .ToDictionary(property => property.Rawcode);
 
             ObjectApiGenerator.EnsurePropertyNamesUnique(properties.Values);
+            ObjectApiGenerator.PrecomputePropertyDataColumns(properties.Values, _dataTables);
 
             // Upgrade types (enum)
             ObjectApiGenerator.GenerateEnumFile(_enumModel);
