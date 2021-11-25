@@ -714,36 +714,30 @@ namespace War3Api.Generator.Object
                             ? $"{propertyModel.Name}{(char)(propertyModel.Data + 'A' - 1)}{i.ToString(format)}"
                             : $"{propertyModel.Name}{i.ToString(format)}";
 
-                        var column = dataTable.Table[columnName].Cast<int?>().SingleOrDefault();
-                        if (column.HasValue)
-                        {
-                            var value = dataTable.Table[column.Value, dataRow];
-                            var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
+                        var column = dataTable.Table[columnName].Single();
+                        var value = dataTable.Table[column, dataRow];
+                        var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
-                            statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
-                                SyntaxKind.SimpleAssignmentExpression,
-                                SyntaxFactory.ElementAccessExpression(
-                                    SyntaxFactory.ParseExpression(left),
-                                    SyntaxFactory.BracketedArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(i.ToString()))))),
-                                SyntaxFactory.ParseExpression(propertyValue))));
-                        }
+                        statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                            SyntaxKind.SimpleAssignmentExpression,
+                            SyntaxFactory.ElementAccessExpression(
+                                SyntaxFactory.ParseExpression(left),
+                                SyntaxFactory.BracketedArgumentList(SyntaxFactory.SingletonSeparatedList(SyntaxFactory.Argument(SyntaxFactory.ParseExpression(i.ToString()))))),
+                            SyntaxFactory.ParseExpression(propertyValue))));
                     }
                 }
                 else
                 {
                     var columnName = propertyModel.Name;
 
-                    var column = dataTable.Table[columnName].Cast<int?>().SingleOrDefault();
-                    if (column.HasValue)
-                    {
-                        var value = dataTable.Table[column.Value, dataRow];
-                        var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
+                    var column = dataTable.Table[columnName].Single();
+                    var value = dataTable.Table[column, dataRow];
+                    var propertyValue = GetPropertyValue(isStringProperty ? ObjectDataType.String : dataTypeModel.UnderlyingType, value);
 
-                        statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
-                            SyntaxKind.SimpleAssignmentExpression,
-                            SyntaxFactory.ParseExpression(left),
-                            SyntaxFactory.ParseExpression(propertyValue))));
-                    }
+                    statements.Add(SyntaxFactory.ExpressionStatement(SyntaxFactory.AssignmentExpression(
+                        SyntaxKind.SimpleAssignmentExpression,
+                        SyntaxFactory.ParseExpression(left),
+                        SyntaxFactory.ParseExpression(propertyValue))));
                 }
             }
 
@@ -767,7 +761,7 @@ namespace War3Api.Generator.Object
                 ObjectDataType.Int => value is null || value is string ? $"{default(int)}" : $"{value}",
                 ObjectDataType.Real => value is null || value is string ? $"{default(float)}f" : $"{value}f",
                 ObjectDataType.Unreal => value is null || value is string ? $"{default(float)}f" : $"{value}f",
-                ObjectDataType.String => value is null ? "null" : $"\"{((string)value).Replace("\\", @"\\")}\"",
+                ObjectDataType.String => value is null ? "null" : $"\"{Localize((string)value).Replace("\\", @"\\", StringComparison.Ordinal)}\"",
 
                 _ => throw new InvalidEnumArgumentException(nameof(objectDataType), (int)objectDataType, typeof(ObjectDataType)),
             };
@@ -794,15 +788,15 @@ namespace War3Api.Generator.Object
 
         internal static SylkTable Localize(SylkTable table)
         {
-            for (var row = 0; row < table.Rows; row++)
+            for (var row = 0; row <= table.Rows; row++)
             {
-                for (var column = 0; column < table.Columns; column++)
+                for (var column = 0; column <= table.Columns; column++)
                 {
-                    if (table[column, row] is string @string)
+                    if (table[column, row] is string s)
                     {
-                        if (@string != null)
+                        if (s != null)
                         {
-                            table[column, row] = Localize(@string);
+                            table[column, row] = Localize(s);
                         }
                     }
                 }
