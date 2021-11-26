@@ -94,7 +94,6 @@ namespace War3Api.Generator.Object
                     DataName = (string)property[fieldColumn],
                     DataSource = (string)property[dataSourceColumn],
                     IdentifierName = ObjectApiGenerator.CreatePropertyIdentifierName(
-                        (string)property[fieldColumn],
                         (string)property[categoryColumn],
                         (string)property[displayNameColumn]),
                     Repeat = (int)property[repeatColumn],

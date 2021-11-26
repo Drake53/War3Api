@@ -147,13 +147,11 @@ namespace War3Api.Generator.Object
             yield return SyntaxFactoryService.Constructor(SyntaxKind.PublicKeyword, className, new[] { (objectTypeName, objectTypeIdentifier), (SyntaxFactory.Token(SyntaxKind.StringKeyword).ValueText, "newRawcode"), (DataConstants.DatabaseClassName, DataConstants.DatabaseVariableName) });
         }
 
-        internal static string CreatePropertyIdentifierName(string field, string category, string displayName)
+        internal static string CreatePropertyIdentifierName(string category, string displayName)
         {
             var sb = new StringBuilder();
             sb.Append(Localize(LookupCategory(category)).Replace("&", string.Empty, StringComparison.Ordinal));
-
-            var localizedDisplayName = Localize(displayName);
-            sb.Append(localizedDisplayName.Contains('%', StringComparison.Ordinal) ? field : localizedDisplayName);
+            sb.Append(Localize(displayName).Replace("%s", string.Empty, StringComparison.Ordinal));
 
             return sb.ToString().ToIdentifier();
         }
