@@ -1785,6 +1785,20 @@ namespace War3Api
         public static readonly volumegroup SOUND_VOLUMEGROUP_AMBIENTSOUNDS = ConvertVolumeGroup(6);
         /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_FIRE"
         public static readonly volumegroup SOUND_VOLUMEGROUP_FIRE = ConvertVolumeGroup(7);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_GENERAL"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_GENERAL = ConvertVolumeGroup(8);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_AMBIENT"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_AMBIENT = ConvertVolumeGroup(9);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_MUSIC"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_MUSIC = ConvertVolumeGroup(10);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_DIALOGUE"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_DIALOGUE = ConvertVolumeGroup(11);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_1"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_1 = ConvertVolumeGroup(12);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_2"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_2 = ConvertVolumeGroup(13);
+        /// @CSharpLua.Template = "SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_3"
+        public static readonly volumegroup SOUND_VOLUMEGROUP_CINEMATIC_SOUND_EFFECTS_3 = ConvertVolumeGroup(14);
         /// @CSharpLua.Template = "GAME_STATE_DIVINE_INTERVENTION"
         public static readonly igamestate GAME_STATE_DIVINE_INTERVENTION = ConvertIGameState(0);
         /// @CSharpLua.Template = "GAME_STATE_DISCONNECTED"
@@ -6719,6 +6733,8 @@ namespace War3Api
         public static extern void AttachSoundToUnit(sound soundHandle, unit whichUnit);
         /// @CSharpLua.Template = "StartSound({0})"
         public static extern void StartSound(sound soundHandle);
+        /// @CSharpLua.Template = "StartSoundEx({0}, {1})"
+        public static extern void StartSoundEx(sound soundHandle, bool fadeIn);
         /// @CSharpLua.Template = "StopSound({0}, {1}, {2})"
         public static extern void StopSound(sound soundHandle, bool killWhenDone, bool fadeOut);
         /// @CSharpLua.Template = "KillSoundWhenDone({0})"
@@ -7357,6 +7373,8 @@ namespace War3Api
         public static extern ability BlzGetUnitAbility(unit whichUnit, int abilId);
         /// @CSharpLua.Template = "BlzGetUnitAbilityByIndex({0}, {1})"
         public static extern ability BlzGetUnitAbilityByIndex(unit whichUnit, int index);
+        /// @CSharpLua.Template = "BlzGetAbilityId({0})"
+        public static extern int BlzGetAbilityId(ability whichAbility);
         /// @CSharpLua.Template = "BlzDisplayChatMessage({0}, {1}, {2})"
         public static extern void BlzDisplayChatMessage(player whichPlayer, int recipient, string message);
         /// @CSharpLua.Template = "BlzPauseUnitEx({0}, {1})"
@@ -7519,5 +7537,29 @@ namespace War3Api
         public static extern destructable BlzCreateDeadDestructableZWithSkin(int objectid, float x, float y, float z, float face, float scale, int variation, int skinId);
         /// @CSharpLua.Template = "BlzGetPlayerTownHallCount({0})"
         public static extern int BlzGetPlayerTownHallCount(player whichPlayer);
+        /// @CSharpLua.Template = "BlzQueueImmediateOrderById({0}, {1})"
+        public static extern bool BlzQueueImmediateOrderById(unit whichUnit, int order);
+        /// @CSharpLua.Template = "BlzQueuePointOrderById({0}, {1}, {2}, {3})"
+        public static extern bool BlzQueuePointOrderById(unit whichUnit, int order, float x, float y);
+        /// @CSharpLua.Template = "BlzQueueTargetOrderById({0}, {1}, {2})"
+        public static extern bool BlzQueueTargetOrderById(unit whichUnit, int order, widget targetWidget);
+        /// @CSharpLua.Template = "BlzQueueInstantPointOrderById({0}, {1}, {2}, {3}, {4})"
+        public static extern bool BlzQueueInstantPointOrderById(unit whichUnit, int order, float x, float y, widget instantTargetWidget);
+        /// @CSharpLua.Template = "BlzQueueInstantTargetOrderById({0}, {1}, {2}, {3})"
+        public static extern bool BlzQueueInstantTargetOrderById(unit whichUnit, int order, widget targetWidget, widget instantTargetWidget);
+        /// @CSharpLua.Template = "BlzQueueBuildOrderById({0}, {1}, {2}, {3})"
+        public static extern bool BlzQueueBuildOrderById(unit whichPeon, int unitId, float x, float y);
+        /// @CSharpLua.Template = "BlzQueueNeutralImmediateOrderById({0}, {1}, {2})"
+        public static extern bool BlzQueueNeutralImmediateOrderById(player forWhichPlayer, unit neutralStructure, int unitId);
+        /// @CSharpLua.Template = "BlzQueueNeutralPointOrderById({0}, {1}, {2}, {3}, {4})"
+        public static extern bool BlzQueueNeutralPointOrderById(player forWhichPlayer, unit neutralStructure, int unitId, float x, float y);
+        /// @CSharpLua.Template = "BlzQueueNeutralTargetOrderById({0}, {1}, {2}, {3})"
+        public static extern bool BlzQueueNeutralTargetOrderById(player forWhichPlayer, unit neutralStructure, int unitId, widget target);
+        /// @CSharpLua.Template = "BlzGetUnitOrderCount({0})"
+        public static extern int BlzGetUnitOrderCount(unit whichUnit);
+        /// @CSharpLua.Template = "BlzUnitClearOrders({0}, {1})"
+        public static extern void BlzUnitClearOrders(unit whichUnit, bool onlyQueued);
+        /// @CSharpLua.Template = "BlzUnitForceStopOrder({0}, {1})"
+        public static extern void BlzUnitForceStopOrder(unit whichUnit, bool clearQueue);
     }
 }
