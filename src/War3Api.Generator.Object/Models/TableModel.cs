@@ -28,7 +28,11 @@ namespace War3Api.Generator.Object.Models
                         continue;
                     }
 
-                    mappings.Add(key.FromRawcode(), row);
+                    var keyCode = key.FromRawcode();
+                    if (!mappings.TryAdd(keyCode, row))
+                    {
+                        mappings[keyCode] = row;
+                    }
                 }
 
                 ObjectToRowMappings = mappings;
