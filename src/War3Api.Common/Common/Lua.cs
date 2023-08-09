@@ -17,5 +17,15 @@ namespace War3Api
     {
         /// @CSharpLua.Template = "FourCC({0})"
         public static extern int FourCC(string value);
+        
+        /// <summary>
+        /// Get a global variable matching the given key.
+        /// </summary>
+        /// <typeparam name="T">The type of the global variable.</typeparam>
+        /// <returns>
+        /// The value of global variable
+        /// </returns>
+        /// @CSharpLua.Template = "rawget(System.global, {0})"
+        public static extern T GetGlobal<T>(string key);
     }
 }
